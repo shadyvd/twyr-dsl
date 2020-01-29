@@ -1,4 +1,8 @@
-<md-label {{did-insert this.didInsert}} ...attributes>
+<md-label
+	{{requires-id}}
+	{{did-insert this.didInsert}}
+	...attributes
+>
 	{{#if (has-block)}}
 		{{yield}}
 	{{else}}

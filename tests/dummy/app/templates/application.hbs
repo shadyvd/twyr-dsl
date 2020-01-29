@@ -25,7 +25,6 @@
 			<Text.Headline class="layout-row layout-align-start-center">
 				<TwyrIcon @icon="all-out" @primary={{true}} @spin={{true}} />
 				<TwyrContent class="ml-2 flex">In-card mixed actions</TwyrContent>
-				<TwyrCheckbox @value={{this.checkBoxValue}} @onChange={{this.changeCheckboxValue}}>A Checkbox</TwyrCheckbox>
 			</Text.Headline>
 			<Text.Subhead>Description</Text.Subhead>
 		</Title.Text>
@@ -75,6 +74,12 @@
 		<TwyrButton @accent={{true}} @raised={{true}} @onClick={{this.onReset}}>
 			Action 2
 		</TwyrButton>
+		<TwyrRadioGroup class="flex layout-row layout-align-end-center px-4" @groupValue={{this.selectedFruit}} @onChange={{this.changeSelectedFruit}} as |Group|>
+			<Group.Button @value="Apple" @primary={{true}}>Apple</Group.Button>
+			<Group.Button @value="Banana" @warn={{true}}>Banana</Group.Button>
+			<Group.Button @value="Mango" disabled>Mango</Group.Button>
+		</TwyrRadioGroup>
+		<TwyrCheckbox class="mb-0" @value={{this.checkBoxValue}} @onChange={{this.changeCheckboxValue}}>A Checkbox</TwyrCheckbox>
 	</Card.Actions>
 </TwyrCard>
 
@@ -85,7 +90,7 @@
 		class="text-red"
 		@openFrom="#twyr-dialog-container"
 		@closeTo="#twyr-dialog-close-area"
-		@clickOutsideToClose={{false}}
+		@clickOutsideToClose={{true}}
 		@fullscreen={{true}}
 		@onClose={{fn this.onShowDialogWithParent "cancel"}}
 	>

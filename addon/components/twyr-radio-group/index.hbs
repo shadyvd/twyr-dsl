@@ -1,15 +1,25 @@
 <md-radio-group
 	role={{this.role}}
 	aria-labelledby={{this.ariaLabelledBy}}
+	{{is-focusable
+		focusOnlyOnKey=this.focusOnlyOnKey
+		onMouseEnter=@onMouseEnter
+		onMouseLeave=@onMouseLeave
+		onMouseDown=@onMouseDown
+		onMouseUp=@onMouseUp
+		onFocusIn=@onFocusIn
+		onFocusOut=@onFocusOut
+	}}
+	{{on "keydown" this.handleKeydown}}
+	...attributes
 >
 	{{yield (hash
 		Label=(component this.subComponents.label
 			setAriaLabelledby=this.setAriaLabelledby
 		)
-		RadioButton=(component this.subComponents.radio
-			toggle=toggle
-			disabled=disabled
-			groupValue=groupValue
+		Button=(component this.subComponents.button
+			toggle=@toggle
+			groupValue=@groupValue
 			registerWithParent=this.registerChild
 			onChange=this.onChange
 		)

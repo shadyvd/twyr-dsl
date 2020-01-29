@@ -14,6 +14,7 @@ export default class ApplicationController extends Controller {
 	changeOpaqueInterval = -1;
 
 	@tracked selectedTabValue = "three";
+	@tracked selectedFruit = "Apple"
 
 	constructor() {
 		super(...arguments);
@@ -52,5 +53,11 @@ export default class ApplicationController extends Controller {
 	@action
 	changeCheckboxValue(newVal) {
 		this.checkBoxValue = newVal;
+	}
+
+	@action
+	changeSelectedFruit(newFruit) {
+		this.debug('changeSelectedFruit: ', newFruit);
+		this.selectedFruit = newFruit;
 	}
 }

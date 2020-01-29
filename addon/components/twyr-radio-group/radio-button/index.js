@@ -57,16 +57,15 @@ export default class TwyrRadioGroupRadioButtonComponent extends Component {
 		}
 
 		if(this.args.onChange && (typeof this.args.onChange === 'function')) {
-			const radioValue = this.args.toggle ? (this.isChecked ? null : this.args.value) : this.args.value;
-
-			this.debug(`handleClick::onChange::value: `, radioValue);
-			this.args.onChange(radioValue);
+			this.debug(`handleClick::onChange::value: `, this.radioValue);
+			this.args.onChange(this.radioValue);
 		}
 	}
 	// #endregion
 
 	// #region Computed Properties
 	get ariaChecked() {
+		this.debug(`ariaChecked: ${this.isChecked ? 'true' : 'false'}`);
 		return this.isChecked ? 'true' : 'false';
 	}
 
@@ -78,15 +77,25 @@ export default class TwyrRadioGroupRadioButtonComponent extends Component {
 	}
 
 	get isChecked() {
-		return (this.args.groupValue === this.args.value);
+		this.debug(`isChecked? `, (this.args.groupValue === this.radioValue));
+		return (this.args.groupValue === this.radioValue);
 	}
 
 	get labelId() {
-		if(!this._element)
+		if(!this._element) {
+			this.debug(`labelId: label`);
 			return 'label';
+		}
 
 		const elementId = this._element.getAttribute('id');
+
+		this.debug(`labelId: ${elementId}-label`);
 		return `${elementId}-label`;
+	}
+
+	get radioValue() {
+		this.debug(`radioValue: ${(this.args.toggle ? (this.isChecked ? null : this.args.value) : this.args.value)}`);
+		return (this.args.toggle ? (this.isChecked ? null : this.args.value) : this.args.value);
 	}
 
 	get role() {
