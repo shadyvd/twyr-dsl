@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import debugLogger from 'ember-debug-logger';
 
 import { action } from '@ember/object';
+import { isPresent } from '@ember/utils';
 
 export default class TwyrDialogComponent extends Component {
 	// #region Private Attributes
@@ -42,6 +43,7 @@ export default class TwyrDialogComponent extends Component {
 	}
 
 	willDestroy() {
+		this.debug(`willDestroy`);
 		super.willDestroy(...arguments);
 
 		if(!this.escapeToClose)
@@ -57,14 +59,17 @@ export default class TwyrDialogComponent extends Component {
 
 	// #region Computed Properties
 	get defaultedParent() {
-		return this.args.parent || '#twyr-wormhole'
+		this.debug(`defaultedParent: ${this.args.parent || '#twyr-wormhole'}`);
+		return this.args.parent || '#twyr-wormhole';
 	}
 
 	get defaultedOpenFrom() {
+		this.debug(`defaultedOpenFrom: ${this.args.openFrom || this.args.origin || this.defaultedParent}`);
 		return this.args.openFrom || this.args.origin || this.defaultedParent;
 	}
 
 	get defaultedCloseTo() {
+		this.debug(`defaultedCloseTo: ${this.args.closeTo || this.args.origin || this.defaultedParent}`);
 		return this.args.closeTo || this.args.origin || this.defaultedParent;
 	}
 
@@ -72,63 +77,71 @@ export default class TwyrDialogComponent extends Component {
 		const destination = this.defaultedParent;
 		const destinationElem = (typeof destination === 'string') ? document.querySelector(destination) : destination;
 
-		if((typeof destinationElem === 'string') && (destinationElem.charAt(0) === '#'))
+		if((typeof destinationElem === 'string') && (destinationElem.charAt(0) === '#')) {
+			this.debug(`destinationId: #${destinationElem.substring(1)}`);
 			return `#${destinationElem.substring(1)}`;
+		}
 
 		let id = destinationElem.getAttribute('id');
-		if(id) return `#${id}`;
+		if(id) {
+			this.debug(`destinationId: #${id}`);
+			return `#${id}`;
+		}
 
 		id = (this._element) ? `${this._element.getAttribute('id')}-parent` : 'parent';
 		destinationElem.setAttribute('id', id);
 
+		this.debug(`destinationId: #${id}`);
 		return id;
 	}
 
 	get destinationElem() {
-		return document.querySelector(this.destinationId);
+		const destElem = document.querySelector(this.destinationId);
+
+		this.debug(`destinationElem: `, destElem);
+		return destElem;
 	}
 
 	get isOpaque() {
-		if((this.args.opaque !== null) && (this.args.opaque !== undefined))
-			return !!this.args.opaque;
-
-		return true;
+		this.debug(`isOpaque: ${isPresent(this.args.opaque) ? this.args.opaque : true}`);
+		return isPresent(this.args.opaque) ? this.args.opaque : true;
 	}
 
 	get focusOnOpen() {
-		if((this.args.focusOnOpen !== null) && (this.args.focusOnOpen !== undefined))
-			return !!this.args.focusOnOpen;
-
-		return true;
+		this.debug(`focusOnOpen: ${isPresent(this.args.focusOnOpen) ? this.args.focusOnOpen : true}`);
+		return isPresent(this.args.focusOnOpen) ? this.args.focusOnOpen : true;
 	}
 
 	get clickOutsideToClose() {
-		if((this.args.clickOutsideToClose !== null) && (this.args.clickOutsideToClose !== undefined))
-			return !!this.args.clickOutsideToClose;
-
-		return true;
+		this.debug(`clickOutsideToClose: ${isPresent(this.args.clickOutsideToClose) ? this.args.clickOutsideToClose : true}`);
+		return isPresent(this.args.clickOutsideToClose) ? this.args.clickOutsideToClose : true;
 	}
 
 	get escapeToClose() {
-		if((this.args.escapeToClose !== null) && (this.args.escapeToClose !== undefined))
-			return !!this.args.escapeToClose;
-
-		return true;
+		this.debug(`escapeToClose: ${isPresent(this.args.escapeToClose) ? this.args.escapeToClose : true}`);
+		return isPresent(this.args.escapeToClose) ? this.args.escapeToClose : true;
 	}
 	// #endregion
 
 	// #region Actions
 	@action
 	handleClick(event) {
-		if(!this.clickOutsideToClose)
+		if(!this.clickOutsideToClose) {
+			this.debug(`handleClick::clickOutsideToClose::false`);
 			return;
+		}
 
-		if(!this.args.onClose)
+		if(!this.args.onClose) {
+			this.debug(`handleClick: no onClose`);
 			return;
+		}
 
-		if(typeof this.args.onClose !== 'function')
+		if(typeof this.args.onClose !== 'function') {
+			this.debug(`handleClick: onClose not func`);
 			return;
+		}
 
+		this.debug(`handleClick::onClose: `, event);
 		this.args.onClose(event);
 	}
 	// #endregion

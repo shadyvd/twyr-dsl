@@ -75,13 +75,12 @@ export default class TwyrRadioGroupComponent extends Component {
 	}
 
 	get focusOnlyOnKey() {
-		if((this.args.focusOnlyOnKey !== null) && (this.args.focusOnlyOnKey !== undefined))
-			return this.args.focusOnlyOnKey;
-
-		return true;
+		this.debug(`focusOnlyOnKey: ${isPresent(this.args.focusOnlyOnKey) ? this.args.focusOnlyOnKey : true}`);
+		return isPresent(this.args.focusOnlyOnKey) ? this.args.focusOnlyOnKey : true;
 	}
 
 	get role() {
+		this.debug(`role: ${this.args.role || 'radiogroup'}`);
 		return this.args.role || 'radiogroup';
 	}
 	// #endregion

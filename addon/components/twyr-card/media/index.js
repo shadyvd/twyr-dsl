@@ -15,6 +15,7 @@ export default class TwyrCardMediaComponent extends Component {
 
 	// #region Computed Properties
 	get size() {
+		this.debug(`size: ${this.args.size || 'md'}`);
 		return this.args.size || 'md';
 	}
 	// #endregion

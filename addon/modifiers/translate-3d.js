@@ -1,8 +1,9 @@
 import Modifier from 'ember-modifier';
 import debugLogger from 'ember-debug-logger';
 
-import { htmlSafe } from '@ember/string';
 import { computeTimeout, nextTick, sleep } from 'ember-css-transitions/utils/transition-utils';
+import { htmlSafe } from '@ember/string';
+import { isPresent } from '@ember/utils';
 import { scheduleOnce } from '@ember/runloop';
 
 export default class Translate3dModifier extends Modifier {
@@ -62,7 +63,7 @@ export default class Translate3dModifier extends Modifier {
 		const containerClone = this.element.parentNode.cloneNode(true);
 
 		const parentNode = document.querySelector(this.args.named.defaultedParent);
-		if(parentNode && parentNode.parentNode !== null) {
+		if(isPresent(parentNode) && isPresent(parentNode.parentNode)) {
 			parentNode.parentNode.appendChild(containerClone);
 		}
 
@@ -79,7 +80,7 @@ export default class Translate3dModifier extends Modifier {
 			return sleep(transformTimeout);
 		})
 		.then(() => {
-			if(containerClone.parentNode !== null) {
+			if(isPresent(containerClone.parentNode)) {
 				containerClone.parentNode.removeChild(containerClone);
 			}
 

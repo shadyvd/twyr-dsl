@@ -19,6 +19,7 @@ export default class FocusableModifier extends Modifier {
 	// #region Lifecycle Hooks
 	didInstall() {
 		super.didInstall(...arguments);
+		this.debug(`didInstall: `, this.args);
 
 		this.element.addEventListener('focusin', this.onFocusIn, true);
 		this.element.addEventListener('focusout', this.onFocusOut, true);
@@ -42,6 +43,8 @@ export default class FocusableModifier extends Modifier {
 
 	didReceiveArguments() {
 		super.didReceiveArguments(...arguments);
+		this.debug(`didReceiveArguments: `, this.args);
+
 		if(this.element.hasAttribute('tabindex'))
 			return;
 
@@ -50,6 +53,8 @@ export default class FocusableModifier extends Modifier {
 	}
 
 	willRemove() {
+		this.debug(`willRemove`);
+
 		this.element.removeEventListener('touchcancel', this.onMouseUp, true);
 		this.element.removeEventListener('touchend', this.onMouseUp, true);
 		this.element.removeEventListener('touchstart', this.onMouseDown, true);

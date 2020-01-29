@@ -12,10 +12,4 @@ export default class TwyrDividerComponent extends Component {
 		this.debug(`constructor`);
 	}
 	// #endregion
-
-	// #region Computed Properties
-	get insetAttr() {
-		return this.args.inset;
-	}
-	// #endregion
 }

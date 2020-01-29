@@ -29,6 +29,7 @@ export default class DoesRippleModifier extends Modifier {
 	// #region Lifecycle Hooks
 	didInstall() {
 		super.didInstall(...arguments);
+		this.debug(`didInstall: `, this.args);
 
 		// Get the Ripple Element and initialize it
 		this._rippleElement = this.element.querySelector('.md-container') || this.element;
@@ -59,6 +60,9 @@ export default class DoesRippleModifier extends Modifier {
 		this._rippleElement.removeEventListener('mouseleave', this.onMouseUp, true);
 		this._rippleElement.removeEventListener('mouseup', this.onMouseUp, true);
 		this._rippleElement.removeEventListener('mousedown', this.onMouseDown, true);
+
+		this.debug(`willRemove`);
+		super.willRemove(...arguments);
 	}
 	// #endregion
 

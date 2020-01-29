@@ -18,7 +18,7 @@ export default class TwyrInkBarComponent extends Component {
 	// #region Computed Styles
 	get inkbarClass() {
 		const inkClass = this.args.movingRight ? 'md-right' : 'md-left';
-		this.debug(`class: ${inkClass}`);
+		this.debug(`inkbarClass: ${inkClass}`);
 
 		return inkClass;
 	}
@@ -28,7 +28,7 @@ export default class TwyrInkBarComponent extends Component {
 		const right = this.args.right || '0';
 		const position = htmlSafe(`left:${left}px;right:${right}px;`);
 
-		this.debug(`position: ${position}`);
+		this.debug(`inkbarPosition: ${position}`);
 		return position;
 	}
 	// #endregion

@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import debugLogger from 'ember-debug-logger';
 
 import { action } from '@ember/object';
+import { isPresent } from '@ember/utils';
 
 export default class TwyrRadioGroupRadioButtonComponent extends Component {
 	// #region Private Attributes
@@ -70,10 +71,8 @@ export default class TwyrRadioGroupRadioButtonComponent extends Component {
 	}
 
 	get focusOnlyOnKey() {
-		if((this.args.focusOnlyOnKey !== null) && (this.args.focusOnlyOnKey !== undefined))
-			return this.args.focusOnlyOnKey;
-
-		return true;
+		this.debug(`focusOnlyOnKey: ${isPresent(this.args.focusOnlyOnKey) ? this.args.focusOnlyOnKey : true}`);
+		return isPresent(this.args.focusOnlyOnKey) ? this.args.focusOnlyOnKey : true;
 	}
 
 	get isChecked() {
@@ -99,6 +98,7 @@ export default class TwyrRadioGroupRadioButtonComponent extends Component {
 	}
 
 	get role() {
+		this.debug(`role: ${this.args.role || 'radio'}`);
 		return this.args.role || 'radio';
 	}
 	// #endregion

@@ -55,10 +55,16 @@ export default class TwyrDialogInnerComponent extends Component {
 
 	// #region Private Methods
 	_checkContentOverflow() {
-		if(!this._element) return;
+		if(!this._element) {
+			this.debug(`checkContentOverflow::_element: null`);
+			return;
+		}
 
 		let content = this._element.querySelector('md-dialog-content');
-		if(!content) return;
+		if(!content) {
+			this.debug(`checkContentOverflow::content: null`);
+			return;
+		}
 
 		this.debug(`checkContentOverflow: ${content.scrollHeight > content.clientHeight}`);
 		this.contentOverflow = content.scrollHeight > content.clientHeight;

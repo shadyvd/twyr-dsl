@@ -47,6 +47,7 @@ export default class TwyrBackdropComponent extends Component {
 
 	// #region Computed Styles
 	get backdropPosition() {
+		this.debug(`backdropPosition: ${this.args.isFixed ? htmlSafe(`position:fixed;`) : null}`);
 		return (this.args.isFixed ? htmlSafe(`position:fixed;`) : null);
 	}
 	// #endregion

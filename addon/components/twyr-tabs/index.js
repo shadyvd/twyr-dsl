@@ -4,6 +4,7 @@ import debugLogger from 'ember-debug-logger';
 import { action } from '@ember/object';
 import { htmlSafe } from '@ember/string';
 import { inject as service } from '@ember/service';
+import { isPresent } from '@ember/utils';
 import { join, scheduleOnce } from '@ember/runloop';
 import { tracked } from '@glimmer/tracking';
 
@@ -117,7 +118,7 @@ export default class TwyrTabsComponent extends Component {
 	}
 
 	get selectedValue() {
-		if((this.args.selected !== null) && (this.args.selected !== undefined)) {
+		if(isPresent(this.args.selected)) {
 			this.debug(`selectedValue: ${this.args.selected}`);
 			return this.args.selected;
 		}
@@ -142,11 +143,8 @@ export default class TwyrTabsComponent extends Component {
 	}
 
 	get stretch() {
-		this.debug(`stretch? ${((this.args.stretch !== null) && (this.args.stretch !== undefined)) ? this.args.stretch : 'sm'}`);
-		if((this.args.stretch !== null) && (this.args.stretch !== undefined))
-			return this.args.stretch;
-
-		return 'sm';
+		this.debug(`stretch? ${isPresent(this.args.stretch) ? this.args.stretch : 'sm'}`);
+		return isPresent(this.args.stretch) ? this.args.stretch : 'sm';
 	}
 	// #endregion
 

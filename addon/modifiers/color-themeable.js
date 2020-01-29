@@ -16,6 +16,8 @@ export default class ThemeColorModifier extends Modifier {
 	// #region Lifecycle Hooks
 	didReceiveArguments() {
 		super.didReceiveArguments(...arguments);
+		this.debug(`didReceiveArguments: `, this.args);
+
 		this.element.classList.remove('md-warn', 'md-secondary', 'md-primary', 'md-accent');
 
 		if(this.args.named.accent === true) this.element.classList.add('md-accent');
@@ -25,6 +27,8 @@ export default class ThemeColorModifier extends Modifier {
 	}
 
 	willRemove() {
+		this.debug(`willRemove`);
+
 		this.element.classList.remove('md-warn', 'md-secondary', 'md-primary', 'md-accent');
 		super.willRemove(...arguments);
 	}

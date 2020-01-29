@@ -3,7 +3,7 @@ import debugLogger from 'ember-debug-logger';
 
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
+import { isPresent } from '@ember/utils';
 
 export default class TwyrCheckboxComponent extends Component {
 	// #region Services
@@ -13,7 +13,7 @@ export default class TwyrCheckboxComponent extends Component {
 	// #region Private Attributes
 	debug = debugLogger('checkbox');
 
-	@tracked _element = null;
+	_element = null;
 	// #endregion
 
 	// #region Constructor
@@ -74,38 +74,45 @@ export default class TwyrCheckboxComponent extends Component {
 			event.preventDefault();
 		}
 
+		this.debug(`handleKeypress: `, event);
 		this.handleClick(event);
 	}
 	// #region
 
 	// #region Computed Properties
 	get ariaChecked() {
-		if(this.args.indeterminate)
+		if(this.args.indeterminate) {
+			this.debug(`ariaChecked: mixed`);
 			return 'mixed';
+		}
 
+		this.debug(`ariaChecked: ${this.isChecked ? 'true' : 'false'}`);
 		return this.isChecked ? 'true' : 'false';
 	}
 
 	get focusOnlyOnKey() {
-		if((this.args.focusOnlyOnKey !== null) && (this.args.focusOnlyOnKey !== undefined))
-			return this.args.focusOnlyOnKey;
-
-		return true;
+		this.debug(`focusOnlyOnKey: ${isPresent(this.args.focusOnlyOnKey) ? this.args.focusOnlyOnKey : true}`);
+		return isPresent(this.args.focusOnlyOnKey) ? this.args.focusOnlyOnKey : true;
 	}
 
 	get isChecked() {
+		this.debug(`isChecked: ${!this.args.indeterminate && this.args.value}`);
 		return (!this.args.indeterminate && this.args.value);
 	}
 
 	get labelId() {
-		if(!this._element)
+		if(!this._element) {
+			this.debug(`labelId: label`);
 			return 'label';
+		}
 
 		const elementId = this._element.getAttribute('id');
+		this.debug(`labelId: ${elementId}-label`);
 		return `${elementId}-label`;
 	}
 
 	get role() {
+		this.debug(`role: ${this.args.role || 'checkbox'}`);
 		return this.args.role || 'checkbox';
 	}
 	// #endregion

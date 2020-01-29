@@ -19,6 +19,7 @@ export default class TwyrDialogContainerComponent extends Component {
 	// #region Lifecycle Hooks
 	@action
 	didInsert(element) {
+		this.debug(`didInsert`);
 		this._element = element;
 	}
 	// #endregion
@@ -26,11 +27,13 @@ export default class TwyrDialogContainerComponent extends Component {
 	// #region DOM Event Handlers
 	@action
 	handleMouseDown(event) {
+		this.debug(`handleMouseDown`);
 		this._sourceElem = event.target;
 	}
 
 	@action
 	handleMouseUp(event) {
+		this.debug(`handleMouseUp`);
 		if(this._sourceElem !== this._element)
 			return;
 
