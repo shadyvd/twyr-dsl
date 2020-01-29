@@ -1,0 +1,111 @@
+<TwyrContent
+	id="title"
+	class="text-warn"
+	@padding={{true}}
+	@layoutPadding={{false}}
+	@scrollY={{false}}
+>
+	Welcome to Ember
+</TwyrContent>
+<TwyrDivider />
+
+<TwyrCard as |Card|>
+	<Card.Header id="twyr-dialog-container" as |Header|>
+		<Header.Avatar>
+			<img src="https://azure.plant.works/img/logo.png" alt="Plant.Works" />
+		</Header.Avatar>
+		<Header.Text as |Text|>
+			<Text.Title>Title</Text.Title>
+			<Text.Subhead>subhead</Text.Subhead>
+		</Header.Text>
+	</Card.Header>
+
+	<Card.Title class="mb-2" as |Title|>
+		<Title.Text as |Text|>
+			<Text.Headline class="layout-row layout-align-start-center">
+				<TwyrIcon @icon="all-out" @primary={{true}} @spin={{true}} />
+				<TwyrContent class="ml-2 flex">In-card mixed actions</TwyrContent>
+			</Text.Headline>
+			<Text.Subhead>Description</Text.Subhead>
+		</Title.Text>
+	</Card.Title>
+
+	<TwyrDivider />
+	<Card.Content class="flex layout-row position-relative p-0">
+		<TwyrSidenav
+			id="twyr-dialog-close-area"
+			@name="left2"
+			@open={{false}}
+			@closeOnClick={{false}}
+			@lockedOpen={{true}}
+			@onToggle={{this.onToggleSidenav}}
+		>
+			<TwyrContent @padding={{true}}>
+				Çup?
+			</TwyrContent>
+		</TwyrSidenav>
+		<div class="flex layout-column layout-align-start-stretch">
+			<TwyrTabs
+				@stretch={{true}}
+				@borderBottom={{true}}
+				@selected={{this.selectedTabValue}}
+				@onChange={{this.changeSelectedTab}}
+				as |Tabs|
+			>
+				<Tabs.Tab @value="one" @name="Tab One" />
+				<Tabs.Tab @value="two" @name="Page Two (Disabled)" @disabled={{true}} />
+				<Tabs.Tab @value="three" @name="Tab Three" />
+			</TwyrTabs>
+			<p class="layout-fill">
+			The titles of Washed Out's breakthrough song and the first single from Paracosm share the
+			two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
+			</p>
+		</div>
+	</Card.Content>
+	<TwyrDivider />
+
+	<Card.Actions class="mt-2 layout-row layout-align-start-center">
+		<TwyrButton @primary={{true}} @raised={{true}} @onClick={{fn this.onShowDialogWithParent "open"}}>
+			Show Dialog
+			<TwyrTooltip>
+				Will open a TwyrDialog!
+			</TwyrTooltip>
+		</TwyrButton>
+		<TwyrButton @accent={{true}} @raised={{true}} @onClick={{this.onReset}}>
+			Action 2
+		</TwyrButton>
+	</Card.Actions>
+</TwyrCard>
+
+<LiquidOutlet @class="layout-column layout-align-start-stretch" />
+
+{{#if this.showDialogWithParent}}
+	<TwyrDialog
+		class="text-red"
+		@openFrom="#twyr-dialog-container"
+		@closeTo="#twyr-dialog-close-area"
+		@clickOutsideToClose={{false}}
+		@fullscreen={{true}}
+		@onClose={{fn this.onShowDialogWithParent "cancel"}}
+	>
+		<TwyrToolbar @primary={{true}} as |Toolbar|>
+			<Toolbar.Tools>
+				<h2>Twy&apos;r</h2>
+				<span class="flex"></span>
+				<TwyrButton @icon={{true}} @onClick={{fn this.onShowDialogWithParent "cancel"}}>
+					<TwyrIcon @icon="close" />
+				</TwyrButton>
+			</Toolbar.Tools>
+		</TwyrToolbar>
+
+		<TwyrDialog::Content class="px-0 pt-1">
+			<TwyrSubheader>This is a dialog rendered into a specific element. Clicking outside the dialog will close it.</TwyrSubheader>
+		</TwyrDialog::Content>
+
+		<TwyrDialog::Actions class="layout-row">
+			<span class="flex"></span>
+			<TwyrButton @warn={{true}} @raised={{true}} @onClick={{fn this.onShowDialogWithParent "cancel"}}>Cancel</TwyrButton>
+			<TwyrButton @primary={{true}} @raised={{true}} @onClick={{fn this.onShowDialogWithParent "ok"}}>OK</TwyrButton>
+		</TwyrDialog::Actions>
+	</TwyrDialog>
+{{/if}}

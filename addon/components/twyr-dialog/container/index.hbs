@@ -1,0 +1,9 @@
+<div
+	class="md-dialog-container"
+	{{did-insert this.didInsert}}
+	{{on "mousedown" this.handleMouseDown}}
+	{{on "mouseup" this.handleMouseUp}}
+	...attributes
+>
+	{{yield}}
+</div>

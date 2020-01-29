@@ -1,0 +1,24 @@
+{{#if @open}}
+	<TwyrBackdrop
+	    class="md-sidenav-backdrop"
+		@isOpaque={{true}}
+		{{on "click" this.onBackdropTap}}
+	/>
+{{/if}}
+
+<TwyrSidenav::Container>
+	<TwyrSidenav::Inner
+		@name={{this.sidenavName}}
+		@position={{this.sidenavPosition}}
+
+		@closed={{not @open}}
+
+		@lockedOpen={{this.sidenavLockedOpen}}
+		@closeOnClick={{@closeOnClick}}
+
+		@onToggle={{this.onToggle}}
+		...attributes
+	>
+		{{yield}}
+	</TwyrSidenav::Inner>
+</TwyrSidenav::Container>

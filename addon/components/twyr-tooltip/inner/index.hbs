@@ -1,0 +1,10 @@
+<md-tooltip
+	class="md-tooltip md-panel md-origin-{{@position}}"
+	style={{this.computedStyle}}
+	{{css-transition mdShow=this.show}}
+	{{css-transition mdHide=@hide}}
+	{{did-insert this.didInsert}}
+	...attributes
+>
+	{{yield}}
+</md-tooltip>

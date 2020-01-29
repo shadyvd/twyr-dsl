@@ -1,0 +1,15 @@
+<md-toolbar
+	class="md-default-theme"
+	{{has-class-if @tall "md-tall"}}
+	{{color-themeable
+		accent=@accent
+		primary=@primary
+		secondary=@secondary
+		warn=@warn
+	}}
+	...attributes
+>
+	{{yield (hash
+		Tools=(component this.subComponents.tools)
+	)}}
+</md-toolbar>

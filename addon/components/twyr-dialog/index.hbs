@@ -1,0 +1,28 @@
+<div {{did-insert this.didInsert}}>
+	{{#-in-element this.destinationElem}}
+		<TwyrBackdrop
+			class="md-dialog-backdrop"
+			@isLockedOpen={{@isLockedOpen}}
+			@isOpaque={{this.isOpaque}}
+			@isFixed={{unless @parent true}}
+			@onClick={{this.handleClick}}
+		/>
+
+		<TwyrDialog::Container
+			class={{@dialogContainerClass}}
+			@outsideClicked={{this.handleClick}}
+		>
+			<TwyrDialog::Inner
+				@origin={{@origin}}
+				@defaultedParent={{this.defaultedParent}}
+				@defaultedOpenFrom={{this.defaultedOpenFrom}}
+				@defaultedCloseTo={{this.defaultedCloseTo}}
+				@fullscreen={{@fullscreen}}
+				@focusOnOpen={{this.focusOnOpen}}
+				...attributes
+			>
+				{{yield}}
+			</TwyrDialog::Inner>
+		</TwyrDialog::Container>
+	{{/-in-element}}
+</div>

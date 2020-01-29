@@ -1,0 +1,10 @@
+<md-sidenav
+	class="md-sidenav-{{@position}}"
+	tabindex="-1"
+	{{has-class-if this.isLockedOpen "md-locked-open"}}
+	{{has-class-if @closed "md-closed"}}
+	{{on "click" this.handleClick}}
+	...attributes
+>
+	{{yield}}
+</md-sidenav>

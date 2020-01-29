@@ -1,0 +1,17 @@
+<div {{did-insert this.didInsert}}>
+	{{#if this.renderTooltip}}
+		{{#-in-element this.destinationElem}}
+			<div class="md-panel-outer-wrapper md-panel-is-showing" style={{this.containerStyle}}>
+				<TwyrTooltip::Inner
+					@position={{this.position}}
+					@anchorElement={{this.anchorElement}}
+					@hide={{this.hideTooltip}}
+					@updateHide={{this.updateHideTooltip}}
+					...attributes
+				>
+					{{yield}}
+				</TwyrTooltip::Inner>
+			</div>
+		{{/-in-element}}
+	{{/if}}
+</div>

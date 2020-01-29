@@ -1,0 +1,179 @@
+/* Special case for online code editing */
+.text-monospace {
+	font-family: monospace !important;
+}
+
+/* Wrapping / Truncating / Hiding */
+.text-wrap {
+	white-space: normal !important;
+}
+
+.text-nowrap {
+	white-space: nowrap !important;
+}
+
+.text-truncate {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.text-hide {
+	font: 0/0 a;
+	color: transparent;
+	text-shadow: none;
+	background-color: transparent;
+	border: 0;
+}
+
+.text-decoration-none {
+	text-decoration: none !important;
+}
+
+.text-break {
+	word-break: break-word !important;
+	overflow-wrap: break-word !important;
+}
+
+/* Justifications */
+.text-left {
+	text-align: left !important;
+}
+
+.text-right {
+	text-align: right !important;
+}
+
+.text-center {
+	text-align: center !important;
+}
+
+.text-justify {
+	text-align: justify !important;
+}
+
+/* Transformations */
+.text-lowercase {
+	text-transform: lowercase !important;
+}
+
+.text-uppercase {
+	text-transform: uppercase !important;
+}
+
+.text-capitalize {
+	text-transform: capitalize !important;
+}
+
+/* Text Colors */
+.dark-grey {
+	color: #4f4f4f !important;
+}
+
+.text-mdb-color {
+	color: #45526e !important;
+}
+
+.text-red {
+	color: #f44336 !important;
+}
+
+.text-pink {
+	color: #e91e63 !important;
+}
+
+.text-purple {
+	color: #9c27b0 !important;
+}
+
+.text-deep-purple {
+	color: #673ab7 !important;
+}
+
+.text-indigo {
+	color: #3f51b5 !important;
+}
+
+.text-blue {
+	color: #2196f3 !important;
+}
+
+.text-light-blue {
+	color: #03a9f4 !important;
+}
+
+.text-cyan {
+	color: #00bcd4 !important;
+}
+
+.text-teal {
+	color: #009688 !important;
+}
+
+.text-green {
+	color: #4caf50 !important;
+}
+
+.text-light-green {
+	color: #8bc34a !important;
+}
+
+.text-lime {
+	color: #cddc39 !important;
+}
+
+.text-yellow {
+	color: #ffeb3b !important;
+}
+
+.text-amber {
+	color: #ffc107 !important;
+}
+
+.text-orange {
+	color: #ff9800 !important;
+}
+
+.text-deep-orange {
+	color: #ff5722 !important;
+}
+
+.text-brown {
+	color: #795548 !important;
+}
+
+.text-blue-grey {
+	color: #607d8b !important;
+}
+
+.text-grey {
+	color: #9e9e9e !important;
+}
+
+.text-black {
+	color: #000 !important;
+}
+
+.text-white {
+	color: #fff !important;
+}
+
+.text-primary {
+	color: if(function-exists(paper-color), paper-color($primary), color($primary)) !important;
+}
+
+.text-accent {
+	color: if(function-exists(paper-color), paper-color($accent), color($accent)) !important;
+}
+
+.text-warn {
+	color: if(function-exists(paper-color), paper-color($warn), color($warn)) !important;
+}
+
+.text-light {
+	color: $light-contrast-color !important;
+}
+
+.text-dark {
+	color: $dark-contrast-color !important;
+}

@@ -1,0 +1,18 @@
+<md-dialog
+	class="md-default-theme"
+	style={{this.transformIn}}
+	{{has-class-if @fullscreen "md-dialog-fullscreen"}}
+	{{has-class-if this.contentOverflow "md-content-overflow"}}
+	{{did-insert this.onInsertElement}}
+	{{translate-3d
+		defaultedOpenFrom=@defaultedOpenFrom
+		defaultedCloseTo=@defaultedCloseTo
+		defaultedParent=@defaultedParent
+		origin=@origin
+		onTranslateFromEnd=this.onTranslateFromEnd
+		onTranslateToEnd=this.onTranslateToEnd
+	}}
+	...attributes
+>
+	{{yield}}
+</md-dialog>

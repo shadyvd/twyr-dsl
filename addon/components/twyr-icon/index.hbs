@@ -1,0 +1,17 @@
+<md-icon
+	class="twyr-icon md-font material-icons md-default-theme {{this.spinClass}}"
+	style={{this.sizeStyle}}
+	md-font-icon={{this.iconClass}}
+	aria-hidden="false"
+	aria-label={{iconClass}}
+	{{color-themeable
+		accent=@accent
+		primary=@primary
+		secondary=@secondary
+		warn=@warn
+	}}
+	...attributes
+>
+	{{underscore this.iconClass}}
+	{{yield}}
+</md-icon>

@@ -1,0 +1,10 @@
+<md-card ...attributes>
+	{{yield (hash
+		Actions=(component this.subComponents.actions)
+		Content=(component this.subComponents.content)
+		Header=(component this.subComponents.header)
+		Image=(component this.subComponents.image)
+		Media=(component this.subComponents.media)
+		Title=(component this.subComponents.title)
+	)}}
+</md-card>

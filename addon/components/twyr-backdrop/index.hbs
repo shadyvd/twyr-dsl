@@ -1,0 +1,13 @@
+<md-backdrop
+	class="md-default-theme"
+	style={{this.backdropPosition}}
+	{{css-transition "ng"}}
+	{{has-class-if @isOpaque "md-opaque"}}
+	{{has-class-if @isLockedOpen "md-locked-open"}}
+	{{did-insert this.didInsert}}
+	{{on "click" this.handleClick}}
+	{{on "touchEnd" this.handleClick}}
+	...attributes
+>
+	{{yield}}
+</md-backdrop>

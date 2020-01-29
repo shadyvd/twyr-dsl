@@ -1,0 +1,9 @@
+<md-content
+	class="md-default-theme"
+	{{has-class-if @padding "md-padding"}}
+	layout-padding={{@layoutPadding}}
+	md-scroll-y={{@scrollY}}
+	...attributes
+>
+	{{yield}}
+</md-content>

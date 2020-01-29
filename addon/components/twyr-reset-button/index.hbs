@@ -1,0 +1,36 @@
+<button type="button"
+	class="md-default-theme md-button"
+	{{has-class-if @raised "md-raised"}}
+	{{has-class-if @fab "md-fab"}}
+	{{has-class-if @mini "md-fab" "md-mini"}}
+	{{has-class-if @icon "md-icon-button"}}
+	{{color-themeable
+		accent=@accent
+		primary=@primary
+		secondary=@secondary
+		warn=@warn
+	}}
+	{{is-focusable
+		focusOnlyOnKey=@focusOnlyOnKey
+		onMouseEnter=@onMouseEnter
+		onMouseLeave=@onMouseLeave
+		onMouseDown=@onMouseDown
+		onMouseUp=@onMouseUp
+		onFocusIn=@onFocusIn
+		onFocusOut=@onFocusOut
+	}}
+	{{will-ripple
+		center=@rippleCenter
+		dimBackground=@dimRippleBackground
+		noInk=@noRippleInk
+		inkColor=@rippleInkColor
+	}}
+	{{on "click" this.handleClick}}
+	...attributes
+>
+	{{#if (has-block)}}
+		{{yield}}
+	{{else}}
+		{{@label}}
+	{{/if}}
+</button>

@@ -1,0 +1,66 @@
+{{#if @href}}
+	<a
+		href={{this.isHref}}
+		class="md-tab"
+		style={{this.computedStyle}}
+		aria-selected={{this.isSelected}}
+		disabled={{@disabled}}
+		{{has-class-if this.isSelected "md-active"}}
+		{{is-focusable
+			focusOnlyOnKey=@focusOnlyOnKey
+			onMouseEnter=@onMouseEnter
+			onMouseLeave=@onMouseLeave
+			onMouseDown=@onMouseDown
+			onMouseUp=@onMouseUp
+			onFocusIn=@onFocusIn
+			onFocusOut=@onFocusOut
+		}}
+		{{will-ripple
+			center=@rippleCenter
+			dimBackground=@dimRippleBackground
+			noInk=@noRippleInk
+			inkColor=@rippleInkColor
+		}}
+		{{requires-id}}
+		{{did-insert this.didInsert}}
+		{{on "click" this.handleClick}}
+	>
+		{{#if (has-block)}}
+			{{yield}}
+		{{else}}
+			{{@name}}
+		{{/if}}
+	</a>
+{{else}}
+	<md-tab-item
+		class="md-tab"
+		style={{this.computedStyle}}
+		aria-selected={{this.isSelected}}
+		disabled={{@disabled}}
+		{{has-class-if this.isSelected "md-active"}}
+		{{is-focusable
+			focusOnlyOnKey=@focusOnlyOnKey
+			onMouseEnter=@onMouseEnter
+			onMouseLeave=@onMouseLeave
+			onMouseDown=@onMouseDown
+			onMouseUp=@onMouseUp
+			onFocusIn=@onFocusIn
+			onFocusOut=@onFocusOut
+		}}
+		{{will-ripple
+			center=@rippleCenter
+			dimBackground=@dimRippleBackground
+			noInk=@noRippleInk
+			inkColor=@rippleInkColor
+		}}
+		{{requires-id}}
+		{{did-insert this.didInsert}}
+		{{on "click" this.handleClick}}
+	>
+		{{#if (has-block)}}
+			{{yield}}
+		{{else}}
+			{{@name}}
+		{{/if}}
+	</md-tab-item>
+{{/if}}

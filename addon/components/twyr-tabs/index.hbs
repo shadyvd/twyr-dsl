@@ -1,0 +1,66 @@
+<md-tabs
+	class="md-no-tab-content md-default-theme"
+	md-border-bottom={{@borderBottom}}
+	{{color-themeable
+		accent=@accent
+		primary=@primary
+		secondary=@secondary
+		warn=@warn
+	}}
+	{{is-focusable
+		focusOnlyOnKey=@focusOnlyOnKey
+		onMouseEnter=@onMouseEnter
+		onMouseLeave=@onMouseLeave
+		onMouseDown=@onMouseDown
+		onMouseUp=@onMouseUp
+		onFocusIn=@onFocusIn
+		onFocusOut=@onFocusOut
+	}}
+	{{did-insert this.didInsert}}
+	{{did-update this.didReceiveArgs}}
+	...attributes
+>
+	<md-tabs-wrapper {{has-class-if this.shouldStretch "md-stretch-tabs"}}>
+		{{#if this.shouldPaginate}}
+			<md-prev-button
+				role="button"
+				{{has-class-if (not this.canPageBack) "md-disabled"}}
+				{{on "click" this.previousPage}}
+			>
+				<TwyrIcon @icon="keyboard-arrow-left" />
+			</md-prev-button>
+
+			<md-next-button
+				role="button"
+				{{has-class-if (not this.canPageForward) "md-disabled"}}
+				{{on "click" this.nextPage}}
+			>
+				<TwyrIcon @icon="keyboard-arrow-left" />
+			</md-next-button>
+		{{/if}}
+
+		<md-tabs-canvas
+			tabindex="-1"
+			role="tablist"
+			{{has-class-if this.shouldPaginate "md-paginated"}}
+			{{has-class-if this.shouldCenter "md-center-tabs"}}
+		>
+			<md-pagination-wrapper
+				style={{this.paginationStyle}}
+				{{has-class-if this.shouldCenter "md-center-tabs"}}
+			>
+				{{yield (hash
+					Tab=(component this.subComponents.tab noInk=@noInk selected=this.selectedValue registerWithParent=this.registerChild onSelect=this.onSelectedTabChanged)
+				)}}
+
+				{{#unless @noInkBar}}
+					<TwyrInkBar
+						@movingRight={{this.movingRight}}
+						@left={{this.inkBar.left}}
+						@right={{this.inkBar.right}}
+					/>
+				{{/unless}}
+			</md-pagination-wrapper>
+		</md-tabs-canvas>
+	</md-tabs-wrapper>
+</md-tabs>

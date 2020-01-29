@@ -1,0 +1,7 @@
+{{#if (has-block)}}
+	<div class="md-media-{{this.size}}" ...attributes>
+		{{yield}}
+	</div>
+{{else}}
+	<img class="md-media-{{this.size}}" src={{@src}} alt={{@alt}} title={{@title}} ...attributes />
+{{/if}}
