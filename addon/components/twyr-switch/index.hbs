@@ -1,0 +1,49 @@
+<md-switch
+	class="twyr-switch md-default-theme"
+	{{has-class-if @value "md-checked"}}
+	{{has-class-if this.isDragging "md-dragging"}}
+	{{did-insert this.didInsert}}
+	{{color-themeable
+		accent=@accent
+		primary=@primary
+		secondary=@secondary
+		warn=@warn
+	}}
+	{{is-focusable
+		focusOnlyOnKey=@focusOnlyOnKey
+		onMouseEnter=@onMouseEnter
+		onMouseLeave=@onMouseLeave
+		onMouseDown=@onMouseDown
+		onMouseUp=@onMouseUp
+		onFocusIn=@onFocusIn
+		onFocusOut=@onFocusOut
+	}}
+	{{will-ripple
+		rippleContainerSelector=".md-thumb"
+		center=@rippleCenter
+		dimBackground=@dimRippleBackground
+		noInk=@noRippleInk
+		inkColor=@rippleInkColor
+	}}
+	{{on "keypress" this.handleKeypress}}
+	...attributes
+>
+	<div class="md-switch-bar" />
+
+	<div class="md-container">
+		<div class="md-bar" />
+		<div class="md-thumb-container" style={{this.thumbContainerStyle}}>
+			<div class="md-thumb" />
+		</div>
+	</div>
+
+	{{#if (has-block)}}
+		<div class="md-label">
+			{{yield}}
+		</div>
+	{{else}}
+		<div class="md-label">
+			{{@label}}
+		</div>
+	{{/if}}
+</md-switch>
