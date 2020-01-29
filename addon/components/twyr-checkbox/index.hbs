@@ -1,1 +1,55 @@
-{{yield}}
+<md-checkbox
+	class="md-checkbox md-default-theme"
+	role={{this.role}}
+	aria-label={{@ariaLabel}}
+	aria-checked={{this.ariaChecked}}
+	aria-labelledby={{this.labelId}}
+	{{requires-id}}
+	{{has-class-if this.isChecked "md-checked"}}
+	{{has-class-if @indeterminate "md-indeterminate"}}
+	{{has-class-if @secondary "md-secondary"}}
+	{{did-insert this.didInsert}}
+	{{color-themeable
+		accent=@accent
+		primary=@primary
+		secondary=@secondary
+		warn=@warn
+	}}
+	{{is-focusable
+		focusOnlyOnKey=@focusOnlyOnKey
+		onMouseEnter=@onMouseEnter
+		onMouseLeave=@onMouseLeave
+		onMouseDown=@onMouseDown
+		onMouseUp=@onMouseUp
+		onFocusIn=@onFocusIn
+		onFocusOut=@onFocusOut
+	}}
+	{{will-ripple
+		center=@rippleCenter
+		dimBackground=@dimRippleBackground
+		noInk=@noRippleInk
+		inkColor=@rippleInkColor
+	}}
+	{{on "click" this.handleClick}}
+	{{on "keypress" this.handleKeypress}}
+	...attributes
+>
+	<div class="md-container">
+		<div class="md-icon"></div>
+	</div>
+
+	{{#if (has-block)}}
+		<div class="md-label">
+			<span id={{this.labelId}}>
+				{{yield}}
+			</span>
+		</div>
+	{{else}}
+		<div class="md-label">
+			<span id={{this.labelId}}>
+				{{label}}
+			</span>
+		</div>
+	{{/if}}
+</md-checkbox
+>

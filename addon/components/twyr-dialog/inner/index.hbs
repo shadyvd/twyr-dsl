@@ -3,7 +3,7 @@
 	style={{this.transformIn}}
 	{{has-class-if @fullscreen "md-dialog-fullscreen"}}
 	{{has-class-if this.contentOverflow "md-content-overflow"}}
-	{{did-insert this.onInsertElement}}
+	{{did-insert this.didInsert}}
 	{{translate-3d
 		defaultedOpenFrom=@defaultedOpenFrom
 		defaultedCloseTo=@defaultedCloseTo

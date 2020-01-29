@@ -46,8 +46,10 @@ export default class TwyrTabsTabComponent extends Component {
 	// #region DOM Event Handlers
 	@action
 	handleClick(event) {
-		if(this.args.disabled)
+		if(!this._element || this._element.hasAttribute('disabled')) {
+			this.debug(`handleClick::disabled`);
 			return;
+		}
 
 		if(this.args.onClick && (typeof this.args.onClick === 'function')) {
 			this.debug(`handleClick::onClick::event: `, event);
@@ -80,7 +82,7 @@ export default class TwyrTabsTabComponent extends Component {
 	}
 
 	get isHref() {
-		if(this.args.href && !this.args.disabled)
+		if(this.args.href && this._element && !this._element.hasAttribute('disabled'))
 			return this.args.href;
 
 		return undefined;

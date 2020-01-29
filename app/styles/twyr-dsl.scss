@@ -55,3 +55,7 @@ $font-family: 'Noto Sans', 'Helvetica Neue', sans-serif;
 	left: 0;
 	right: 0;
 }
+
+md-tabs .md-tab[disabled] {
+	cursor: auto;
+}

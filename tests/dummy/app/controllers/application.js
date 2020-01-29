@@ -8,6 +8,7 @@ export default class ApplicationController extends Controller {
 	@tracked isOpaque = true;
 	@tracked isSidenavOpen = true;
 	@tracked showDialogWithParent = false;
+	@tracked checkBoxValue = true;
 
 	debug = debugLogger('application');
 	changeOpaqueInterval = -1;
@@ -46,5 +47,10 @@ export default class ApplicationController extends Controller {
 	changeSelectedTab(newTabValue) {
 		this.debug('changeSelectedTab with tab value: ', newTabValue);
 		this.selectedTabValue = newTabValue;
+	}
+
+	@action
+	changeCheckboxValue(newVal) {
+		this.checkBoxValue = newVal;
 	}
 }

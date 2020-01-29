@@ -23,8 +23,8 @@ export default class TwyrDialogInnerComponent extends Component {
 
 	// #region Lifecycle Hooks
 	@action
-	onInsertElement(element) {
-		this.debug(`onInsertElement`);
+	didInsert(element) {
+		this.debug(`didInsert`);
 		this._element = element;
 		this._checkContentOverflow();
 

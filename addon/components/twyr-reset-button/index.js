@@ -19,9 +19,14 @@ export default class TwyrResetButtonComponent extends Component {
 	@action
 	handleClick(event) {
 		if(this.args.bubbles === false) {
-			this.debug(`stopping click event propagation`, event);
+			this.debug(`handleClick::stopping click event propagation`, event);
 			event.preventDefault();
 			event.stopPropagation();
+		}
+
+		if(this.args.onClick && (typeof this.args.onClick === 'function')) {
+			this.debug(`handleClick::onClick::event: `, event);
+			this.args.onClick(event);
 		}
 
 		if(this.args.onReset && (typeof this.args.onReset === 'function')) {

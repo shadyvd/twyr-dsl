@@ -4,7 +4,7 @@
 		class="md-tab"
 		style={{this.computedStyle}}
 		aria-selected={{this.isSelected}}
-		disabled={{@disabled}}
+		{{requires-id}}
 		{{has-class-if this.isSelected "md-active"}}
 		{{is-focusable
 			focusOnlyOnKey=@focusOnlyOnKey
@@ -21,9 +21,9 @@
 			noInk=@noRippleInk
 			inkColor=@rippleInkColor
 		}}
-		{{requires-id}}
 		{{did-insert this.didInsert}}
 		{{on "click" this.handleClick}}
+		...attributes
 	>
 		{{#if (has-block)}}
 			{{yield}}
@@ -36,7 +36,7 @@
 		class="md-tab"
 		style={{this.computedStyle}}
 		aria-selected={{this.isSelected}}
-		disabled={{@disabled}}
+		{{requires-id}}
 		{{has-class-if this.isSelected "md-active"}}
 		{{is-focusable
 			focusOnlyOnKey=@focusOnlyOnKey
@@ -53,9 +53,9 @@
 			noInk=@noRippleInk
 			inkColor=@rippleInkColor
 		}}
-		{{requires-id}}
 		{{did-insert this.didInsert}}
 		{{on "click" this.handleClick}}
+		...attributes
 	>
 		{{#if (has-block)}}
 			{{yield}}

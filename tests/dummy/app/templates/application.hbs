@@ -25,6 +25,7 @@
 			<Text.Headline class="layout-row layout-align-start-center">
 				<TwyrIcon @icon="all-out" @primary={{true}} @spin={{true}} />
 				<TwyrContent class="ml-2 flex">In-card mixed actions</TwyrContent>
+				<TwyrCheckbox @value={{this.checkBoxValue}} @onChange={{this.changeCheckboxValue}}>A Checkbox</TwyrCheckbox>
 			</Text.Headline>
 			<Text.Subhead>Description</Text.Subhead>
 		</Title.Text>
@@ -53,7 +54,7 @@
 				as |Tabs|
 			>
 				<Tabs.Tab @value="one" @name="Tab One" />
-				<Tabs.Tab @value="two" @name="Page Two (Disabled)" @disabled={{true}} />
+				<Tabs.Tab @value="two" @name="Page Two (Disabled)" disabled />
 				<Tabs.Tab @value="three" @name="Tab Three" />
 			</TwyrTabs>
 			<p class="layout-fill">

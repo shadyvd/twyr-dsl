@@ -28,16 +28,20 @@ export default class TwyrBackdropComponent extends Component {
 	@action
 	handleClick(event) {
 		if(event.srcElement === this._element) {
-			this.debug(`stopping click event propagation`, event);
+			this.debug(`handleClick::stopping event propagation`);
 			event.preventDefault();
 			event.stopPropagation();
 		}
 
-		if(!this.args.onClick) return;
-		if(typeof this.args.onClick !== 'function') return;
+		if(!this._element || this._element.hasAttribute('disabled')) {
+			this.debug(`handleClick::disabled`);
+			return;
+		}
 
-		this.debug(`propagating click with event:`, event);
-		this.args.onClick(event);
+		if(this.args.onClick && (typeof this.args.onClick === 'function')) {
+			this.debug(`handleClick::onClick::event: `, event);
+			this.args.onClick(event);
+		}
 	}
 	// #endregion
 
