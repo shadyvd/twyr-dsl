@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import debugLogger from 'ember-debug-logger';
 
 import { action } from '@ember/object';
+import { nextTick } from 'ember-css-transitions/utils/transition-utils';
 import { htmlSafe } from '@ember/string';
 import { inject as service } from '@ember/service';
 import { isPresent } from '@ember/utils';
@@ -66,6 +67,15 @@ export default class TwyrTabsComponent extends Component {
 
 		this._updateSelectedTab();
 		this._updateCanvasWidth();
+
+		nextTick()
+		.then(() => {
+			if(this.isDestroying || this.isDestroyed)
+				return;
+
+			this._updateSelectedTab();
+			this._updateCanvasWidth();
+		});
 	}
 
 	willDestroy() {
@@ -263,8 +273,11 @@ export default class TwyrTabsComponent extends Component {
 		this._updateSelectedTab();
 		this._updateCanvasWidth();
 
-		// eslint-disable-next-line ember/no-incorrect-calls-with-inline-anonymous-functions
-		scheduleOnce('afterRender', this, () => {
+		nextTick()
+		.then(() => {
+			if(this.isDestroying || this.isDestroyed)
+				return;
+
 			this._updateSelectedTab();
 			this._updateCanvasWidth();
 		});

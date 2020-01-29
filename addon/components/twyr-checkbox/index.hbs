@@ -7,7 +7,6 @@
 	{{requires-id}}
 	{{has-class-if this.isChecked "md-checked"}}
 	{{has-class-if @indeterminate "md-indeterminate"}}
-	{{has-class-if @secondary "md-secondary"}}
 	{{did-insert this.didInsert}}
 	{{color-themeable
 		accent=@accent
@@ -25,6 +24,7 @@
 		onFocusOut=@onFocusOut
 	}}
 	{{will-ripple
+		rippleContainerSelector=@rippleContainerSelector
 		center=@rippleCenter
 		dimBackground=@dimRippleBackground
 		noInk=@noRippleInk

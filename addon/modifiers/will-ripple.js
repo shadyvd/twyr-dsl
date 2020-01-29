@@ -32,7 +32,7 @@ export default class DoesRippleModifier extends Modifier {
 		this.debug(`didInstall: `, this.args);
 
 		// Get the Ripple Element and initialize it
-		this._rippleElement = this.element.querySelector('.md-container') || this.element;
+		this._rippleElement = this.element.querySelector(this.rippleContainerSelector) || this.element;
 		this._rippleElement.classList.add('md-ink-ripple');
 
 		// Create the Ripple container
@@ -304,6 +304,10 @@ export default class DoesRippleModifier extends Modifier {
 
 	get rippleColor() {
 		return this.parseColor(this.rippleInk) || this.parseColor(this.elementColor);
+	}
+
+	get rippleContainerSelector() {
+		return this.args.named.rippleContainerSelector || '.md-container';
 	}
 	// #endregion
 }
