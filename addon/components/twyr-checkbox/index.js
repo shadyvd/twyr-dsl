@@ -86,6 +86,13 @@ export default class TwyrCheckboxComponent extends Component {
 		return this.isChecked ? 'true' : 'false';
 	}
 
+	get focusOnlyOnKey() {
+		if((this.args.focusOnlyOnKey !== null) && (this.args.focusOnlyOnKey !== undefined))
+			return this.args.focusOnlyOnKey;
+
+		return true;
+	}
+
 	get isChecked() {
 		return (!this.args.indeterminate && this.args.value);
 	}

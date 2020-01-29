@@ -3,9 +3,9 @@ import debugLogger from 'ember-debug-logger';
 
 import { action } from '@ember/object';
 
-export default class TwyrButtonComponent extends Component {
+export default class TwyrRadioGroupRadioButtonComponent extends Component {
 	// #region Private Attributes
-	debug = debugLogger('button');
+	debug = debugLogger('radio-group-button');
 
 	_element = null;
 	// #endregion
@@ -55,6 +55,42 @@ export default class TwyrButtonComponent extends Component {
 			this.debug(`handleClick::onClick::event: `, event);
 			this.args.onClick(event);
 		}
+
+		if(this.args.onChange && (typeof this.args.onChange === 'function')) {
+			const radioValue = this.args.toggle ? (this.isChecked ? null : this.args.value) : this.args.value;
+
+			this.debug(`handleClick::onChange::value: `, radioValue);
+			this.args.onChange(radioValue);
+		}
 	}
-	// #region
+	// #endregion
+
+	// #region Computed Properties
+	get ariaChecked() {
+		return this.isChecked ? 'true' : 'false';
+	}
+
+	get focusOnlyOnKey() {
+		if((this.args.focusOnlyOnKey !== null) && (this.args.focusOnlyOnKey !== undefined))
+			return this.args.focusOnlyOnKey;
+
+		return true;
+	}
+
+	get isChecked() {
+		return (this.args.groupValue === this.args.value);
+	}
+
+	get labelId() {
+		if(!this._element)
+			return 'label';
+
+		const elementId = this._element.getAttribute('id');
+		return `${elementId}-label`;
+	}
+
+	get role() {
+		return this.args.role || 'radio';
+	}
+	// #endregion
 }

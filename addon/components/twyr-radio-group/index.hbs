@@ -1,0 +1,17 @@
+<md-radio-group
+	role={{this.role}}
+	aria-labelledby={{this.ariaLabelledBy}}
+>
+	{{yield (hash
+		Label=(component this.subComponents.label
+			setAriaLabelledby=this.setAriaLabelledby
+		)
+		RadioButton=(component this.subComponents.radio
+			toggle=toggle
+			disabled=disabled
+			groupValue=groupValue
+			registerWithParent=this.registerChild
+			onChange=this.onChange
+		)
+	)}}
+</md-radio-group>

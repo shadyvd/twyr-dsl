@@ -1,12 +1,10 @@
-<md-checkbox
-	class="md-checkbox md-default-theme"
+<md-radio-button
+	class="md-default-theme"
 	role={{this.role}}
 	aria-checked={{this.ariaChecked}}
 	aria-label={{@ariaLabel}}
 	aria-labelledby={{this.labelId}}
-	{{requires-id}}
 	{{has-class-if this.isChecked "md-checked"}}
-	{{has-class-if @indeterminate "md-indeterminate"}}
 	{{has-class-if @secondary "md-secondary"}}
 	{{did-insert this.didInsert}}
 	{{color-themeable
@@ -31,25 +29,24 @@
 		inkColor=@rippleInkColor
 	}}
 	{{on "click" this.handleClick}}
-	{{on "keypress" this.handleKeypress}}
 	...attributes
 >
 	<div class="md-container">
-		<div class="md-icon"></div>
+		<div class="md-off" />
+		<div class="md-on" />
 	</div>
 
 	{{#if (has-block)}}
 		<div class="md-label">
-			<span id={{this.labelId}}>
+			<span>
 				{{yield}}
 			</span>
 		</div>
 	{{else}}
 		<div class="md-label">
-			<span id={{this.labelId}}>
+			<span>
 				{{@label}}
 			</span>
 		</div>
 	{{/if}}
-</md-checkbox
->
+</md-radio-button>

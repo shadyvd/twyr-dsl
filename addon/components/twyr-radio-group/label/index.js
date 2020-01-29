@@ -3,11 +3,9 @@ import debugLogger from 'ember-debug-logger';
 
 import { action } from '@ember/object';
 
-export default class TwyrButtonComponent extends Component {
+export default class TwyrRadioGroupLabelComponent extends Component {
 	// #region Private Attributes
-	debug = debugLogger('button');
-
-	_element = null;
+	debug = debugLogger('radio-group-label');
 	// #endregion
 
 	// #region Constructor
@@ -25,6 +23,9 @@ export default class TwyrButtonComponent extends Component {
 
 		if(this.args.registerWithParent && (typeof this.args.registerWithParent === 'function'))
 			this.args.registerWithParent(this, true);
+
+		if(this.args.setAriaLabelledby && (typeof this.args.setAriaLabelledby === 'function'))
+			this.args.setAriaLabelledby(element.getAttribute('id'));
 	}
 
 	willDestroy() {
@@ -36,25 +37,4 @@ export default class TwyrButtonComponent extends Component {
 		super.willDestroy(...arguments);
 	}
 	// #endregion
-
-	// #region DOM Event Handlers
-	@action
-	handleClick(event) {
-		if(this.args.bubbles === false) {
-			this.debug(`handleClick::stopping click event propagation`, event);
-			event.preventDefault();
-			event.stopPropagation();
-		}
-
-		if(!this._element || this._element.hasAttribute('disabled')) {
-			this.debug(`handleClick::disabled`);
-			return;
-		}
-
-		if(this.args.onClick && (typeof this.args.onClick === 'function')) {
-			this.debug(`handleClick::onClick::event: `, event);
-			this.args.onClick(event);
-		}
-	}
-	// #region
 }
