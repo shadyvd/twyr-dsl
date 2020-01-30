@@ -5,7 +5,7 @@ import { action } from '@ember/object';
 
 export default class TwyrResetButtonComponent extends Component {
 	// #region Private Attributes
-	debug = debugLogger('reset-button');
+	debug = debugLogger('twyr-reset-button');
 
 	_element = null;
 	// #endregion

@@ -3,7 +3,7 @@ import debugLogger from 'ember-debug-logger';
 
 export default class HasClassIfModifier extends Modifier {
 	// #region Private Attributes
-	debug = debugLogger('has-class-if-modifier');
+	debug = debugLogger('twyr-has-class-if-modifier');
 	// #endregion
 
 	// #region Constructor

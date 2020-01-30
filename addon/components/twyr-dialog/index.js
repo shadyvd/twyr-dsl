@@ -6,7 +6,7 @@ import { isPresent } from '@ember/utils';
 
 export default class TwyrDialogComponent extends Component {
 	// #region Private Attributes
-	debug = debugLogger('dialog');
+	debug = debugLogger('twyr-dialog');
 	_element = null;
 	// #endregion
 

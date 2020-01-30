@@ -3,7 +3,7 @@ import debugLogger from 'ember-debug-logger';
 
 export default class TwyrCardMediaComponent extends Component {
 	// #region Private Attributes
-	debug = debugLogger('card-media');
+	debug = debugLogger('twyr-card-media');
 	// #endregion
 
 	// #region Constructor

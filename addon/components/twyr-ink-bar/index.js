@@ -5,7 +5,7 @@ import { htmlSafe } from '@ember/string';
 
 export default class TwyrInkBarComponent extends Component {
 	// #region Private Attributes
-	debug = debugLogger('inkbar');
+	debug = debugLogger('twyr-inkbar');
 	// #endregion
 
 	// #region Constructor

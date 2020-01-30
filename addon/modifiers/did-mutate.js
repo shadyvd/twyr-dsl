@@ -5,7 +5,7 @@ import { isPresent } from '@ember/utils';
 
 export default class DidMutateModifier extends Modifier {
 	// #region Private Attributes
-	debug = debugLogger('did-mutate-modifier');
+	debug = debugLogger('twyr-did-mutate-modifier');
 
 	_observer = null;
 	// #endregion

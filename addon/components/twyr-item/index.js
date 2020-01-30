@@ -9,7 +9,7 @@ export default class TwyrItemComponent extends Component {
 	// #region Private Attributes
 	debug = debugLogger('twyr-item');
 
-	@tracked _childElements = [];
+	_childElements = [];
 	// #endregion
 
 	// #region Tracked Attributes

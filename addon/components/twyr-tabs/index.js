@@ -15,7 +15,7 @@ export default class TwyrTabsComponent extends Component {
 	// #endregion
 
 	// #region Private Attributes
-	debug = debugLogger('tabs');
+	debug = debugLogger('twyr-tabs');
 
 	_element = null;
 	_childElements = [];

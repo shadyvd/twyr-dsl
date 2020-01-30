@@ -5,7 +5,7 @@ import { action } from '@ember/object';
 
 export default class TwyrDialogContainerComponent extends Component {
 	// #region Private Attributes
-	debug = debugLogger('dialog-container');
+	debug = debugLogger('twyr-dialog-container');
 	_element = null;
 	// #endregion
 

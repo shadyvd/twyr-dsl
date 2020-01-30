@@ -12,7 +12,7 @@ export default class TwyrSwitchComponent extends Component {
 	// #endregion
 
 	// #region Private Attributes
-	debug = debugLogger('switch');
+	debug = debugLogger('twyr-switch');
 
 	_element = null;
 

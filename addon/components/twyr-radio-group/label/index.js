@@ -5,7 +5,7 @@ import { action } from '@ember/object';
 
 export default class TwyrRadioGroupLabelComponent extends Component {
 	// #region Private Attributes
-	debug = debugLogger('radio-group-label');
+	debug = debugLogger('twyr-radio-group-label');
 	// #endregion
 
 	// #region Constructor

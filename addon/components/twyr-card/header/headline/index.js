@@ -3,7 +3,7 @@ import debugLogger from 'ember-debug-logger';
 
 export default class TwyrCardHeaderHeadlineComponent extends Component {
 	// #region Private Attributes
-	debug = debugLogger('card-header-headline');
+	debug = debugLogger('twyr-card-header-headline');
 	// #endregion
 
 	// #region Constructor

@@ -3,7 +3,7 @@ import debugLogger from 'ember-debug-logger';
 
 export default class ThemeColorModifier extends Modifier {
 	// #region Private Attributes
-	debug = debugLogger('color-themeable-modifier');
+	debug = debugLogger('twyr-color-themeable-modifier');
 	// #endregion
 
 	// #region Constructor

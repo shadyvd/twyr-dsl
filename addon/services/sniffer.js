@@ -3,7 +3,7 @@ import debugLogger from 'ember-debug-logger';
 
 export default class SnifferService extends Service {
 	// #region Private Attributes
-	debug = debugLogger('sniffer service');
+	debug = debugLogger('twyr-sniffer-service');
 
 	animations = false;
 	transitions = false;

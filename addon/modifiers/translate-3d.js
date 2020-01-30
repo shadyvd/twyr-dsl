@@ -8,7 +8,7 @@ import { scheduleOnce } from '@ember/runloop';
 
 export default class Translate3dModifier extends Modifier {
 	// #region Private Attributes
-	debug = debugLogger('translate-3d-modifier');
+	debug = debugLogger('twyr-translate-3d-modifier');
 	// #endregion
 
 	// #region Constructor

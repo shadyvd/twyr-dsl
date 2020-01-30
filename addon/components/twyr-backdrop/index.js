@@ -6,7 +6,7 @@ import { htmlSafe } from '@ember/string';
 
 export default class TwyrBackdropComponent extends Component {
 	// #region Private Attributes
-	debug = debugLogger('backdrop');
+	debug = debugLogger('twyr-backdrop');
 	_element = null;
 	// #endregion
 

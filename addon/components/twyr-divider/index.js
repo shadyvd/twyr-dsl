@@ -3,7 +3,7 @@ import debugLogger from 'ember-debug-logger';
 
 export default class TwyrDividerComponent extends Component {
 	// #region Private Attributes
-	debug = debugLogger('divider');
+	debug = debugLogger('twyr-divider');
 	// #endregion
 
 	// #region Constructor

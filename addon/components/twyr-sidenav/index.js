@@ -5,7 +5,7 @@ import { action } from '@ember/object';
 
 export default class TwyrSidenavComponent extends Component {
 	// #region Private Attributes
-	debug = debugLogger('sidenav');
+	debug = debugLogger('twyr-sidenav');
 	// #endregion
 
 	// #region Constructor

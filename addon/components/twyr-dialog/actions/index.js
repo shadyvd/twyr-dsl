@@ -3,7 +3,7 @@ import debugLogger from 'ember-debug-logger';
 
 export default class TwyrDialogActionsComponent extends Component {
 	// #region Private Attributes
-	debug = debugLogger('dialog-actions');
+	debug = debugLogger('twyr-dialog-actions');
 	// #endregion
 
 	// #region Constructor

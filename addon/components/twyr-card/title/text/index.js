@@ -3,7 +3,7 @@ import debugLogger from 'ember-debug-logger';
 
 export default class TwyrCardTitleTextComponent extends Component {
 	// #region Private Attributes
-	debug = debugLogger('card-title-text');
+	debug = debugLogger('twyr-card-title-text');
 	// #endregion
 
 	// #region Yielded Sub-components

@@ -3,7 +3,7 @@ import debugLogger from 'ember-debug-logger';
 
 export default class TwyrToolbarToolsComponent extends Component {
 	// #region Private Attributes
-	debug = debugLogger('toolbar-tools');
+	debug = debugLogger('twyr-toolbar-tools');
 	// #endregion
 
 	// #region Constructor

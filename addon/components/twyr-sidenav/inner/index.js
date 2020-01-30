@@ -12,7 +12,7 @@ export default class TwyrSidenavInnerComponent extends Component {
 	// #endregion
 
 	// #region Private Attributes
-	debug = debugLogger('sidenav-inner');
+	debug = debugLogger('twyr-sidenav-inner');
 	// #endregion
 
 	// #region Constructor

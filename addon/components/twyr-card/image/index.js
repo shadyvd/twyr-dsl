@@ -3,7 +3,7 @@ import debugLogger from 'ember-debug-logger';
 
 export default class TwyrCardImageComponent extends Component {
 	// #region Private Attributes
-	debug = debugLogger('card-image');
+	debug = debugLogger('twyr-card-image');
 	// #endregion
 
 	// #region Constructor

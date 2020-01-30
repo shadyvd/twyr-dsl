@@ -3,7 +3,7 @@ import debugLogger from 'ember-debug-logger';
 
 export default class TwyrCardActionsComponent extends Component {
 	// #region Private Attributes
-	debug = debugLogger('card-actions');
+	debug = debugLogger('twyr-card-actions');
 	// #endregion
 
 	// #region Yielded Sub-components

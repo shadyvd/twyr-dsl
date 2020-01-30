@@ -3,7 +3,7 @@ import debugLogger from 'ember-debug-logger';
 
 export default class TwyrSubheaderComponent extends Component {
 	// #region Private Attributes
-	debug = debugLogger('subheader');
+	debug = debugLogger('twyr-subheader');
 	// #endregion
 
 	// #region Constructor

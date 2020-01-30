@@ -3,7 +3,7 @@ import debugLogger from 'ember-debug-logger';
 
 export default class TwyrSidenavService extends Service {
 	// #region Private Attributes
-	debug = debugLogger('sidenav service');
+	debug = debugLogger('twyr-sidenav-service');
 
 	_sidenavs = {};
 	// #endregion

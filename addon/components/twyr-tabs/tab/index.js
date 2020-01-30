@@ -7,7 +7,7 @@ import { tracked } from '@glimmer/tracking';
 
 export default class TwyrTabsTabComponent extends Component {
 	// #region Private Attributes
-	debug = debugLogger('tabs-tab');
+	debug = debugLogger('twyr-tabs-tab');
 	_element = null;
 	// #endregion
 

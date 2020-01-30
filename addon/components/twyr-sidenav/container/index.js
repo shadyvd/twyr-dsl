@@ -3,7 +3,7 @@ import debugLogger from 'ember-debug-logger';
 
 export default class TwyrSidenavContainerComponent extends Component {
 	// #region Private Attributes
-	debug = debugLogger('sidenav-container');
+	debug = debugLogger('twyr-sidenav-container');
 	// #endregion
 
 	// #region Constructor

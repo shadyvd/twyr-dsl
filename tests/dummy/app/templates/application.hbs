@@ -133,8 +133,9 @@
 			</Toolbar.Tools>
 		</TwyrToolbar>
 
-		<TwyrDialog::Content class="px-0 pt-1">
+		<TwyrDialog::Content class="layout-column layout-align-start-stretch">
 			<TwyrSubheader>This is a dialog rendered into a specific element. Clicking outside the dialog will close it.</TwyrSubheader>
+			<TwyrInput @class="flex" @label="Name" @placeholder="Enter name" @warn={{true}} @maxLength={{24}} @value={{this.selectedTabValue}} @onChange={{this.changeSelectedTab}} />
 		</TwyrDialog::Content>
 
 		<TwyrDialog::Actions class="layout-row">

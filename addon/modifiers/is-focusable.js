@@ -5,7 +5,7 @@ import { action } from '@ember/object';
 
 export default class FocusableModifier extends Modifier {
 	// #region Private Attributes
-	debug = debugLogger('is-focusable-modifier');
+	debug = debugLogger('twyr-is-focusable-modifier');
 	// #endregion
 
 	// #region Constructor

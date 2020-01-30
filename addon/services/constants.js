@@ -3,7 +3,7 @@ import debugLogger from 'ember-debug-logger';
 
 export default class ConstantsService extends Service {
 	// #region Private Attributes
-	debug = debugLogger('constants service');
+	debug = debugLogger('twyr-constants-service');
 
 	@service sniffer;
 	// #endregion

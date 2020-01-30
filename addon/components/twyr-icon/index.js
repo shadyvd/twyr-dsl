@@ -5,7 +5,7 @@ import { htmlSafe } from '@ember/string';
 
 export default class TwyrIconComponent extends Component {
 	// #region Private Attributes
-	debug = debugLogger('icon');
+	debug = debugLogger('twyr-icon');
 	// #endregion
 
 	// #region Constructor

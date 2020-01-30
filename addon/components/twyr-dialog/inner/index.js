@@ -6,7 +6,7 @@ import { tracked } from '@glimmer/tracking';
 
 export default class TwyrDialogInnerComponent extends Component {
 	// #region Private Attributes
-	debug = debugLogger('dialog-inner');
+	debug = debugLogger('twyr-dialog-inner');
 	_element = null;
 	// #endregion
 

@@ -9,7 +9,7 @@ import { tracked } from '@glimmer/tracking';
 
 export default class TwyrTooltipInnerComponent extends Component {
 	// #region Private Attributes
-	debug = debugLogger('tooltip-inner');
+	debug = debugLogger('twyr-tooltip-inner');
 	// #endregion
 
 	// #region Tracked Attributes
