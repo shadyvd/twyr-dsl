@@ -1,0 +1,147 @@
+<md-input-container
+	class="md-default-theme"
+	{{requires-id}}
+	{{has-class-if this.hasValue "md-input-has-value"}}
+	{{has-class-if this.isInputFocused "md-input-focused"}}
+	{{has-class-if this.isInvalidAndTouched "md-input-invalid"}}
+	{{has-class-if @icon "md-icon-left"}}
+	{{has-class-if @iconRight "md-icon-right"}}
+	{{has-class-if (has-block) "md-block"}}
+	{{has-class-if @placeholder "md-input-has-placeholder"}}
+	{{did-insert this.didInsert}}
+	{{did-update this.didReceiveArgs @value @errors}}
+	{{did-mutate onMutate=this.didMutate attributeFilter=(array "class")}}
+	{{color-themeable
+		accent=@accent
+		primary=@primary
+		secondary=@secondary
+		warn=@warn
+	}}
+	{{is-focusable
+		focusOnlyOnKey=@focusOnlyOnKey
+		onMouseEnter=@onMouseEnter
+		onMouseLeave=@onMouseLeave
+		onMouseDown=@onMouseDown
+		onMouseUp=@onMouseUp
+		onFocusIn=@onFocusIn
+		onFocusOut=@onFocusOut
+	}}
+>
+	{{#if @label}}
+		<label for={{this.inputElementId}} class={{if this.isRequired "md-required"}}>
+			{{@label}}
+		</label>
+	{{/if}}
+
+	{{#if @icon}}
+		{{component this.iconComponent @icon}}
+	{{/if}}
+
+	{{#if @textarea}}
+		<textarea
+			id={{this.inputElementId}}
+			class="md-input {{if this.isInvalid "ng-invalid"}} {{if this.isTouched "ng-dirty"}}"
+			placeholder={{if this.shouldShowPlaceholder @placeholder}}
+			aria-describedby={{concat this.elementId "-char-count " this.elementId "-error-messages"}}
+			name={{or @name @passThru.name}}
+			rows={{or @rows @passThru.rows}}
+			cols={{or @cols @passThru.cols}}
+			maxlength={{this.maxLength}}
+			tabindex={{or @tabindex @passThru.tabindex "0"}}
+			title={{@title}}
+			required={{this.isRequired}}
+			selectionEnd={{or @selectionEnd @passThru.selectionEnd}}
+			selectionStart={{or @selectionStart @passThru.selectionStart}}
+			selectionDirection={{or @selectionDirection @passThru.selectionDirection}}
+			wrap={{or @wrap @passThru.wrap}}
+			readonly={{or @readonly @passThru.readonly}}
+			form={{or @form @passThru.form}}
+			spellcheck={{or @spellcheck @passThru.spellcheck}}
+			{{on "blur" this.handleBlur}}
+			{{on "click" this.handleClick}}
+			{{on "focus" this.handleFocus}}
+			{{on "input" this.handleInput}}
+			{{on "keydown" this.handleKeydown}}
+			{{on "keyup" this.handleKeyup}}
+			...attributes
+		>
+		</textarea>
+	{{else}}
+		<input
+			id={{this.inputElementId}}
+			class="md-input {{if this.isInvalid "ng-invalid"}}  {{if this.isTouched "ng-dirty"}}"
+			placeholder={{if this.shouldShowPlaceholder @placeholder}}
+			aria-describedby={{concat this.elementId "-char-count " this.elementId "-error-messages"}}
+			accept={{or @accept @passThru.accept}}
+			autocomplete={{or @autocomplete @passThru.autocomplete}}
+			autocorrect={{or @autocorrect @passThru.autocorrect}}
+			autocapitalize={{or @autocapitalize @passThru.autocapitalize}}
+			autosave={{or @autosave @passThru.autosave}}
+			form={{or @form @passThru.form}}
+			formaction={{or @formaction @passThru.formaction}}
+			formenctype={{or @formenctype @passThru.formenctype}}
+			formmethod={{or @formmethod @passThru.formmethod}}
+			formnovalidate={{or @formnovalidate @passThru.formnovalidate}}
+			formtarget={{or @formtarget @passThru.formtarget}}
+			height={{or @height @passThru.height}}
+			inputmode={{or @inputmode @passThru.inputmode}}
+			min={{or @min @passThru.min}}
+			maxlength={{this.maxLength}}
+			max={{or @max @passThru.max}}
+			multiple={{or @multiple @passThru.multiple}}
+			name={{or @name @passThru.name}}
+			pattern={{or @pattern @passThru.pattern}}
+			readonly={{or @readonly @passThru.readonly}}
+			required={{this.isRequired}}
+			selectionDirection={{or @selectionDirection @passThru.selectionDirection}}
+			size={{or @size @passThru.size}}
+			spellcheck={{or @spellcheck @passThru.spellcheck}}
+			step={{or @step @passThru.step}}
+			tabindex={{or @tabindex @passThru.tabindex "0"}}
+			title={{@title}}
+			width={{or @width @passThru.width}}
+			{{on "blur" this.handleBlur}}
+			{{on "click" this.handleClick}}
+			{{on "focus" this.handleFocus}}
+			{{on "input" this.handleInput}}
+			{{on "keydown" this.handleKeydown}}
+			{{on "keyup" this.handleKeyup}}
+			...attributes
+		/>
+	{{/if}}
+
+	{{#unless @hideAllMessages}}
+		<div class="md-errors-spacer" id={{concat this.elementId "-char-count"}}>
+			{{#if this.maxLength}}
+				<div class="md-char-counter">{{this.characterCountDisplay}}</div>
+			{{/if}}
+		</div>
+
+		{{#if this.isInvalidAndTouched}}
+			<div class="md-input-messages-animation md-auto-hide" id={{concat this.elementId "-error-messages"}}>
+				{{#each @validationErrorMessages as |error index|}}
+					<div
+						id="error-{{this.inputElementId}}-{{index}}"
+						class="paper-input-error ng-enter ng-enter-active md-input-message-animation"
+						style="opacity: 1; margin-top: 0"
+					>
+						{{error.message}}
+					</div>
+				{{/each}}
+			</div>
+		{{/if}}
+	{{/unless}}
+
+	{{yield (hash
+		charCount=this.currentLength
+		isInvalid=this.isInvalid
+		isTouched=this.isTouched
+		isInvalidAndTouched=this.isInvalidAndTouched
+		hasValue=this.hasValue
+		validationErrorMessages=@validationErrorMessages
+	)}}
+
+	{{#if @iconRight}}
+		{{component this.iconComponent @iconRight}}
+	{{/if}}
+</md-input-container>
