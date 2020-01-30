@@ -1,8 +1,11 @@
 <md-switch
 	class="twyr-switch md-default-theme"
+	role={{this.role}}
+	aria-checked={{this.ariaChecked}}
 	{{has-class-if @value "md-checked"}}
 	{{has-class-if this.isDragging "md-dragging"}}
 	{{did-insert this.didInsert}}
+	{{did-mutate onMutate=this.didMutate}}
 	{{color-themeable
 		accent=@accent
 		primary=@primary

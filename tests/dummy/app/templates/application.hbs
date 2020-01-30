@@ -80,6 +80,9 @@
 			<Group.Button @value="Mango" disabled>Mango</Group.Button>
 		</TwyrRadioGroup>
 		<TwyrCheckbox class="mb-0" @value={{this.checkBoxValue}} @onChange={{this.changeCheckboxValue}}>A Checkbox</TwyrCheckbox>
+		<TwyrSwitch @value={{this.checkBoxValue}} @onChange={{this.changeCheckboxValue}} disabled={{this.isOpaque}}>
+			{{this.checkBoxValue}}
+		</TwyrSwitch>
 	</Card.Actions>
 </TwyrCard>
 

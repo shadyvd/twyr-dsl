@@ -18,9 +18,9 @@ export default class ApplicationController extends Controller {
 
 	constructor() {
 		super(...arguments);
-		// this.changeOpaqueInterval = setInterval(() => {
-		// 	this.isOpaque = !this.isOpaque;
-		// }, 10000);
+		this.changeOpaqueInterval = setInterval(() => {
+			this.isOpaque = !this.isOpaque;
+		}, 10000);
 	}
 
 	@action
