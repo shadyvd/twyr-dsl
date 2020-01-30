@@ -56,10 +56,48 @@
 				<Tabs.Tab @value="two" @name="Page Two (Disabled)" disabled />
 				<Tabs.Tab @value="three" @name="Tab Three" />
 			</TwyrTabs>
-			<p class="layout-fill">
-			The titles of Washed Out's breakthrough song and the first single from Paracosm share the
-			two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-			</p>
+			<TwyrList>
+				<TwyrItem
+					as |Controls|
+				>
+					<p>Click anywhere to fire the primary action, or the controls to fire the secondary</p>
+					<div class="md-secondary-container">
+						<Controls.Button @accent={{true}} @raised={{true}} @onClick={{this.onReset}}>
+							Action 2
+						</Controls.Button>
+					</div>
+				</TwyrItem>
+
+				<TwyrItem
+					@onClick={{this.onItemClicked}}
+					as |Controls|
+				>
+					<p>Click anywhere to fire the primary action, or the controls to fire the secondary</p>
+					<div class="md-secondary-container">
+						<Controls.Checkbox class="mb-0" @value={{this.checkBoxValue}} @onChange={{this.changeCheckboxValue}}></Controls.Checkbox>
+					</div>
+				</TwyrItem>
+
+				<TwyrItem as |Controls|>
+					<p>Click anywhere to fire the primary action, or the controls to fire the secondary</p>
+					<div class="md-secondary-container">
+						<Controls.Switch @value={{this.checkBoxValue}} @onChange={{this.changeCheckboxValue}} disabled={{this.isOpaque}}>
+							{{this.checkBoxValue}}
+						</Controls.Switch>
+					</div>
+				</TwyrItem>
+
+				<TwyrItem as |Controls|>
+					<p>Click anywhere to fire the primary action, or the controls to fire the secondary</p>
+					<div class="md-secondary-container">
+						<Controls.RadioGroup class="flex layout-row layout-align-end-center px-4" @groupValue={{this.selectedFruit}} @onChange={{this.changeSelectedFruit}} as |Group|>
+							<Group.Button @value="Apple" @primary={{true}}>Apple</Group.Button>
+							<Group.Button @value="Banana" @warn={{true}}>Banana</Group.Button>
+							<Group.Button @value="Mango" disabled>Mango</Group.Button>
+						</Controls.RadioGroup>
+					</div>
+				</TwyrItem>
+			</TwyrList>
 		</div>
 	</Card.Content>
 	<TwyrDivider />
@@ -71,18 +109,6 @@
 				Will open a TwyrDialog!
 			</TwyrTooltip>
 		</TwyrButton>
-		<TwyrButton @accent={{true}} @raised={{true}} @onClick={{this.onReset}}>
-			Action 2
-		</TwyrButton>
-		<TwyrRadioGroup class="flex layout-row layout-align-end-center px-4" @groupValue={{this.selectedFruit}} @onChange={{this.changeSelectedFruit}} as |Group|>
-			<Group.Button @value="Apple" @primary={{true}}>Apple</Group.Button>
-			<Group.Button @value="Banana" @warn={{true}}>Banana</Group.Button>
-			<Group.Button @value="Mango" disabled>Mango</Group.Button>
-		</TwyrRadioGroup>
-		<TwyrCheckbox class="mb-0" @value={{this.checkBoxValue}} @onChange={{this.changeCheckboxValue}}>A Checkbox</TwyrCheckbox>
-		<TwyrSwitch @value={{this.checkBoxValue}} @onChange={{this.changeCheckboxValue}} disabled={{this.isOpaque}}>
-			{{this.checkBoxValue}}
-		</TwyrSwitch>
 	</Card.Actions>
 </TwyrCard>
 

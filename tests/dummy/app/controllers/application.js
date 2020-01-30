@@ -60,4 +60,9 @@ export default class ApplicationController extends Controller {
 		this.debug('changeSelectedFruit: ', newFruit);
 		this.selectedFruit = newFruit;
 	}
+
+	@action
+	onItemClicked() {
+		this.debug('onItemClicked: howdy?');
+	}
 }

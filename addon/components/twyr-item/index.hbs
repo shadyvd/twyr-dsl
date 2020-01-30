@@ -1,0 +1,48 @@
+<md-list-item
+	role={{this.role}}
+	tabindex={{this.tabindex}}
+	title={{@title}}
+	{{has-class-if this.hasChildComponents "md-proxy-focus"}}
+	{{has-class-if this.hasPrimaryAction "_md-button-wrap"}}
+	{{has-class-if this.focused "md-focused"}}
+	{{has-class-if this.shouldBeClickable "md-clickable"}}
+	{{will-ripple
+		rippleContainerSelector=".md-no-style"
+		center=false
+		dimBackground=true
+		fitRipple=@fitRipple
+		inkColor=@rippleInkColor
+		noInk=this.noRippleInk
+	}}
+	{{on "click" this.handleClick}}
+	{{on "focusin" this.handleFocusIn}}
+	{{on "focusout" this.handleFocusOut}}
+	...attributes
+>
+	{{#with (hash
+		Button=(component this.subComponents.button registerWithParent=this.registerChild bubbles=false skipProxy=true)
+		Checkbox=(component this.subComponents.checkbox registerWithParent=this.registerChild bubbles=false)
+		RadioGroup=(component this.subComponents.radioGroup registerWithParent=this.registerChild bubbles=false)
+		Switch=(component this.subComponents.switch registerWithParent=this.registerChild bubbles=false)
+	) as |Controls|}}
+		{{#if this.hasPrimaryAction}}
+			<div class="md-button md-no-style">
+				<TwyrButton
+					class="md-no-style"
+					@href={{@href}}
+					target={{@target}}
+					{{on "click" this.handlePrimaryAction}}
+					{{on "mouseenter" this.handleMouseEnter}}
+					{{on "mouseleave" this.handleMouseLeave}}
+				/>
+				<div class="md-list-item-inner">
+					{{yield Controls}}
+				</div>
+			</div>
+		{{else}}
+			<div class="md-no-style md-list-item-inner">
+				{{yield Controls}}
+			</div>
+		{{/if}}
+	{{/with}}
+</md-list-item>
