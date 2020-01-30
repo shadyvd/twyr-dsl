@@ -122,6 +122,66 @@ export default class DoesRippleModifier extends Modifier {
 	}
 	// #endregion
 
+	// #region Computed Properties
+	get fitRipple() {
+		if((this.args.named.fitRipple !== null) && (this.args.named.fitRipple !== undefined)) {
+			this.debug(`fitRipple: `, this.args.named.fitRipple);
+			return this.args.named.fitRipple;
+		}
+
+		this.debug(`fitRipple: false`);
+		return false;
+	}
+
+	get isRippleAllowed() {
+		if(this.rippleInk === false) {
+			this.debug(`isRippleAllowed::rippleInk: false`);
+			return false;
+		}
+
+		let element = this._rippleElement;
+		do {
+			if(!element.tagName || (element.tagName.toUpperCase() === 'BODY'))
+				break;
+
+			if(element.hasAttribute('disabled')) {
+				this.debug(`isRippleAllowed::element::disabled: false`);
+				return false;
+			}
+
+			element = element.parentNode;
+		} while(element);
+
+		this.debug(`isRippleAllowed: true`);
+		return true;
+	}
+
+	get rippleInk() {
+		if(this.args.named.noInk === true) {
+			this.debug(`rippleInk: false`);
+			return false;
+		}
+
+		this.debug(`rippleInk: ${this.args.named.inkColor || ''}`);
+		return (this.args.named.inkColor || '');
+	}
+
+	get elementColor() {
+		this.debug(`elementColor: ${window.getComputedStyle(this._rippleElement).color || 'rgb(0,0,0)'}`);
+		return (window.getComputedStyle(this._rippleElement).color || 'rgb(0,0,0)');
+	}
+
+	get rippleColor() {
+		this.debug(`rippleColor: ${this.parseColor(this.rippleInk) || this.parseColor(this.elementColor)}`);
+		return (this.parseColor(this.rippleInk) || this.parseColor(this.elementColor));
+	}
+
+	get rippleContainerSelector() {
+		this.debug(`rippleContainerSelector: ${this.args.named.rippleContainerSelector || '.md-container'}`);
+		return (this.args.named.rippleContainerSelector || '.md-container');
+	}
+	// #endregion
+
 	// #region Ripple Management Private Methods
 	clearRipples() {
 		for(let idx = 0; idx < this._ripples.length; idx++) {
@@ -149,7 +209,7 @@ export default class DoesRippleModifier extends Modifier {
 		const x = Math.max(Math.abs(width - left), left) * 2;
 		const y = Math.max(Math.abs(height - top), top) * 2;
 
-		const size = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+		const size = this.fitRipple ? Math.max(x, y) : Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
 		const color = this.rippleColor;
 
 		const rippleCss = `
@@ -239,6 +299,7 @@ export default class DoesRippleModifier extends Modifier {
 	}
 
 	parseColor(color) {
+		this.debug(`parseColor: ${color}`);
 		if(!color) return;
 
 		function hexToRGBA(color) {
@@ -257,57 +318,23 @@ export default class DoesRippleModifier extends Modifier {
 		}
 
 		if(color.indexOf('rgba') === 0) {
-			return color.replace(/\d?\.?\d*\s*\)\s*$/, `0.1`);
+			this.debug(`parseColor::rgba: ${color.replace(/\d?\.?\d*\s*\)\s*$/, `0.1)`)}`);
+			return color.replace(/\d?\.?\d*\s*\)\s*$/, `0.1)`);
 		}
 
 		if(color.indexOf('rgb') === 0) {
+			this.debug(`parseColor::rgb: ${color.replace(')', ', 0.1)').replace('(', 'a(')}`);
 			return color.replace(')', ', 0.1)').replace('(', 'a(');
 		}
 
 		if(color.indexOf('#') === 0) {
-			return hexToRGBA(color);
+			const rgbaColor = hexToRGBA(color);
+
+			this.debug(`parseColor::#: ${rgbaColor}`);
+			return rgbaColor;
 		}
-	}
-	// #endregion
 
-	// #region Private Properties
-	get isRippleAllowed() {
-		if(this.rippleInk === false)
-			return false;
-
-		let element = this._rippleElement;
-		do {
-			if(!element.tagName || (element.tagName.toUpperCase() === 'BODY'))
-				break;
-
-			if(element && (typeof element.hasAttribute === 'function')) {
-				if(element.hasAttribute('disabled'))
-					return false;
-			}
-
-			element = element.parentNode;
-		} while(element);
-
-		return true;
-	}
-
-	get rippleInk() {
-		if(this.args.named.noInk === true)
-			return false;
-
-		return (this.args.named.inkColor || '');
-	}
-
-	get elementColor() {
-		return window.getComputedStyle(this._rippleElement).color || 'rgb(0,0,0)';
-	}
-
-	get rippleColor() {
-		return this.parseColor(this.rippleInk) || this.parseColor(this.elementColor);
-	}
-
-	get rippleContainerSelector() {
-		return this.args.named.rippleContainerSelector || '.md-container';
+		return color;
 	}
 	// #endregion
 }
