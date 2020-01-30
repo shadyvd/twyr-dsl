@@ -33,6 +33,7 @@ export default class TwyrRadioGroupComponent extends Component {
 	// #endregion
 
 	// #region DOM Event Handlers
+	@action
 	handleKeydown(event) {
 		switch (event.which) {
 			case this.constants.KEYCODE.LEFT_ARROW:
