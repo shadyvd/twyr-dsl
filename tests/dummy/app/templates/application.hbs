@@ -46,9 +46,9 @@
 		</TwyrSidenav>
 		<div class="flex layout-column layout-align-start-stretch">
 			<TwyrTabs
-				@stretch={{true}}
 				@borderBottom={{true}}
 				@selected={{this.selectedTabValue}}
+				@stretch={{this.isOpaque}}
 				@onChange={{this.changeSelectedTab}}
 				as |Tabs|
 			>
@@ -98,6 +98,7 @@
 					</div>
 				</TwyrItem>
 			</TwyrList>
+			<TwyrProgressLinear @primary={{true}} />
 		</div>
 	</Card.Content>
 	<TwyrDivider />

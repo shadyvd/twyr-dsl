@@ -1,0 +1,18 @@
+<md-progress-linear
+	class="md-default-theme"
+	md-mode={{this.mode}}
+	md-buffer-value={{this.bufferValue}}
+	{{color-themeable
+		accent=@accent
+		primary=@primary
+		secondary=@secondary
+		warn=@warn
+	}}
+	...attributes
+>
+	<div class="md-container {{this.modeClass}}">
+		<div class="md-dashed"></div>
+		<div class="md-bar md-bar1" style={{this.bar1Style}}></div>
+		<div class="md-bar md-bar2" style={{this.bar2Style}}></div>
+	</div>
+</md-progress-linear>
