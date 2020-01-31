@@ -24,7 +24,34 @@
 		<Title.Text as |Text|>
 			<Text.Headline class="layout-row layout-align-start-center">
 				<TwyrIcon @icon="all-out" @primary={{true}} @spin={{true}} />
-				<TwyrContent class="ml-2 flex">In-card mixed actions</TwyrContent>
+				<TwyrSpeedDial
+					class="flex"
+					@animation="fling"
+					@direction="right"
+					@open={{this.isDialOpen}}
+					@hoverFull={{false}}
+					@onToggle={{this.toggleDial}} as |Dial|
+				>
+					<Dial.Trigger>
+						<TwyrButton @fab={{true}}>
+							<TwyrIcon @icon="menu" />
+						</TwyrButton>
+					</Dial.Trigger>
+
+					<Dial.Actions as |Actions|>
+						<Actions.Action>
+							<TwyrButton @icon={{true}}>
+								<TwyrIcon @primary={{true}} @icon="people" />
+							</TwyrButton>
+						</Actions.Action>
+
+						<Actions.Action>
+							<TwyrButton @icon={{true}}>
+								<TwyrIcon @primary={{true}} @icon="accessibility" />
+							</TwyrButton>
+						</Actions.Action>
+					</Dial.Actions>
+				</TwyrSpeedDial>
 			</Text.Headline>
 			<Text.Subhead>Description</Text.Subhead>
 		</Title.Text>

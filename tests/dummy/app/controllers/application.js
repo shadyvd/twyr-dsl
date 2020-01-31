@@ -18,6 +18,8 @@ export default class ApplicationController extends Controller {
 
 	@tracked sliderValue = 25;
 
+	@tracked isDialOpen = true;
+
 	constructor() {
 		super(...arguments);
 		this.changeOpaqueInterval = setInterval(() => {
@@ -71,5 +73,10 @@ export default class ApplicationController extends Controller {
 	@action
 	onItemClicked() {
 		this.debug('onItemClicked: howdy?');
+	}
+
+	@action toggleDial(newValue) {
+		newValue = (newValue !== undefined) ? !!newValue : !this.isDialOpen;
+		this.isDialOpen = newValue;
 	}
 }
