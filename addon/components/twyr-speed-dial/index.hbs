@@ -1,0 +1,15 @@
+<md-fab-speed-dial
+	class="{{this.animationClass}} {{this.directionClass}}"
+	{{has-class-if this.isOpen "md-is-open"}}
+	{{has-class-if this.shouldHideActions "md-animations-waiting"}}
+	{{has-class-if @hoverFull "md-hover-full"}}
+	{{did-insert this.didInsert}}
+	{{on "mouseenter" this.handleMouseEnter}}
+	{{on "mouseleave" this.handleMouseLeave}}
+	...attributes
+>
+	{{yield (hash
+		Trigger=(component this.subComponents.trigger speedDial=this)
+		Actions=(component this.subComponents.actions speedDial=this)
+	)}}
+</md-fab-speed-dial>
