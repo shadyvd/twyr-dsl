@@ -14,6 +14,7 @@ export default class TwyrInputComponent extends Component {
 	// #endregion
 
 	// #region Tracked Attributes
+	@tracked elementId = null;
 	@tracked isInputFocused = false;
 	@tracked isNativeInvalid = false;
 	@tracked isTouched = false;
@@ -48,6 +49,7 @@ export default class TwyrInputComponent extends Component {
 		if((this._prevValue !== this.args.value) || (this._prevErrors !== this.args.errors))
 			this._notifyValidityChange();
 
+		this._setValue();
 		this._prevValue = this.args.value;
 		this._prevErrors = this.args.errors;
 
@@ -65,6 +67,10 @@ export default class TwyrInputComponent extends Component {
 
 		if(!this._element.classList.contains('md-focused') && this._element.classList.contains('md-input-focused'))
 			this._element.classList.remove('md-input-focused');
+
+
+		if(this._element.getAttribute('id') !== this.elementId)
+			this.elementId = this._element.getAttribute('id');
 	}
 
 	willDestroy() {
@@ -152,13 +158,8 @@ export default class TwyrInputComponent extends Component {
 	}
 
 	get currentLength() {
-		this.debug(`currentLength: ${this.args.value ? this.args.value.length : 0}`);
-		return this.args.value ? this.args.value.length : 0;
-	}
-
-	get elementId() {
-		this.debug(`elementId: ${this._element ? this._element.getAttribute('id') : ''}`);
-		return (this._element ? this._element.getAttribute('id') : '');
+		this.debug(`currentLength: ${this.args.value ? this.args.value.toString().length : 0}`);
+		return this.args.value ? this.args.value.toString().length : 0;
 	}
 
 	get hasValue() {
@@ -172,8 +173,8 @@ export default class TwyrInputComponent extends Component {
 	}
 
 	get inputElementId() {
-		this.debug(`inputElementId: input-${this._element ? this._element.getAttribute('id') : ''}`);
-		return `input-${this._element ? this._element.getAttribute('id') : ''}`;
+		this.debug(`inputElementId: input-${this.elementId}`);
+		return `input-${this.elementId}`;
 	}
 
 	get isInvalid() {

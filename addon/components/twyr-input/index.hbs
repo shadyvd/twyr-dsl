@@ -9,8 +9,8 @@
 	{{has-class-if (has-block) "md-block"}}
 	{{has-class-if @placeholder "md-input-has-placeholder"}}
 	{{did-insert this.didInsert}}
-	{{did-update this.didReceiveArgs @value @errors}}
-	{{did-mutate onMutate=this.didMutate attributeFilter=(array "class")}}
+	{{did-update this.didReceiveArgs @errors @value}}
+	{{did-mutate onMutate=this.didMutate attributeFilter=(array "class" "id")}}
 	{{color-themeable
 		accent=@accent
 		primary=@primary
