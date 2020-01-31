@@ -5,7 +5,7 @@ import { htmlSafe } from '@ember/string';
 import { inject as service } from '@ember/service';
 import { isPresent } from '@ember/utils';
 
-// #region File Global Attributes
+// #region File Global Variables
 const MODE_DETERMINATE = 'determinate';
 const MODE_INDETERMINATE = 'indeterminate';
 const MODE_BUFFER = 'buffer';

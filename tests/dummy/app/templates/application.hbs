@@ -40,8 +40,8 @@
 			@lockedOpen={{true}}
 			@onToggle={{this.onToggleSidenav}}
 		>
-			<TwyrContent @padding={{true}}>
-				Çup?
+			<TwyrContent class="flex layout-column layout-align-center-center" @padding={{true}}>
+				<TwyrProgressCircular @warn={{true}} @diameter={{100}} @value={{69}} disabled={{this.isOpaque}} />
 			</TwyrContent>
 		</TwyrSidenav>
 		<div class="flex layout-column layout-align-start-stretch">
@@ -87,14 +87,14 @@
 					</div>
 				</TwyrItem>
 
-				<TwyrItem as |Controls|>
+				<TwyrItem>
 					<p>Click anywhere to fire the primary action, or the controls to fire the secondary</p>
 					<div class="md-secondary-container">
-						<Controls.RadioGroup class="flex layout-row layout-align-end-center px-4" @groupValue={{this.selectedFruit}} @onChange={{this.changeSelectedFruit}} as |Group|>
-							<Group.Button @value="Apple" @primary={{true}}>Apple</Group.Button>
+						<TwyrRadioGroup class="flex layout-row layout-align-end-center px-4" @groupValue={{this.selectedFruit}} @onChange={{this.changeSelectedFruit}} as |Group|>
 							<Group.Button @value="Banana" @warn={{true}}>Banana</Group.Button>
+							<Group.Button @value="Apple" @primary={{true}}>Apple</Group.Button>
 							<Group.Button @value="Mango" disabled>Mango</Group.Button>
-						</Controls.RadioGroup>
+						</TwyrRadioGroup>
 					</div>
 				</TwyrItem>
 			</TwyrList>

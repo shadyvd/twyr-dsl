@@ -68,7 +68,10 @@ export default class DidMutateModifier extends Modifier {
 		if(isPresent(this.args.named.attributes))
 			return !!this.args.named.attributes;
 
-		return true;
+		if(this.attributeFilter.length)
+			return true;
+
+		return false;
 	}
 
 	get characterData() {
