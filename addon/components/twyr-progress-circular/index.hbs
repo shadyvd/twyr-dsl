@@ -1,0 +1,30 @@
+<md-progress-circular
+	class="md-default-theme {{this.spinnerClass}}"
+	style={{this.containerStyle}}
+	value={{@value}}
+	md-mode={{this.mode}}
+	{{did-insert this.didInsert}}
+	{{did-update
+		this.didReceiveArgs
+		@diameter
+		@disabled
+		@strokeRatio
+		@value
+		@startIndeterminate
+		@endIndeterminate
+		@easeFnIndeterminate
+		@durationIndeterminate
+	}}
+	{{did-mutate onMutate=this.didMutate}}
+	{{color-themeable
+		accent=@accent
+		primary=@primary
+		secondary=@secondary
+		warn=@warn
+	}}
+	...attributes
+>
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {{this.diameter}} {{this.diameter}}" style={{this.svgStyle}}>
+		<path fill="none" style={{this.pathStyle}} stroke-dasharray={{this.strokeDasharray}} d={{this.arc}}></path>
+	</svg>
+</md-progress-circular>
