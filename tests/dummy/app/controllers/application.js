@@ -16,6 +16,8 @@ export default class ApplicationController extends Controller {
 	@tracked selectedTabValue = "three";
 	@tracked selectedFruit = "Apple"
 
+	@tracked sliderValue = 25;
+
 	constructor() {
 		super(...arguments);
 		this.changeOpaqueInterval = setInterval(() => {
@@ -59,6 +61,11 @@ export default class ApplicationController extends Controller {
 	changeSelectedFruit(newFruit) {
 		this.debug('changeSelectedFruit: ', newFruit);
 		this.selectedFruit = newFruit;
+	}
+
+	@action
+	changeSliderValue(newVal) {
+		this.sliderValue = newVal;
 	}
 
 	@action

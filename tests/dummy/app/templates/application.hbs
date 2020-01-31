@@ -41,7 +41,7 @@
 			@onToggle={{this.onToggleSidenav}}
 		>
 			<TwyrContent class="flex layout-column layout-align-center-center" @padding={{true}}>
-				<TwyrProgressCircular @warn={{true}} @diameter={{100}} @value={{69}} disabled={{this.isOpaque}} />
+				<TwyrProgressCircular @warn={{true}} @diameter={{100}} disabled={{this.isOpaque}} />
 			</TwyrContent>
 		</TwyrSidenav>
 		<div class="flex layout-column layout-align-start-stretch">
@@ -91,8 +91,8 @@
 					<p>Click anywhere to fire the primary action, or the controls to fire the secondary</p>
 					<div class="md-secondary-container">
 						<TwyrRadioGroup class="flex layout-row layout-align-end-center px-4" @groupValue={{this.selectedFruit}} @onChange={{this.changeSelectedFruit}} as |Group|>
-							<Group.Button @value="Banana" @warn={{true}}>Banana</Group.Button>
 							<Group.Button @value="Apple" @primary={{true}}>Apple</Group.Button>
+							<Group.Button @value="Banana" @warn={{true}}>Banana</Group.Button>
 							<Group.Button @value="Mango" disabled>Mango</Group.Button>
 						</TwyrRadioGroup>
 					</div>
@@ -117,7 +117,6 @@
 
 {{#if this.showDialogWithParent}}
 	<TwyrDialog
-		class="text-red"
 		@openFrom="#twyr-dialog-container"
 		@closeTo="#twyr-dialog-close-area"
 		@clickOutsideToClose={{true}}
@@ -136,7 +135,10 @@
 
 		<TwyrDialog::Content class="layout-column layout-align-start-stretch">
 			<TwyrSubheader>This is a dialog rendered into a specific element. Clicking outside the dialog will close it.</TwyrSubheader>
-			<TwyrInput @class="flex" @label="Name" @placeholder="Enter name" @warn={{true}} @maxLength={{24}} @value={{this.selectedTabValue}} @onChange={{this.changeSelectedTab}} />
+			<div class="flex layout-row layout-align-start-center">
+				<TwyrInput type="number" @label="Slider Value" @primary={{true}} @min={{0}} @max={{255}} @maxLength={{3}} @value={{this.sliderValue}} @onChange={{this.changeSliderValue}} />
+				<TwyrSlider class="flex" @accent={{true}} @min={{0}} @max={{255}} @value={{this.sliderValue}} @onChange={{this.changeSliderValue}} disabled={{this.isOpaque}} />
+			</div>
 		</TwyrDialog::Content>
 
 		<TwyrDialog::Actions class="layout-row">
