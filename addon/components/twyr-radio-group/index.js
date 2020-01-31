@@ -21,7 +21,7 @@ export default class TwyrRadioGroupComponent extends Component {
 	// #region Yielded Sub-components
 	subComponents = {
 		'label': 'twyr-radio-group/label',
-		'button': 'twyr-radio-group/radio-button'
+		'button': 'twyr-radio'
 	};
 	// #endregion
 

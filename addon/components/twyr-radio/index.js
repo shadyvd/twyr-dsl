@@ -4,9 +4,9 @@ import debugLogger from 'ember-debug-logger';
 import { action } from '@ember/object';
 import { isPresent } from '@ember/utils';
 
-export default class TwyrRadioGroupRadioButtonComponent extends Component {
+export default class TwyrRadioComponent extends Component {
 	// #region Private Attributes
-	debug = debugLogger('twyr-radio-group-button');
+	debug = debugLogger('twyr-radio-button');
 
 	_element = null;
 	// #endregion

@@ -20,7 +20,7 @@ export default class TwyrItemComponent extends Component {
 	subComponents = {
 		'button': 'twyr-button',
 		'checkbox': 'twyr-checkbox',
-		'radioGroup': 'twyr-radio-group',
+		'radio': 'twyr-radio',
 		'switch': 'twyr-switch'
 	};
 	// #endregion
