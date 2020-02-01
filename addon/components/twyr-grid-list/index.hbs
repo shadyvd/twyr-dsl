@@ -1,0 +1,16 @@
+<md-grid-list
+	{{did-insert this.didInsert}}
+	{{did-update
+		this.didReceiveArgs
+		@cols
+		@currentMedia
+		@gutter
+		@rowCount
+		@rowHeight
+	}}
+	...attributes
+>
+	{{yield (hash
+		Tile=(component this.subComponents.tile registerWithParent=this.registerChild)
+	)}}
+</md-grid-list>
