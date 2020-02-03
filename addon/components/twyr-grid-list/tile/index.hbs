@@ -1,0 +1,11 @@
+<md-grid-tile
+	{{did-insert this.didInsert}}
+	{{did-update this.didReceiveArgs @gridList @colspan @rowspan}}
+	...attributes
+>
+	<figure>
+		{{yield (hash
+			Footer=(component this.subComponents.footer)
+		)}}
+	</figure>
+</md-grid-tile>

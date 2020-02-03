@@ -83,48 +83,93 @@
 				<Tabs.Tab @value="two" @name="Page Two (Disabled)" disabled />
 				<Tabs.Tab @value="three" @name="Tab Three" />
 			</TwyrTabs>
-			<TwyrList>
-				<TwyrItem
-					as |Controls|
-				>
-					<p>Click anywhere to fire the primary action, or the controls to fire the secondary</p>
-					<div class="md-secondary-container">
-						<Controls.Button @accent={{true}} @raised={{true}} @onClick={{this.onReset}}>
-							Action 2
-						</Controls.Button>
-					</div>
-				</TwyrItem>
 
-				<TwyrItem
-					@onClick={{this.onItemClicked}}
-					as |Controls|
-				>
-					<p>Click anywhere to fire the primary action, or the controls to fire the secondary</p>
-					<div class="md-secondary-container">
-						<Controls.Checkbox class="mb-0" @value={{this.checkBoxValue}} @onChange={{this.changeCheckboxValue}}></Controls.Checkbox>
-					</div>
-				</TwyrItem>
+			<div>
+				{{#if (eq this.selectedTabValue "one")}}
+					<TwyrGridList @cols="1 md-2 gt-md-6" @rowHeight="gt-md-1:1 2:2" @gutter="12px gt-sm-8px" as |Grid|>
+						<Grid.Tile style="background-color:antiquewhite;" @rowspan="2" @colspan="sm-1 gt-sm-2" as |Tile|>
+							<Tile.Footer>
+								<h3>#1: (3r x 2c)</h3>
+							</Tile.Footer>
+						</Grid.Tile>
 
-				<TwyrItem as |Controls|>
-					<p>Click anywhere to fire the primary action, or the controls to fire the secondary</p>
-					<div class="md-secondary-container">
-						<Controls.Switch @value={{this.checkBoxValue}} @onChange={{this.changeCheckboxValue}} disabled={{this.isOpaque}}>
-							{{this.checkBoxValue}}
-						</Controls.Switch>
-					</div>
-				</TwyrItem>
+						<Grid.Tile style="background-color:aqua;" as |Tile|>
+							<Tile.Footer>
+								<h3>#2: (1r x 1c)</h3>
+							</Tile.Footer>
+						</Grid.Tile>
 
-				<TwyrItem>
-					<p>Click anywhere to fire the primary action, or the controls to fire the secondary</p>
-					<div class="md-secondary-container">
-						<TwyrRadioGroup class="flex layout-row layout-align-end-center px-4" @groupValue={{this.selectedFruit}} @onChange={{this.changeSelectedFruit}} as |Group|>
-							<Group.Button @value="Apple" @primary={{true}}>Apple</Group.Button>
-							<Group.Button @value="Banana" @warn={{true}}>Banana</Group.Button>
-							<Group.Button @value="Mango" disabled>Mango</Group.Button>
-						</TwyrRadioGroup>
-					</div>
-				</TwyrItem>
-			</TwyrList>
+						<Grid.Tile style="background-color:brown;" as |Tile|>
+							<Tile.Footer>
+								<h3>#3: (1r x 1c)</h3>
+							</Tile.Footer>
+						</Grid.Tile>
+
+						<Grid.Tile style="background-color:darkgray;" @rowspan="2" as |Tile|>
+							<Tile.Footer>
+								<h3>#4: (2r x 1c)</h3>
+							</Tile.Footer>
+						</Grid.Tile>
+
+						<Grid.Tile style="background-color:hotpink;" @rowspan="2" @colspan="sm-1 gt-sm-2" as |Tile|>
+							<Tile.Footer>
+								<h3>#5: (2r x 2c)</h3>
+							</Tile.Footer>
+						</Grid.Tile>
+
+						<Grid.Tile style="background-color:red;" @rowspan="2" as |Tile|>
+							<Tile.Footer>
+								<h3>#6: (2r x 1c)</h3>
+							</Tile.Footer>
+						</Grid.Tile>
+					</TwyrGridList>
+				{{/if}}
+
+				{{#if (eq this.selectedTabValue "three")}}
+					<TwyrList>
+						<TwyrItem
+							as |Controls|
+						>
+							<p>Click anywhere to fire the primary action, or the controls to fire the secondary</p>
+							<div class="md-secondary-container">
+								<Controls.Button @accent={{true}} @raised={{true}} @onClick={{this.onReset}}>
+									Action 2
+								</Controls.Button>
+							</div>
+						</TwyrItem>
+
+						<TwyrItem
+							@onClick={{this.onItemClicked}}
+							as |Controls|
+						>
+							<p>Click anywhere to fire the primary action, or the controls to fire the secondary</p>
+							<div class="md-secondary-container">
+								<Controls.Checkbox class="mb-0" @value={{this.checkBoxValue}} @onChange={{this.changeCheckboxValue}}></Controls.Checkbox>
+							</div>
+						</TwyrItem>
+
+						<TwyrItem as |Controls|>
+							<p>Click anywhere to fire the primary action, or the controls to fire the secondary</p>
+							<div class="md-secondary-container">
+								<Controls.Switch @value={{this.checkBoxValue}} @onChange={{this.changeCheckboxValue}} disabled={{this.isOpaque}}>
+									{{this.checkBoxValue}}
+								</Controls.Switch>
+							</div>
+						</TwyrItem>
+
+						<TwyrItem>
+							<p>Click anywhere to fire the primary action, or the controls to fire the secondary</p>
+							<div class="md-secondary-container">
+								<TwyrRadioGroup class="flex layout-row layout-align-end-center px-4" @groupValue={{this.selectedFruit}} @onChange={{this.changeSelectedFruit}} as |Group|>
+									<Group.Button @value="Apple" @primary={{true}}>Apple</Group.Button>
+									<Group.Button @value="Banana" @warn={{true}}>Banana</Group.Button>
+									<Group.Button @value="Mango" disabled>Mango</Group.Button>
+								</TwyrRadioGroup>
+							</div>
+						</TwyrItem>
+					</TwyrList>
+				{{/if}}
+			</div>
 			<TwyrProgressLinear @primary={{true}} />
 		</div>
 	</Card.Content>

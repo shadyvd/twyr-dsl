@@ -13,7 +13,7 @@ export default class ApplicationController extends Controller {
 	debug = debugLogger('application');
 	changeOpaqueInterval = -1;
 
-	@tracked selectedTabValue = "three";
+	@tracked selectedTabValue = "one";
 	@tracked selectedFruit = "Apple"
 
 	@tracked sliderValue = 25;

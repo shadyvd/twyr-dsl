@@ -1,12 +1,13 @@
 import Component from '@glimmer/component';
 import debugLogger from 'ember-debug-logger';
-import gridLayout from '../utils/grid-layout';
+import gridLayout from '../../utils/grid-layout';
 
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isPresent } from '@ember/utils';
 import { nextTick } from 'ember-css-transitions/utils/transition-utils';
 import { run } from '@ember/runloop';
+import { tracked } from '@glimmer/tracking';
 
 // #region File Global Variables
 const mediaRegex = /(^|\s)((?:print-)|(?:[a-z]{2}-){1,2})?(\d+)(?!\S)/g;
@@ -43,6 +44,11 @@ export default class TwyrGridListComponent extends Component {
 	_childElements = [];
 	// #endregion
 
+	// #region Tracked Attributes
+	@tracked _currentMedia = 'sm';
+	@tracked _rowCount = 0;
+	// #endregion
+
 	// #region Yielded Sub-components
 	subComponents = {
 		'tile': 'twyr-grid-list/tile'
@@ -65,6 +71,15 @@ export default class TwyrGridListComponent extends Component {
 		this._element = element;
 
 		this._installMediaListener();
+		run.debounce(this, this.updateGrid, 0);
+
+		nextTick()
+		.then(() => {
+			if(this.isDestroying || this.isDestroyed)
+				return;
+
+			run.debounce(this, this.updateGrid, 0);
+		});
 	}
 
 	@action
@@ -101,15 +116,15 @@ export default class TwyrGridListComponent extends Component {
 	}
 
 	get currentCols() {
-		return this._getAttributeForMedia(this.colsMedia, this.args.currentMedia) || 1;
+		return this._getAttributeForMedia(this.colsMedia, this._currentMedia) || 1;
 	}
 
 	get currentGutter() {
-		return this._applyDefaultUnit(this._getAttributeForMedia(this.gutterMedia, this.args.currentMedia) || 1);
+		return this._applyDefaultUnit(this._getAttributeForMedia(this.gutterMedia, this._currentMedia) || 1);
 	}
 
 	get currentRowHeight() {
-		const rowHeight = this._getAttributeForMedia(this.rowHeightMedia, this.args.currentMedia);
+		const rowHeight = this._getAttributeForMedia(this.rowHeightMedia, this._currentMedia);
 		const whRatio = rowHeight.split(':');
 
 		let currentRowHeight = undefined;
@@ -131,7 +146,7 @@ export default class TwyrGridListComponent extends Component {
 	}
 
 	get currentRowMode() {
-		const rowHeight = this._getAttributeForMedia(this.rowHeightMedia, this.args.currentMedia);
+		const rowHeight = this._getAttributeForMedia(this.rowHeightMedia, this._currentMedia);
 		return this._getRowMode(rowHeight);
 	}
 
@@ -206,7 +221,7 @@ export default class TwyrGridListComponent extends Component {
 		const gutter = this.currentGutter;
 		const rowHeight = this.currentRowHeight;
 		const rowMode = this.currentRowMode;
-		const rowCount = this.args.rowCount;
+		const rowCount = this._rowCount;
 
 		switch (rowMode) {
 			case 'fixed':
@@ -275,15 +290,14 @@ export default class TwyrGridListComponent extends Component {
 		const layoutInfo = gridLayout(this.currentCols, tiles);
 
 		tiles.forEach((tile, i) => {
-			tile.set('position', layoutInfo.positions[i]);
+			tile.setPosition(layoutInfo.positions[i]);
 		});
 
-		if(isPresent(this.args.onRowCountChange) && (typeof this.args.onRowCountChange === 'function'))
-			this.args.onRowCountChange(layoutInfo.rowCount);
+		this._rowCount = layoutInfo.rowCount;
 	}
 
 	_uninstallMediaListener() {
-		for (let mediaName in this.get('constants.MEDIA')) {
+		for (let mediaName in this.constants.MEDIA) {
 			const listenerName = mediaListenerName(mediaName);
 			const mediaList = this[`${listenerName}List`];
 
@@ -293,10 +307,11 @@ export default class TwyrGridListComponent extends Component {
 
 	_updateCurrentMedia() {
 		const mediaPriorities = this.constants.MEDIA_PRIORITY;
-		const currentMedia = mediaPriorities.filter((mediaName) => this.get(mediaName));
+		const currentMedia = mediaPriorities.filter((mediaName) => this[mediaName]);
 
-		if(isPresent(this.args.onCurrentMediaChange) && (typeof this.args.onCurrentMediaChange === 'function'))
-			this.args.onCurrentMediaChange(currentMedia);
+		// if(isPresent(this.args.onCurrentMediaChange) && (typeof this.args.onCurrentMediaChange === 'function'))
+		// 	this.args.onCurrentMediaChange(currentMedia);
+		this._currentMedia = currentMedia;
 	}
 
 	_updateGrid() {
@@ -318,7 +333,6 @@ export default class TwyrGridListComponent extends Component {
 	@action
 	registerChild(child, register) {
 		this.debug(`registerChild::child: `, child, `, register: ${register}`);
-		if(this._initialTabSelectTimeout) clearTimeout(this._initialTabSelectTimeout);
 
 		if(register) {
 			if(!this._childElements.includes(child))
@@ -328,8 +342,6 @@ export default class TwyrGridListComponent extends Component {
 			if(this._childElements.includes(child))
 				this._childElements.splice(this._childElements.indexOf(child), 1);
 		}
-
-		this._initialTabSelectTimeout = setTimeout(this._doInitialTabSelection.bind(this), 250);
 	}
 	// #endregion
 }

@@ -34,8 +34,8 @@ function calculateGridfor(colCount, tiles) {
 	};
 
 	function reserveSpace(tile, i) {
-		let colspan = tile.get('currentColspan');
-		let rowspan = tile.get('currentRowspan');
+		let colspan = tile.currentColspan;
+		let rowspan = tile.currentRowspan;
 
 		if (colspan > colCount) {
 			throw new Error(`md-grid-list: Tile at position ${i} has a colspan (${colspan}) that exceeds the column count (${colCount})`);
