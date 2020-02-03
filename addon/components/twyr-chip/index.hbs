@@ -37,7 +37,7 @@
 							tabindex="-1"
 							{{on "click" (fn this.handleRemoveItem item)}}
 						>
-								<PaperIcon @icon="clear" @size={{18}}/>
+								<TwyrIcon @icon="clear" @size={{18}} />
 								<span class="md-visually-hidden">Remove</span>
 						</button>
 					{{/unless}}
@@ -52,7 +52,7 @@
 		{{#unless @readOnly}}
 			<div class="md-chip-input-container">
 				{{#if (or @requireMatch @options)}}
-					<PaperAutocomplete
+					<TwyrAutocomplete
 						@inputClass="md-input"
 						@options={{@options}}
 						@closeOnSelect={{true}}
@@ -75,7 +75,7 @@
 						{{else}}
 							<span>{{Item}}</span>
 						{{/if}}
-					</PaperAutocomplete>
+					</TwyrAutocomplete>
 				{{else}}
 					<input
 						tabindex="0"
