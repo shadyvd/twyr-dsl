@@ -1,0 +1,9 @@
+<md-menu-item {{on "mouseenter" this.handleMouseEnter}} disabled={{@disabled}}>
+	{{#if this.shouldRenderButton}}
+		<PaperButton @onClick={{fn this.handleClick}} @href={{@href}} @target={{@target}} @disabled={{@disabled}}>
+			{{yield}}
+		</PaperButton>
+	{{else}}
+		{{yield}}
+	{{/if}}
+</md-menu-item>

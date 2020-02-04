@@ -1,0 +1,39 @@
+{{!-- send the backdrop to the same place as the content --}}
+{{#if @dropdown.isOpen}}
+	{{#maybe-in-element this.destinationElement @renderInPlace}}
+		<PaperBackdrop
+			class="md-menu-backdrop md-click-catcher"
+			{{on "click" @dropdown.actions.close}}
+		/>
+	{{/maybe-in-element}}
+{{/if}}
+
+<BasicDropdownContent
+	class="md-open-menu-container md-whiteframe-z2 md-clickable"
+	{{has-class-if this._isActive "md-active"}}
+	@dropdown={{@dropdown}}
+	@hPosition={{@hPosition}}
+	@renderInPlace={{@renderInPlace}}
+	@preventScroll={{@preventScroll}}
+	@rootEventType={{@rootEventType}}
+	@vPosition={{@vPosition}}
+	@destination={{@destination}}
+	@top={{@top}}
+	@left={{@left}}
+	@right={{@right}}
+	@height={{@height}}
+	@otherStyles={{this.customStyles}}
+	{{did-insert this.didInsert}}
+	...attributes
+>
+	<md-menu-content
+		width={{@width}}
+		{{has-class-if @dense "md-dense"}}
+		{{did-insert this.handleContentFocus}}
+		{{on "keydown" this.handleContentKeydown}}
+	>
+		{{yield (hash
+			MenuItem=(component this.subComponents.menuItem dropdown=@dropdown)
+		)}}
+	</md-menu-content>
+</BasicDropdownContent>

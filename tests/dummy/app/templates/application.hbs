@@ -23,7 +23,27 @@
 	<Card.Title class="mb-2" as |Title|>
 		<Title.Text as |Text|>
 			<Text.Headline class="layout-row layout-align-start-center">
-				<TwyrIcon @icon="all-out" @primary={{true}} @spin={{true}} />
+				<TwyrMenu as |Menu|>
+					<Menu.Trigger>
+						<TwyrButton @icon={{true}}>
+							<TwyrIcon @icon="all-out" @primary={{true}} @spin={{true}} />
+						</TwyrButton>
+					</Menu.Trigger>
+
+					<Menu.Content @width={{4}} as |Content|>
+						<Content.MenuItem>
+							<TwyrIcon @icon="local-phone" />
+							<span>Hello, world</span>
+						</Content.MenuItem>
+
+						<TwyrDivider />
+
+						<Content.MenuItem @disabled={{true}}>
+							<TwyrIcon @icon="adb" />
+							<span>This is disabled.</span>
+						</Content.MenuItem>
+					</Menu.Content>
+				</TwyrMenu>
 				<TwyrSpeedDial
 					class="flex"
 					@animation="fling"

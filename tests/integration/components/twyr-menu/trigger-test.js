@@ -3,22 +3,22 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
-module('Integration | Component | twyr-chip', function(hooks) {
+module('Integration | Component | twyr-menu/trigger', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
-    await render(hbs`<TwyrChip />`);
+    await render(hbs`<TwyrMenu::Trigger />`);
 
     assert.equal(this.element.textContent.trim(), '');
 
     // Template block usage:
     await render(hbs`
-      <TwyrChip>
+      <TwyrMenu::Trigger>
         template block text
-      </TwyrChip>
+      </TwyrMenu::Trigger>
     `);
 
     assert.equal(this.element.textContent.trim(), 'template block text');

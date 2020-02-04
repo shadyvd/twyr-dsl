@@ -1,0 +1,13 @@
+{{!-- proxy all the things that ebd gives us --}}
+<BasicDropdownTrigger
+	class="md-menu"
+	@htmlTag="md-menu"
+	tabindex="-1"
+	@dropdown={{@dropdown}}
+	@hPosition={{@hPosition}}
+	@renderInPlace={{@renderInPlace}}
+	@vPosition={{@vPosition}}
+	...attributes
+>
+	  {{yield}}
+</BasicDropdownTrigger>
