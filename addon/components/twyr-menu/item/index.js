@@ -7,6 +7,8 @@ import { isPresent } from '@ember/utils';
 export default class TwyrMenuItemComponent extends Component {
 	// #region Private Attributes
 	debug = debugLogger('twyr-menu-item');
+
+	_element = null;
 	// #endregion
 
 	// #region Constructor
@@ -16,10 +18,25 @@ export default class TwyrMenuItemComponent extends Component {
 	}
 	// #endregion
 
+	// #region Lifecycle Hooks
+	@action
+	didInsert(element) {
+		this.debug(`didInsert`);
+		this._element = element;
+	}
+	// #endregion
+
 	// #region DOM Event Handlers
 	@action
 	handleClick() {
-		this.args.dropdown.close();
+		if (this.args.disabled)
+			return;
+
+		if(this._element && this._element.hasAttribute('disabled'))
+			return;
+
+		if(isPresent(this.args.dropdown) && isPresent(this.args.dropdown.actions) && (typeof this.args.dropdown.actions.close === 'function'))
+			this.args.dropdown.actions.close();
 
 		if(isPresent(this.args.onClick) && (typeof this.args.onClick === 'function'))
 			this.args.onClick(...arguments);
@@ -27,7 +44,11 @@ export default class TwyrMenuItemComponent extends Component {
 
 	@action
 	handleMouseEnter(event) {
-		if (this.args.disabled) return;
+		if (this.args.disabled)
+			return;
+
+		if(this._element && this._element.hasAttribute('disabled'))
+			return;
 
 		let button = event.target.querySelector('button');
 		if (button) button.focus();

@@ -1,8 +1,13 @@
-<md-menu-item {{on "mouseenter" this.handleMouseEnter}} disabled={{@disabled}}>
+<md-menu-item
+	disabled={{@disabled}}
+	{{did-insert this.didInsert}}
+	{{on "mouseenter" this.handleMouseEnter}}
+	...attributes
+>
 	{{#if this.shouldRenderButton}}
-		<PaperButton @onClick={{fn this.handleClick}} @href={{@href}} @target={{@target}} @disabled={{@disabled}}>
+		<TwyrButton @onClick={{fn this.handleClick}} @href={{@href}} @target={{@target}} @disabled={{@disabled}}>
 			{{yield}}
-		</PaperButton>
+		</TwyrButton>
 	{{else}}
 		{{yield}}
 	{{/if}}

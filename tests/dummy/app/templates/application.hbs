@@ -26,24 +26,25 @@
 				<TwyrMenu as |Menu|>
 					<Menu.Trigger>
 						<TwyrButton @icon={{true}}>
-							<TwyrIcon @icon="all-out" @primary={{true}} @spin={{true}} />
+							<TwyrIcon @icon="all-out" @primary={{true}} />
 						</TwyrButton>
 					</Menu.Trigger>
 
 					<Menu.Content @width={{4}} as |Content|>
-						<Content.MenuItem>
+						<Content.MenuItem @onClick={{this.onItemClicked}}>
 							<TwyrIcon @icon="local-phone" />
 							<span>Hello, world</span>
 						</Content.MenuItem>
 
 						<TwyrDivider />
 
-						<Content.MenuItem @disabled={{true}}>
+						<Content.MenuItem @disabled={{true}} @onClick={{this.onItemClicked}}>
 							<TwyrIcon @icon="adb" />
 							<span>This is disabled.</span>
 						</Content.MenuItem>
 					</Menu.Content>
 				</TwyrMenu>
+
 				<TwyrSpeedDial
 					class="flex"
 					@animation="fling"

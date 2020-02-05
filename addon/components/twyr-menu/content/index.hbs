@@ -1,7 +1,7 @@
 {{!-- send the backdrop to the same place as the content --}}
 {{#if @dropdown.isOpen}}
 	{{#maybe-in-element this.destinationElement @renderInPlace}}
-		<PaperBackdrop
+		<TwyrBackdrop
 			class="md-menu-backdrop md-click-catcher"
 			{{on "click" @dropdown.actions.close}}
 		/>
@@ -9,8 +9,7 @@
 {{/if}}
 
 <BasicDropdownContent
-	class="md-open-menu-container md-whiteframe-z2 md-clickable"
-	{{has-class-if this._isActive "md-active"}}
+	class="md-open-menu-container md-whiteframe-z2 md-clickable {{if this._isActive "md-active"}}"
 	@dropdown={{@dropdown}}
 	@hPosition={{@hPosition}}
 	@renderInPlace={{@renderInPlace}}

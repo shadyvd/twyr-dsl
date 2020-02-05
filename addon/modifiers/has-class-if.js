@@ -16,7 +16,7 @@ export default class HasClassIfModifier extends Modifier {
 	// #region Lifecycle Hooks
 	didReceiveArguments() {
 		super.didReceiveArguments(...arguments);
-		this.debug(`didReceiveArguments: `, this.args);
+		this.debug(`didReceiveArguments::element: `, this.element, `\nargs: `, this.args);
 
 		const condition = this.args.positional[0];
 		const classList = this.args.positional.slice(1);

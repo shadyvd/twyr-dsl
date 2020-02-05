@@ -68,6 +68,9 @@ export default class TwyrMenuContentComponent extends Component {
 
 		nextTick()
 		.then(() => {
+			if (this.isDestroying || this.isDestroyed)
+				return;
+
 			this._isActive = true;
 		})
 	}
@@ -120,7 +123,7 @@ export default class TwyrMenuContentComponent extends Component {
 	handleContentKeydown(event) {
 		switch (event.which) {
 			case this.constants.KEYCODE.ESCAPE:
-				this.args.dropdown.close();
+				this.args.dropdown.actions.close();
 			break;
 
 			case this.constants.KEYCODE.LEFT_ARROW:
