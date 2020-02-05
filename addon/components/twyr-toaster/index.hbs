@@ -1,0 +1,31 @@
+{{yield}}
+{{#if this.activeToast.show}}
+	<TwyrToaster::Toast
+		class={{this.activeToast.toastClass}}
+		@position={{this.activeToast.position}}
+		@duration={{this.activeToast.duration}}
+		@parent={{@parent}}
+		@onClose={{fn this.onClose this.activeToast}}
+		...attributes
+		as |Toast|
+	>
+		{{#if this.activeToast.componentName}}
+			{{component this.activeToast.componentName}}
+		{{else}}
+			<Toast.Text>
+				{{this.activeToast.text}}
+			</Toast.Text>
+
+			{{#if this.activeToast.action}}
+				<TwyrButton
+					@primary={{this.activeToast.action.primary}}
+					@accent={{this.activeToast.action.accent}}
+					@warn={{this.activeToast.action.warn}}
+					@onClick={{this.activeToast.action.onClick}}
+				>
+					{{this.activeToast.action.label}}
+				</TwyrButton>
+			{{/if}}
+		{{/if}}
+	</TwyrToaster::Toast>
+{{/if}}

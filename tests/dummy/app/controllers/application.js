@@ -2,9 +2,13 @@ import Controller from '@ember/controller';
 import debugLogger from 'ember-debug-logger';
 
 import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
 import { tracked } from "@glimmer/tracking";
 
 export default class ApplicationController extends Controller {
+	@service twyrToaster;
+	_toast = null;
+
 	@tracked isOpaque = true;
 	@tracked isSidenavOpen = true;
 	@tracked showDialogWithParent = false;
@@ -24,6 +28,31 @@ export default class ApplicationController extends Controller {
 		super(...arguments);
 		this.changeOpaqueInterval = setInterval(() => {
 			this.isOpaque = !this.isOpaque;
+
+			if(this.isOpaque && !this._toast) {
+				this.debug(`Showing Toast....`)
+				this._toast = this.twyrToaster.show('Hello, world - the toast', {
+					'duration': 400000,
+					'toastClass': 'md-warn',
+					'action': {
+						'label': 'Undo',
+						'accent': true,
+						'onClick': (function() {
+							this.debug('Toast action pressed');
+						}).bind(this)
+					},
+
+					'onClose': (function() {
+						this.debug('Toast onClose');
+					}).bind(this)
+				});
+			}
+
+			if(!this.isOpaque && this._toast) {
+				this.debug(`Canceling Toast....`)
+				this.twyrToaster.cancel(this._toast);
+				this._toast = null;
+			}
 		}, 10000);
 	}
 

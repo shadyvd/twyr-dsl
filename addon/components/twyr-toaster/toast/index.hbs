@@ -1,0 +1,17 @@
+{{#-in-element this.destinationElem}}
+	<TwyrToaster::Inner
+		@capsule={{this.capsule}}
+		@left={{this.left}}
+		@top={{this.top}}
+		@swipeToClose={{this.swipeToClose}}
+		@onClose={{this.onClose}}
+		@swipe={{this.swipeAction}}
+		{{requires-id}}
+		{{did-insert this.didInsert}}
+		...attributes
+	>
+		{{yield (hash
+			Text=(component "twyr-toaster/text")
+		)}}
+	</TwyrToaster::Inner>
+{{/-in-element}}

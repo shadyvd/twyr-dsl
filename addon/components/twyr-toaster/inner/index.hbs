@@ -1,0 +1,17 @@
+<md-toast
+	style={{this.computedStyle}}
+	{{css-transition "ng"}}
+	{{has-class-if @capsule "md-capsule"}}
+	{{has-class-if this._dragging "md-dragging"}}
+	{{has-class-if @left "md-left"}}
+	{{has-class-if (not @left) "md-right"}}
+	{{has-class-if @top "md-top"}}
+	{{has-class-if (not @top) "md-bottom"}}
+	{{did-insert this.didInsert}}
+	{{did-update this.didReceiveArgs @swipeToClose}}
+	...attributes
+>
+	<div class="md-toast-content">
+		{{yield}}
+	</div>
+</md-toast>
