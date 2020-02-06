@@ -1,0 +1,41 @@
+<md-input-container
+	class="{{if @selected "md-input-has-value"}} {{if this.isInvalidAndTouched "md-input-invalid"}} {{if this.isFocusedAndSelected "md-input-focused"}}"
+	{{did-update this.didReceiveArgs @disabled}}
+	{{did-mutate onMutate=this.didMutate}}
+	...attributes
+>
+	<PowerSelect
+		@disabled={{this.isDisabled}}
+		@extra={{hash label=@label}}
+		@options={{@options}}
+		@placeholder={{@placeholder}}
+		@selected={{@selected}}
+
+		@search={{@search}}
+		@searchEnabled={{@searchEnabled}}
+		@searchField={{@searchField}}
+		@searchPlaceholder={{@searchPlaceholder}}
+
+		@registerAPI={{this.setPublicAPI}}
+		@calculatePosition={{this.calculatePosition}}
+
+		@_ebdContentComponent={{component this.subComponents.ebdContent searchEnabled=@searchEnabled select=this.publicAPI}}
+		@_ebdTriggerComponent={{component this.subComponents.ebdTrigger label=@label selected=@selected required=@required disabled=this.isDisabled}}
+		@triggerComponent={{this.subComponents.epsTrigger}}
+		@triggerClass="{{if this.isInvalid "ng-invalid"}} {{if this.isTouched "ng-dirty"}}"
+
+		@beforeOptionsComponent={{this.subComponents.beforeOptions}}
+		@optionsComponent={{this.subComponents.options}}
+		@noMatchesMessageComponent={{this.subComponents.noMatchesMessage}}
+		@searchMessageComponent={{this.subComponents.searchMessage}}
+
+		@onBlur={{this.onBlur}}
+		@onChange={{this.onChange}}
+		@onClose={{this.onClose}}
+		@onFocus={{this.onFocus}}
+		@onOpen={{this.onOpen}}
+		as |Opt Term|
+	>
+		{{yield Opt Term}}
+	</PowerSelect>
+</md-input-container>

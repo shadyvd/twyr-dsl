@@ -1,0 +1,14 @@
+<md-option
+	{{will-ripple
+		rippleContainerSelector=@rippleContainerSelector
+		center=@rippleCenter
+		dimBackground=@dimRippleBackground
+		fitRipple=@fitRipple
+		inkColor=@rippleInkColor
+		noInk=@noRippleInk
+	}}
+>
+	<div class="md-text">
+		{{yield}}
+	</div>
+</md-option>
