@@ -13,8 +13,8 @@ export default class TwyrTooltipComponent extends Component {
 	// #endregion
 
 	// #region Tracked Attributes
-	@tracked renderTooltip = false;
-	@tracked hideTooltip = true;
+	@tracked _renderTooltip = false;
+	@tracked _hideTooltip = true;
 	// #endregion
 
 	// #region Constructor
@@ -35,7 +35,7 @@ export default class TwyrTooltipComponent extends Component {
 	// #region Lifecycle Hooks
 	@action
 	didInsert(element) {
-		this.renderTooltip = false;
+		this._renderTooltip = false;
 		this._element = element.parentNode;
 		this.debug(`didInsert: `, this._element);
 
@@ -78,8 +78,8 @@ export default class TwyrTooltipComponent extends Component {
 		anchorElem.addEventListener('mouseleave', this.leaveEventHandler);
 		anchorElem.addEventListener('touchcancel', this.leaveEventHandler);
 
-		this.renderTooltip = true;
-		this.hideTooltip = false;
+		this._renderTooltip = true;
+		this._hideTooltip = false;
 	}
 
 	_leaveEventHandler() {
@@ -94,8 +94,8 @@ export default class TwyrTooltipComponent extends Component {
 		anchorElem.removeEventListener('mouseleave', this.leaveEventHandler);
 		anchorElem.removeEventListener('touchcancel', this.leaveEventHandler);
 
-		this.renderTooltip = false;
-		this.hideTooltip = true;
+		this._renderTooltip = false;
+		this._hideTooltip = true;
 	}
 	// #endregion
 
@@ -121,29 +121,29 @@ export default class TwyrTooltipComponent extends Component {
 
 	get destinationId() {
 		const destination = this.defaultedParent;
-		const destinationElem = (typeof destination === 'string') ? document.querySelector(destination) : destination;
+		const destinationElement = (typeof destination === 'string') ? document.querySelector(destination) : destination;
 
-		if((typeof destinationElem === 'string') && (destinationElem.charAt(0) === '#')) {
-			this.debug(`destinationId: `, `#${destinationElem.substring(1)}`);
-			return `#${destinationElem.substring(1)}`;
+		if((typeof destinationElement === 'string') && (destinationElement.charAt(0) === '#')) {
+			this.debug(`destinationId: `, `#${destinationElement.substring(1)}`);
+			return `#${destinationElement.substring(1)}`;
 		}
 
-		let id = destinationElem.getAttribute('id');
+		let id = destinationElement.getAttribute('id');
 		if(id) {
 			this.debug(`destinationId: `, `#${id}`);
 			return `#${id}`;
 		}
 
 		id = (this._element) ? `${this._element.getAttribute('id')}-parent` : 'parent';
-		destinationElem.setAttribute('id', id);
+		destinationElement.setAttribute('id', id);
 
 		this.debug(`destinationId: `, id);
 		return id;
 	}
 
-	get destinationElem() {
+	get destinationElement() {
 		const destElem = document.querySelector(this.destinationId);
-		this.debug(`destinationElem: `, destElem);
+		this.debug(`destinationElement: `, destElem);
 
 		return destElem;
 	}
@@ -169,7 +169,7 @@ export default class TwyrTooltipComponent extends Component {
 	// #region Actions
 	@action
 	updateHideTooltip(hideTooltip) {
-		this.hideTooltip = hideTooltip;
+		this._hideTooltip = hideTooltip;
 	}
 	// #endregion
 }

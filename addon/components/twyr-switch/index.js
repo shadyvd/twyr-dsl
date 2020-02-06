@@ -24,7 +24,7 @@ export default class TwyrSwitchComponent extends Component {
 	// #endregion
 
 	// #region Tracked Attributes
-	@tracked isDragging = false;
+	@tracked _isDragging = false;
 	// #endregion
 
 	// #region Constructor
@@ -116,7 +116,7 @@ export default class TwyrSwitchComponent extends Component {
 	}
 
 	get thumbContainerStyle() {
-		if (!this.isDragging) {
+		if (!this._isDragging) {
 			this.debug(`thumbContainerStyle: undefined`);
 			return undefined;
 		}
@@ -133,7 +133,7 @@ export default class TwyrSwitchComponent extends Component {
 	_dragStart() {
 		this.debug(`_dragStart`);
 		this._dragAmount = Number(this.args.value);
-		this.isDragging = true;
+		this._isDragging = true;
 	}
 
 	_drag(event) {
@@ -151,7 +151,7 @@ export default class TwyrSwitchComponent extends Component {
 	_dragEnd() {
 		this.debug(`_dragEnd`);
 
-		this.isDragging = false;
+		this._isDragging = false;
 		this._dragAmount = null;
 
 		if(!this._element)
@@ -166,7 +166,7 @@ export default class TwyrSwitchComponent extends Component {
 		if(typeof this.args.onChange !== 'function')
 			return;
 
-		if (!this.isDragging || (this.args.value && (this._dragAmount < 0.5)) || (!this.args.value && (this._dragAmount > 0.5))) {
+		if (!this._isDragging || (this.args.value && (this._dragAmount < 0.5)) || (!this.args.value && (this._dragAmount > 0.5))) {
 			this.args.onChange(!this.args.value);
 		}
 	}

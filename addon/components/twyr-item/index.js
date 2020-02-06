@@ -13,7 +13,7 @@ export default class TwyrItemComponent extends Component {
 	// #endregion
 
 	// #region Tracked Attributes
-	@tracked focused = false;
+	@tracked _focused = false;
 	// #endregion
 
 	// #region Yielded Sub-components
@@ -79,13 +79,13 @@ export default class TwyrItemComponent extends Component {
 	@action
 	handleFocusIn() {
 		this.debug(`handleFocusIn`);
-		this.focused = true;
+		this._focused = true;
 	}
 
 	@action
 	handleFocusOut() {
 		this.debug(`handleFocusOut`);
-		this.focused = false;
+		this._focused = false;
 	}
 
 	@action

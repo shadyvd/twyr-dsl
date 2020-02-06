@@ -91,7 +91,7 @@ export default class TwyrToasterToastComponent extends Component {
 		return '#twyr-toast-fab-wormhole';
 	}
 
-	get destinationElem() {
+	get destinationElement() {
 		return document.querySelector(this.destinationId);
 	}
 

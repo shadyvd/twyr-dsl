@@ -2,7 +2,7 @@
 	class="md-default-theme"
 	style={{this.transformIn}}
 	{{has-class-if @fullscreen "md-dialog-fullscreen"}}
-	{{has-class-if this.contentOverflow "md-content-overflow"}}
+	{{has-class-if this._contentOverflow "md-content-overflow"}}
 	{{did-insert this.didInsert}}
 	{{translate-3d
 		defaultedOpenFrom=@defaultedOpenFrom

@@ -4,8 +4,8 @@
 	max={{this.max}}
 	step={{this.step}}
 	md-discrete={{this.isDiscrete}}
-	{{has-class-if this.isActive "md-active"}}
-	{{has-class-if this.isDragging "md-dragging"}}
+	{{has-class-if this._isActive "md-active"}}
+	{{has-class-if this._isDragging "md-dragging"}}
 	{{has-class-if this.isMinimum "md-min"}}
 	{{did-insert this.didInsert}}
 	{{did-update this.didReceiveArgs @disabled}}

@@ -1,8 +1,8 @@
 <md-tooltip
 	class="md-tooltip md-panel md-origin-{{@position}}"
-	style={{this.computedStyle}}
+	style={{this._computedStyle}}
 	{{css-transition mdShow=this.show}}
-	{{css-transition mdHide=@hide}}
+	{{css-transition mdHide=this.hide}}
 	{{did-insert this.didInsert}}
 	...attributes
 >

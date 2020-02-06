@@ -75,30 +75,30 @@ export default class TwyrDialogComponent extends Component {
 
 	get destinationId() {
 		const destination = this.defaultedParent;
-		const destinationElem = (typeof destination === 'string') ? document.querySelector(destination) : destination;
+		const destinationElement = (typeof destination === 'string') ? document.querySelector(destination) : destination;
 
-		if((typeof destinationElem === 'string') && (destinationElem.charAt(0) === '#')) {
-			this.debug(`destinationId: #${destinationElem.substring(1)}`);
-			return `#${destinationElem.substring(1)}`;
+		if((typeof destinationElement === 'string') && (destinationElement.charAt(0) === '#')) {
+			this.debug(`destinationId: #${destinationElement.substring(1)}`);
+			return `#${destinationElement.substring(1)}`;
 		}
 
-		let id = destinationElem.getAttribute('id');
+		let id = destinationElement.getAttribute('id');
 		if(id) {
 			this.debug(`destinationId: #${id}`);
 			return `#${id}`;
 		}
 
 		id = (this._element) ? `${this._element.getAttribute('id')}-parent` : 'parent';
-		destinationElem.setAttribute('id', id);
+		destinationElement.setAttribute('id', id);
 
 		this.debug(`destinationId: #${id}`);
 		return id;
 	}
 
-	get destinationElem() {
+	get destinationElement() {
 		const destElem = document.querySelector(this.destinationId);
 
-		this.debug(`destinationElem: `, destElem);
+		this.debug(`destinationElement: `, destElem);
 		return destElem;
 	}
 

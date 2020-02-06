@@ -207,11 +207,6 @@
 </TwyrCard>
 
 <TwyrToaster />
-{{!-- <TwyrToaster::Toast @capsule={{true}} as |Toast|>
-	<Toast.Text>Hello</Toast.Text>
-	<TwyrButton @accent={{true}} >Undo</TwyrButton>
-</TwyrToaster::Toast> --}}
-
 <LiquidOutlet @class="layout-column layout-align-start-stretch" />
 
 {{#if this.showDialogWithParent}}
@@ -237,6 +232,11 @@
 			<div class="flex layout-row layout-align-start-center">
 				<TwyrInput type="number" @label="Slider Value" @primary={{true}} @min={{0}} @max={{255}} @maxLength={{3}} @value={{this.sliderValue}} @onChange={{this.changeSliderValue}} />
 				<TwyrSlider class="flex" @accent={{true}} @min={{0}} @max={{255}} @value={{this.sliderValue}} @onChange={{this.changeSliderValue}} disabled={{this.isOpaque}} />
+			</div>
+			<div class="flex layout-row layout-align-start-center">
+				<TwyrSelect @options={{this.sizes}} @label="Size" @required={{true}} @selected={{this.pizzaSize}} @onChange={{this.setPizzaSize}} as |Size|>
+					{{Size}}
+				</TwyrSelect>
 			</div>
 		</TwyrDialog::Content>
 

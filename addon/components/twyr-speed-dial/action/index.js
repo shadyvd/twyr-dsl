@@ -27,7 +27,6 @@ export default class TwyrSpeedDialActionComponent extends Component {
 
 	// #region Tracked Attributes
 	@tracked _elementDidRender = false;
-	// @tracked computedStyle = undefined;
 	// #endregion
 
 	// #region Constructor

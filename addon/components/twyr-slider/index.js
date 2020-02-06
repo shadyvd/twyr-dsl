@@ -20,8 +20,8 @@ export default class TwyrSliderComponent extends Component {
 	// #endregion
 
 	// #region Tracked Attributes
-	@tracked isActive = false;
-	@tracked isDragging = false;
+	@tracked _isActive = false;
+	@tracked _isDragging = false;
 	// #endregion
 
 	// #region Constructor
@@ -91,8 +91,8 @@ export default class TwyrSliderComponent extends Component {
 		}
 
 		this.debug(`handleDragStart::final`);
-		this.isActive = true;
-		this.isDragging = true;
+		this._isActive = true;
+		this._isDragging = true;
 
 		this._element.focus();
 		this._setValueFromEvent(event.center.x);
@@ -102,7 +102,7 @@ export default class TwyrSliderComponent extends Component {
 	handleDrag(event) {
 		this.debug(`handleDrag: `, event);
 
-		if(!this.isDragging) {
+		if(!this._isDragging) {
 			this.debug(`handleDrag::isDragging: false`);
 			return;
 		}
@@ -130,7 +130,7 @@ export default class TwyrSliderComponent extends Component {
 	handleDragEnd(event) {
 		this.debug(`handleDragEnd: `, event);
 
-		if(!this.isDragging) {
+		if(!this._isDragging) {
 			this.debug(`handleDragEnd::isDragging: false`);
 			return;
 		}
@@ -146,8 +146,8 @@ export default class TwyrSliderComponent extends Component {
 		}
 
 		this.debug(`handleDragEnd::final`);
-		this.isActive = false;
-		this.isDragging = false;
+		this._isActive = false;
+		this._isDragging = false;
 	}
 
 	@action

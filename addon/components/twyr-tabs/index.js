@@ -29,8 +29,8 @@ export default class TwyrTabsComponent extends Component {
 	@tracked _previousSelectedTab = null;
 	@tracked _selectedTab = null;
 	@tracked _wrapperWidth = 0;
-	@tracked movingRight = true;
-	@tracked shouldPaginate = true;
+	@tracked _movingRight = true;
+	@tracked _shouldPaginate = true;
 	// #endregion
 
 	// #region Yielded Sub-components
@@ -123,7 +123,7 @@ export default class TwyrTabsComponent extends Component {
 
 	get paginationStyle() {
 		this.debug(`paginationStyle`);
-		return this.shouldPaginate ? htmlSafe(`transform: translate3d(-${this._currentOffset}px, 0px, 0px);`) : undefined;
+		return this._shouldPaginate ? htmlSafe(`transform: translate3d(-${this._currentOffset}px, 0px, 0px);`) : undefined;
 
 	}
 
@@ -143,13 +143,13 @@ export default class TwyrTabsComponent extends Component {
 	}
 
 	get shouldCenter() {
-		this.debug(`shouldCenter? ${!this.shouldPaginate && !!this.args.center}`);
-		return !this.shouldPaginate && !!this.args.center;
+		this.debug(`shouldCenter? ${!this._shouldPaginate && !!this.args.center}`);
+		return !this._shouldPaginate && !!this.args.center;
 	}
 
 	get shouldStretch() {
-		this.debug(`shouldStretch? ${!this.shouldPaginate && this._currentStretch}`);
-		return !this.shouldPaginate && this._currentStretch;
+		this.debug(`shouldStretch? ${!this._shouldPaginate && this._currentStretch}`);
+		return !this._shouldPaginate && this._currentStretch;
 	}
 
 	get stretch() {
@@ -200,7 +200,7 @@ export default class TwyrTabsComponent extends Component {
 	}
 
 	_updateSelectedTab() {
-		this.movingRight = !this._selectedTab || !this._previousSelectedTab || (this._previousSelectedTab.left < this._selectedTab.left);
+		this._movingRight = !this._selectedTab || !this._previousSelectedTab || (this._previousSelectedTab.left < this._selectedTab.left);
 		scheduleOnce('afterRender', this, this.fixOffsetIfNeeded);
 
 		if(!this.args.onChange)
@@ -223,7 +223,7 @@ export default class TwyrTabsComponent extends Component {
 
 		this._canvasWidth = canvasWidth;
 		this._wrapperWidth = wrapperWidth;
-		this.shouldPaginate = (wrapperWidth > canvasWidth);
+		this._shouldPaginate = (wrapperWidth > canvasWidth);
 	}
 
 	_updateStretchTabs() {

@@ -12,7 +12,7 @@
 	...attributes
 >
 	<md-tabs-wrapper {{has-class-if this.shouldStretch "md-stretch-tabs"}}>
-		{{#if this.shouldPaginate}}
+		{{#if this._shouldPaginate}}
 			<md-prev-button
 				role="button"
 				{{has-class-if (not this.canPageBack) "md-disabled"}}
@@ -33,7 +33,7 @@
 		<md-tabs-canvas
 			tabindex="-1"
 			role="tablist"
-			{{has-class-if this.shouldPaginate "md-paginated"}}
+			{{has-class-if this._shouldPaginate "md-paginated"}}
 			{{has-class-if this.shouldCenter "md-center-tabs"}}
 		>
 			<md-pagination-wrapper
@@ -46,7 +46,7 @@
 
 				{{#unless @noInkBar}}
 					<TwyrInkBar
-						@movingRight={{this.movingRight}}
+						@movingRight={{this._movingRight}}
 						@left={{this.inkBar.left}}
 						@right={{this.inkBar.right}}
 					/>

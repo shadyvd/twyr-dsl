@@ -11,7 +11,7 @@ export default class TwyrDialogInnerComponent extends Component {
 	// #endregion
 
 	// #region Tracked Attributes
-	@tracked contentOverflow = false;
+	@tracked _contentOverflow = false;
 	// #endregion
 
 	// #region Constructor
@@ -67,7 +67,7 @@ export default class TwyrDialogInnerComponent extends Component {
 		}
 
 		this.debug(`checkContentOverflow: ${content.scrollHeight > content.clientHeight}`);
-		this.contentOverflow = content.scrollHeight > content.clientHeight;
+		this._contentOverflow = content.scrollHeight > content.clientHeight;
 	}
 	// #endregion
 

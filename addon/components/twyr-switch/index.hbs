@@ -3,7 +3,7 @@
 	role={{this.role}}
 	aria-checked={{this.ariaChecked}}
 	{{has-class-if @value "md-checked"}}
-	{{has-class-if this.isDragging "md-dragging"}}
+	{{has-class-if this._isDragging "md-dragging"}}
 	{{did-insert this.didInsert}}
 	{{did-mutate onMutate=this.didMutate}}
 	{{color-themeable

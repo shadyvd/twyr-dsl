@@ -3,6 +3,7 @@ import debugLogger from 'ember-debug-logger';
 
 import { action } from '@ember/object';
 import { htmlSafe } from '@ember/string';
+import { isPresent } from '@ember/utils';
 import { nextTick } from 'ember-css-transitions/utils/transition-utils';
 import { scheduleOnce } from '@ember/runloop';
 import { tracked } from '@glimmer/tracking';
@@ -13,8 +14,7 @@ export default class TwyrTooltipInnerComponent extends Component {
 	// #endregion
 
 	// #region Tracked Attributes
-	@tracked hide = true;
-	@tracked computedStyle = null;
+	@tracked _computedStyle = null;
 	// #endregion
 
 	// #region Constructor
@@ -38,8 +38,8 @@ export default class TwyrTooltipInnerComponent extends Component {
 			const position = this.args.position;
 
 			const tooltipPosition = this._calculateTooltipPosition(element, anchorElem, position);
-			this.computedStyle = htmlSafe(`top:${tooltipPosition.top}px; left:${tooltipPosition.left}px;`);
-			this.debug(`didInsert::afterRender::computedStyle: ${this.computedStyle}`);
+			this._computedStyle = htmlSafe(`top:${tooltipPosition.top}px; left:${tooltipPosition.left}px;`);
+			this.debug(`didInsert::afterRender::computedStyle: ${this._computedStyle}`);
 
 			if(this.args.updateHide && (typeof this.args.updateHide === 'function'))
 				this.args.updateHide(true);
@@ -59,9 +59,16 @@ export default class TwyrTooltipInnerComponent extends Component {
 	// #endregion
 
 	// #region Computed Properties
+	get hide() {
+		if(isPresent(this.args.hide))
+			return this.args.hide;
+
+		return true;
+	}
+
 	get show() {
-		this.debug(`show: ${!!this.computedStyle}`);
-		return !!this.computedStyle;
+		this.debug(`show: ${!!this._computedStyle}`);
+		return !!this._computedStyle;
 	}
 	// #endregion
 

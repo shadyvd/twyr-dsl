@@ -9,6 +9,9 @@ export default class ApplicationController extends Controller {
 	@service twyrToaster;
 	_toast = null;
 
+	sizes = ['small', 'medium', 'large', 'xl'];
+	pizzaSize = 'medium';
+
 	@tracked isOpaque = true;
 	@tracked isSidenavOpen = true;
 	@tracked showDialogWithParent = false;
@@ -107,5 +110,9 @@ export default class ApplicationController extends Controller {
 	@action toggleDial(newValue) {
 		newValue = (newValue !== undefined) ? !!newValue : !this.isDialOpen;
 		this.isDialOpen = newValue;
+	}
+
+	@action setPizzaSize(zise) {
+		this.pizzaSize = zise;
 	}
 }
