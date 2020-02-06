@@ -55,7 +55,7 @@
     "@ember/jquery": "^1.1.0",
     "classlist-polyfill": "^1.2.0",
     "element-closest": "^3.0.2",
-    "ember-cli-babel": "^7.14.1",
+    "ember-cli-babel": "^7.17.1",
     "ember-cli-htmlbars": "^4.2.2",
     "ember-in-element-polyfill": "^0.2.1",
     "ember-maybe-in-element": "^0.4.0",
@@ -133,7 +133,7 @@
     "loader.js": "^4.7.0",
     "node-sass": "^4.13.1",
     "qunit-dom": "^1.0.0",
-    "resolve": "^1.15.0",
+    "resolve": "^1.15.1",
     "virtual-each": "^0.6.2"
   },
   "engines": {
