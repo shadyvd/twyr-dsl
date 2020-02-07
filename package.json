@@ -25,16 +25,20 @@
 		"email": "shadyvd@hotmail.com",
 		"url": "https://twyr.github.io"
 	},
-	"maintainers": [{
-		"name": "Vish Desai",
-		"email": "shadyvd@hotmail.com",
-		"url": "https://twyr.github.io"
-	}],
-	"contributors": [{
-		"name": "Vish Desai",
-		"email": "shadyvd@hotmail.com",
-		"url": "https://twyr.github.io"
-	}],
+	"maintainers": [
+		{
+			"name": "Vish Desai",
+			"email": "shadyvd@hotmail.com",
+			"url": "https://twyr.github.io"
+		}
+	],
+	"contributors": [
+		{
+			"name": "Vish Desai",
+			"email": "shadyvd@hotmail.com",
+			"url": "https://twyr.github.io"
+		}
+	],
 	"directories": {
 		"doc": "doc",
 		"test": "tests"
@@ -51,7 +55,7 @@
 		"@ember/jquery": "^1.1.0",
 		"classlist-polyfill": "^1.2.0",
 		"element-closest": "^3.0.2",
-		"ember-cli-babel": "^7.17.1",
+		"ember-cli-babel": "^7.17.2",
 		"ember-cli-htmlbars": "^4.2.2",
 		"ember-in-element-polyfill": "^0.2.1",
 		"ember-maybe-in-element": "^0.4.0",
