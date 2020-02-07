@@ -1,4 +1,4 @@
-{{#if this.isGroup}}
+{{#if @isGroup}}
 	{{#if @select.loading}}
 		{{#if @loadingMessage}}
 			<TwyrProgressCircular/>
@@ -20,9 +20,10 @@
 					@extra={{@extra}}
 					@isGroup={{true}}
 					role="group"
-					class="ember-power-select-options" as |option|
+					class="ember-power-select-options"
+					as |option|
 				>
-				{{yield option @select}}
+					{{yield option @select}}
 				</Options>
 			</md-optgroup>
 		{{else}}

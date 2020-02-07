@@ -61,19 +61,25 @@ export default class TwyrSelectEbdContentComponent extends Component {
 
 	// #region Computed Properties
 	get customStyles() {
-		if(this._isActive)
+		if(this._isActive) {
+			this.debug(`customStyles: {}`);
 			return {};
+		}
 
+		this.debug(`customStyles: `, this.otherStyles);
 		return this.otherStyles;
 	}
 
 	get destinationElement() {
+		this.debug(`destinationElement: `, document.getElementById(this.args.destination));
 		return document.getElementById(this.args.destination);
 	}
 	// #endregion
 
 	// #region Private Methods
 	_afterAnimateIn(dropdownElement) {
+		this.debug(`_afterAnimateIn`);
+
 		this.args.dropdown.actions.reposition();
 		this._isActive = true;
 
@@ -81,6 +87,7 @@ export default class TwyrSelectEbdContentComponent extends Component {
 	}
 
 	_focusOption(e, direction) {
+		this.debug(`_focusOption`);
 		let focusTarget = e.target.closest('md-option');
 
 		do {
@@ -115,6 +122,7 @@ export default class TwyrSelectEbdContentComponent extends Component {
 			return false;
 		});
 
+		this.debug(`_shouldReposition: ${shouldReposition}`);
 		return shouldReposition;
 	}
 	// #endregion
@@ -122,6 +130,7 @@ export default class TwyrSelectEbdContentComponent extends Component {
 	// #region Actions
 	@action
 	animateIn(dropdownElement) {
+		this.debug(`animateIn`);
 		next(() => {
 			scheduleOnce('afterRender', this, this._afterAnimateIn, dropdownElement);
 		});
@@ -129,6 +138,8 @@ export default class TwyrSelectEbdContentComponent extends Component {
 
 	@action
 	animateOut(dropdownElement) {
+		this.debug(`animateOut`);
+
 		const parentElement = this.args.renderInPlace ? dropdownElement.parentElement.parentElement : dropdownElement.parentElement;
 		const clone = dropdownElement.cloneNode(true);
 		clone.id = `${clone.id}--clone`;
@@ -155,6 +166,7 @@ export default class TwyrSelectEbdContentComponent extends Component {
 
 	@action
 	focusItem(element) {
+		this.debug(`focusItem`);
 		let focusTarget = element.querySelector('md-option[aria-selected="true"]');
 
 		// default to first not disabled option
@@ -168,38 +180,39 @@ export default class TwyrSelectEbdContentComponent extends Component {
 	}
 
 	@action
-	handleKeyDown(ev) {
-		switch (ev.which) {
+	handleKeyDown(event) {
+		this.debug(`handleKeyDown`);
+		switch (event.which) {
 			case this.constants.KEYCODE.ESCAPE:
 				this.dropdown.actions.close();
 			break;
 
 			case this.constants.KEYCODE.LEFT_ARROW:
 			case this.constants.KEYCODE.UP_ARROW: {
-				ev.preventDefault();
+				event.preventDefault();
 
 				let newHighlighted = advanceSelectableOption(this.select.results, this.select.highlighted, -1);
-				this.select.actions.highlight(newHighlighted, ev);
+				this.select.actions.highlight(newHighlighted, event);
 				this.select.actions.scrollTo(newHighlighted);
 
-				this._focusOption(ev, -1);
+				this._focusOption(event, -1);
 			}
 			break;
 
 			case this.constants.KEYCODE.RIGHT_ARROW:
 			case this.constants.KEYCODE.DOWN_ARROW: {
-				ev.preventDefault();
+				event.preventDefault();
 
 				let newHighlighted = advanceSelectableOption(this.select.results, this.select.highlighted, 1);
-				this.select.actions.highlight(newHighlighted, ev);
+				this.select.actions.highlight(newHighlighted, event);
 				this.select.actions.scrollTo(newHighlighted);
 
-				this._focusOption(ev, 1);
+				this._focusOption(event, 1);
 			}
 			break;
 
 			case this.constants.KEYCODE.ENTER:
-				ev.preventDefault();
+				event.preventDefault();
 				this.select.actions.choose(this.select.highlighted);
 			break;
 		}

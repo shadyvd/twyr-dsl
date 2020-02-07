@@ -88,6 +88,7 @@ export default class ApplicationController extends Controller {
 
 	@action
 	changeCheckboxValue(newVal) {
+		this.debug('changeCeckboxValue: ', newVal);
 		this.checkBoxValue = newVal;
 	}
 
@@ -99,6 +100,7 @@ export default class ApplicationController extends Controller {
 
 	@action
 	changeSliderValue(newVal) {
+		this.debug('changeSliderValue: ', newVal);
 		this.sliderValue = newVal;
 	}
 
@@ -109,10 +111,13 @@ export default class ApplicationController extends Controller {
 
 	@action toggleDial(newValue) {
 		newValue = (newValue !== undefined) ? !!newValue : !this.isDialOpen;
+
+		this.debug('toggleDial: ', newValue);
 		this.isDialOpen = newValue;
 	}
 
 	@action setPizzaSize(zise) {
+		this.debug('setPizzaSize: ', zise);
 		this.pizzaSize = zise;
 	}
 }

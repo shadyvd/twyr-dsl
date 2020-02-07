@@ -35,6 +35,7 @@ export default class TwyrSelectComponent extends Component {
 	// #region Tracked Attributes
 	@tracked isDisabled = false;
 	@tracked isFocused = false;
+	@tracked isInvalid = false;
 	@tracked isTouched = false;
 	@tracked publicAPI = null;
 	// #endregion
@@ -77,36 +78,33 @@ export default class TwyrSelectComponent extends Component {
 		this.debug(`didMutate`);
 		this.isDisabled = (this.args.disabled || (this._element && this._element.hasAttribute('disabled')));
 	}
-
-	willDestroy() {
-		this.debug(`willDestroy`);
-		super.willDestroy(...arguments);
-	}
 	// #endregion
 
 	// #region Computed Properties
 	get isFocusedAndSelected() {
-		return this.args.selected && this.isFocused;
+		this.debug(`isFocusedAndSelected: ${this.args.selected && this.isFocused}`);
+		return (this.args.selected && this.isFocused);
 	}
 
 	get isInvalidAndTouched() {
-		return this.args.isInvalid && this.isTouched;
+		this.debug(`isInvalidAndTouched: ${this.isInvalid && this.isTouched}`);
+		return (this.isInvalid && this.isTouched);
 	}
 	// #endregion
 
 	// #region Private Methods
 	_clamp(num, min, max) {
+		this.debug(`_clamp: ${Math.min(Math.max(num, min), max)}`);
 		return Math.min(Math.max(num, min), max);
 	}
 
 	_notifyValidityChange() {
+		this.debug(`_notifyValidityChange`);
 		return;
 	}
-	// #endregion
 
-	// #region Actions
 	@action
-	calculatePosition(trigger, content) {
+	_calculatePosition(trigger, content) {
 		const containerNode = content;
 		const contentNode = content.querySelector('md-content');
 		const parentNode = document.body;
@@ -219,43 +217,63 @@ export default class TwyrSelectComponent extends Component {
 		};
 
 		this._didAnimateScale = true;
+		this.debug(`_calculatePosition: `, {
+			'style': style,
+			'horizontalPosition': '',
+			'verticalPosition': ''
+		});
+
 		return {
 			'style': style,
 			'horizontalPosition': '',
 			'verticalPosition': ''
 		};
 	}
+	// #endregion
 
-	@action onBlur() {
+	// #region Actions
+	@action
+	onBlur() {
+		this.debug(`onBlur`);
 		this.isFocused = false;
 	}
 
 	@action
 	onChange() {
-		if(isPresent(this.args.onChange) && (typeof this.args.onChange === 'function'))
+		this.debug(`onChange`);
+		if(isPresent(this.args.onChange) && (typeof this.args.onChange === 'function')) {
+			this.debug(`onChange: @onChange`);
 			this.args.onChange(...arguments);
+		}
 	}
 
 	@action
 	onClose() {
+		this.debug(`onClose`);
+
 		this._didAnimateScale = false;
 		this.isTouched = true;
 
 		this._notifyValidityChange();
 	}
 
-	@action onFocus() {
+	@action
+	onFocus() {
+		this.debug(`onFocus`);
 		this.isFocused = true;
 	}
 
 	@action
 	onOpen() {
+		this.debug(`onOpen`);
+
 		this._didAnimateScale = false;
 		this._notifyValidityChange();
 	}
 
 	@action
 	setPublicAPI(publicAPI) {
+		this.debug(`setPublicAPI: `, publicAPI);
 		this.publicAPI = publicAPI;
 	}
 	// #endregion

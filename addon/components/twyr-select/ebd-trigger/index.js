@@ -15,7 +15,8 @@ export default class TwyrSelectEbdTriggerComponent extends Component {
 
 	// #region Computed Properties
 	get shouldShowLabel() {
-		return this.args.label && this.args.selected;
+		this.debug(`shouldShowLabel: ${this.args.label && this.args.selected}`);
+		return (this.args.label && this.args.selected);
 	}
 	// #endregion
 }
