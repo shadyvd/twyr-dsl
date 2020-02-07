@@ -5,7 +5,12 @@
 	...attributes
 >
 	{{#if this.shouldRenderButton}}
-		<TwyrButton @onClick={{fn this.handleClick}} @href={{@href}} @target={{@target}} @disabled={{@disabled}}>
+		<TwyrButton
+			@disabled={{@disabled}}
+			@href={{@href}}
+			@target={{@target}}
+			@onClick={{this.handleClick}}
+		>
 			{{yield}}
 		</TwyrButton>
 	{{else}}

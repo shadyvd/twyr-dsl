@@ -120,14 +120,6 @@ export default class TwyrChipComponent extends Component {
 	}
 
 	@action
-	handleAutocompleteKeydown(select, e) {
-		if(e.key !== 'Enter')
-			return;
-
-		this.handleAddItem(e.target.value, select);
-	}
-
-	@action
 	handleAddItem(newItem, select) {
 		if(this.requireMatch)
 			return;

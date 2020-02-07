@@ -21,7 +21,7 @@
 	{{!-- @width={{@width}} --}}
 	@height={{@height}}
 	@otherStyles={{this.customStyles}}
-	@shouldReposition={{fn this.shouldReposition}}
+	@shouldReposition={{this._shouldReposition}}
 	{{did-insert this.animateIn}}
 	{{will-destroy this.animateOut}}
 	...attributes

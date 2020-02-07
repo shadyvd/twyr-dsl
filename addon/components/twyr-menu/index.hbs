@@ -1,9 +1,9 @@
 <BasicDropdown
 	@triggerComponent={{this.subComponents.trigger}}
 	@contentComponent={{this.subComponents.content}}
-	@calculatePosition={{fn this._calculatePosition}}
-	@onClose={{fn this.close}}
-	@onOpen={{fn this.open}}
+	@calculatePosition={{this._calculatePosition}}
+	@onClose={{this.close}}
+	@onOpen={{this.open}}
 	...attributes
 	as |BD|
 >

@@ -95,6 +95,28 @@ export default class TwyrSelectEbdContentComponent extends Component {
 			focusTarget.focus();
 		}
 	}
+
+	@action
+	_shouldReposition(mutations) {
+		let shouldReposition = false;
+
+		shouldReposition = Array.prototype.slice.call(mutations[0].addedNodes).some((node) => {
+			if (node.classList) {
+				return !node.classList.contains('md-ripple') && (node.nodeName !== '#comment') && !(node.nodeName === '#text' && node.nodeValue === '');
+			}
+
+			return false;
+		});
+
+		shouldReposition = shouldReposition || Array.prototype.slice.call(mutations[0].removedNodes).some((node) => {
+			if (node.classList) {
+				return !node.classList.contains('md-ripple') && (node.nodeName !== '#comment') && !(node.nodeName === '#text' && node.nodeValue === '');
+			}
+			return false;
+		});
+
+		return shouldReposition;
+	}
 	// #endregion
 
 	// #region Actions
@@ -181,28 +203,6 @@ export default class TwyrSelectEbdContentComponent extends Component {
 				this.select.actions.choose(this.select.highlighted);
 			break;
 		}
-	}
-
-	@action
-	shouldReposition(mutations) {
-		let shouldReposition = false;
-
-		shouldReposition = Array.prototype.slice.call(mutations[0].addedNodes).some((node) => {
-			if (node.classList) {
-				return !node.classList.contains('md-ripple') && (node.nodeName !== '#comment') && !(node.nodeName === '#text' && node.nodeValue === '');
-			}
-
-			return false;
-		});
-
-		shouldReposition = shouldReposition || Array.prototype.slice.call(mutations[0].removedNodes).some((node) => {
-			if (node.classList) {
-				return !node.classList.contains('md-ripple') && (node.nodeName !== '#comment') && !(node.nodeName === '#text' && node.nodeValue === '');
-			}
-			return false;
-		});
-
-		return shouldReposition;
 	}
 	// #endregion
 }
