@@ -1,0 +1,58 @@
+{{#with
+	(hash
+		id=this.id
+		Controls=this._dropdownControls
+
+		Content=(component
+			(or @ContentComponent this.subComponents.content)
+
+			destinationId=this.destinationId
+			dropdownId=this.id
+			dropdownControls=this._dropdownControls
+			dropdownStatus=this._dropdownStatus
+
+			preventScroll=@preventScroll
+			renderInPlace=this.renderInPlace
+			rootEventType=(or @rootEventType "click")
+
+			position=this._currentPosition
+			otherStyles=this._otherStyles
+
+			xAlign=this.xAlign
+			yAlign=this.yAlign
+
+			registerWithDropdown=this.registerContentElement
+		)
+
+		Status=this._dropdownStatus
+
+		Trigger=(component
+			(or @TriggerComponent this.subComponents.trigger)
+
+			dropdownId=this.id
+			dropdownControls=this._dropdownControls
+			dropdownStatus=this._dropdownStatus
+
+			renderInPlace=this.renderInPlace
+
+			position=this._currentPosition
+			otherStyles=this._otherStyles
+
+			xAlign=this.xAlign
+			yAlign=this.yAlign
+
+			registerWithDropdown=this.registerTriggerElement
+		)
+	)
+	as |Dropdown|
+}}
+	<div
+		class={{if this.renderInPlace "position-relative"}}
+		{{requires-id}}
+		{{did-insert this.didInsert}}
+		{{did-mutate onMutate=this.didMutate}}
+		...attributes
+	>
+		{{yield Dropdown}}
+	</div>
+{{/with}}

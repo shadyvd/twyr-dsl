@@ -1,0 +1,26 @@
+{{#if @dropdownStatus.isOpen}}
+	<div class="ember-basic-dropdown-content-wormhole-origin">
+		{{#maybe-in-element this.destinationElement @renderInPlace}}
+			{{#if @overlay}}
+				<div class="twyr-basic-dropdown-overlay"></div>
+			{{/if}}
+
+			{{#let (element (or @htmlTag "div")) as |Element|}}
+				<Element
+					id={{this.dropdownId}}
+					class="twyr-basic-dropdown-content twyr-basic-dropdown-content--{{@xAlign}} twyr-basic-dropdown-content--{{@yAlign}} {{this.animationClass}}{{if @renderInPlace " twyr-basic-dropdown-content--in-place"}}"
+					style={{this.computedStyle}}
+					dir={{@dir}}
+					{{did-insert this.didInsert}}
+					{{did-mutate onMutate=this.didMutate attributes=false childList=true subtree=true}}
+					...attributes
+				>
+					{{yield}}
+				</Element>
+			{{/let}}
+		{{/maybe-in-element}}
+	</div>
+{{else}}
+	<div id={{this.dropdownId}} class="twyr-basic-dropdown-content-placeholder" style="display: none;">
+	</div>
+{{/if}}
