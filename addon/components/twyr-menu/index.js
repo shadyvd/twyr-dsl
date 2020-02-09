@@ -112,7 +112,7 @@ export default class TwyrMenuComponent extends Component {
 			break;
 
 			default:
-				alert(`Invalid target mode '${positionMode.top}' specified for paper-menu on Y axis.`);
+				alert(`Invalid target mode '${positionMode.top}' specified for twyr-menu on Y axis.`);
 			break;
 		}
 
@@ -151,7 +151,7 @@ export default class TwyrMenuComponent extends Component {
 			break;
 
 			default:
-				alert(`Invalid target mode '${positionMode.left}' specified for paper-menu on X axis.`);
+				alert(`Invalid target mode '${positionMode.left}' specified for twyr-menu on X axis.`);
 			break;
 		}
 

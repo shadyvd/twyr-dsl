@@ -34,6 +34,7 @@ export default class DidMutateModifier extends Modifier {
 			'subtree': this.subtree
 		};
 
+		this._observer.disconnect();
 		this._observer.observe(this.element, options);
 	}
 
