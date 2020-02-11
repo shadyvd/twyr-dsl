@@ -1,5 +1,5 @@
 {{#if @dropdownStatus.isOpen}}
-	<div class="ember-basic-dropdown-content-wormhole-origin">
+	<div class="twyr-basic-dropdown-content-wormhole-origin">
 		{{#maybe-in-element this.destinationElement @renderInPlace}}
 			{{#if @overlay}}
 				<div class="twyr-basic-dropdown-overlay"></div>
@@ -13,6 +13,7 @@
 					dir={{@dir}}
 					{{did-insert this.didInsert}}
 					{{did-mutate onMutate=this.didMutate attributes=false childList=true subtree=true}}
+					{{will-destroy this.willTeardown}}
 					...attributes
 				>
 					{{yield}}
@@ -21,6 +22,6 @@
 		{{/maybe-in-element}}
 	</div>
 {{else}}
-	<div id="{{@dropdownId}}-content-placeholder" class="twyr-basic-dropdown-content-placeholder" style="display:none;">
+	<div id="twyr-basic-dropdown-content-{{@dropdownId}}" class="twyr-basic-dropdown-content-placeholder" style="display:none;">
 	</div>
 {{/if}}

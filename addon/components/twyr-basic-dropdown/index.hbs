@@ -1,6 +1,6 @@
 {{#with
 	(hash
-		id=this.id
+		id=this._elementId
 		Controls=this._dropdownControls
 
 		Content=(component
@@ -43,14 +43,17 @@
 
 			registerWithDropdown=this.registerTriggerElement
 		)
+
+		xAlign=this.xAlign
+		yAlign=this.yAlign
 	)
 	as |Dropdown|
 }}
 	<div
-		class={{if this.renderInPlace "position-relative"}}
+		class="{{if this.renderInPlace "twyr-basic-dropdown position-relative"}}"
 		{{requires-id}}
 		{{did-insert this.didInsert}}
-		{{did-mutate onMutate=this.didMutate  attributeFilter=(array "disabled" "id")}}
+		{{did-mutate onMutate=this.didMutate attributeFilter=(array "disabled" "id")}}
 		...attributes
 	>
 		{{yield Dropdown}}

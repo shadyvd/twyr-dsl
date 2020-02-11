@@ -74,11 +74,16 @@
 					</Dial.Actions>
 				</TwyrSpeedDial>
 			</Text.Headline>
-			<Text.Subhead>
-				<TwyrBasicDropdown class="ml-4" as |Dropdown|>
-					<Dropdown.Trigger>Click me</Dropdown.Trigger>
-					<Dropdown.Content>Hello world</Dropdown.Content>
+			<Text.Subhead class="layout-row layout-align-start-center">
+				<TwyrBasicDropdown class="mx-4" @setAlign={{this.setAlign}} as |Dropdown|>
+					<Dropdown.Trigger>Click me Twyr</Dropdown.Trigger>
+					<Dropdown.Content>Hello world, Twyr</Dropdown.Content>
 				</TwyrBasicDropdown>
+
+				<BasicDropdown class="ml-4" as |Dropdown|>
+					<Dropdown.Trigger>Click me Basic</Dropdown.Trigger>
+					<Dropdown.Content>Hello world, basic</Dropdown.Content>
+				</BasicDropdown>
 			</Text.Subhead>
 		</Title.Text>
 	</Card.Title>

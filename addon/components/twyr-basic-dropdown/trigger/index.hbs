@@ -1,10 +1,9 @@
 {{#let (element (or @htmlTag "div")) as |Element|}}
 	<Element
 		id="{{@dropdownId}}-trigger"
-		class="twyr-basic-dropdown-trigger{{if @renderInPlace " twyr-basic-dropdown-trigger--in-place"}}{{if @xAlign (concat " twur-basic-dropdown-trigger--" @xAlign)}}{{if @yAlign (concat " twyr-basic-dropdown-trigger--" @yAlign)}}"
+		class="twyr-basic-dropdown-trigger{{if @renderInPlace " twyr-basic-dropdown-trigger--in-place"}}{{if @xAlign (concat " twyr-basic-dropdown-trigger--" @xAlign)}}{{if @yAlign (concat " twyr-basic-dropdown-trigger--" @yAlign)}}"
 		role="button"
 		tabindex={{unless @dropdownStatus.isDisabled "0"}}
-		aria-owns="twyr-basic-dropdown-content-{{@dropdownId}}"
 		aria-expanded={{if @dropdownStatus.isOpen "true"}}
 		aria-disabled={{if @dropdownStatus.isDisabled "true"}}
 		{{did-insert this.didInsert}}

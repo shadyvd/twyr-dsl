@@ -22,7 +22,7 @@ const closestContent = function closestContent(el) {
 const dropdownIsValidParent = function dropdownIsValidParent(el, dropdownId) {
 	const closestDropdown = closestContent(el);
 	if (closestDropdown) {
-		const trigger = document.querySelector(`[aria-owns=twyr-basic-dropdown-content-${closestDropdown.getAttribute('id').replace('-content', '')}]`);
+		const trigger = document.getElementById(`${closestDropdown.getAttribute('id')}-trigger]`);
 		const parentDropdown = closestContent(trigger);
 
 		return (parentDropdown && parentDropdown.getAttribute('id') === dropdownId) || dropdownIsValidParent(parentDropdown, dropdownId);
@@ -55,10 +55,11 @@ export default class TwyrBasicDropdownContentComponent extends Component {
 	debug = debugLogger('twyr-basic-dropdown-content');
 
 	_element = null;
+	_hasAnimatedIn = false;
+	_hasMoved = false;
 	// #endregion
 
 	// #region Tracked Attributes
-	@tracked _hasAnimatedIn = false;
 	@tracked _scrollableAncestors = A([]);
 	// #endregion
 
@@ -74,6 +75,9 @@ export default class TwyrBasicDropdownContentComponent extends Component {
 	didInsert(element) {
 		this.debug(`didInsert`);
 		this._element = element;
+
+		this._hasAnimatedIn = false;
+		this._hasMoved = false;
 
 		if(isPresent(this.args.registerWithDropdown) && (typeof this.args.registerWithDropdown === 'function')) {
 			this.debug(`didInsert::registerWithDropdown`);
@@ -109,6 +113,19 @@ export default class TwyrBasicDropdownContentComponent extends Component {
 	@action
 	didMutate(mutations) {
 		this.debug(`didMutate`);
+		if(!this._hasAnimatedIn) {
+			this._hasAnimatedIn = true;
+
+			this.debug(`didMutate::_scrollbarAncestors`);
+			this._setScrollableAncestors();
+
+			this.debug(`didMutate::_addScrollHandling`);
+			this._addScrollHandling();
+
+			this.debug(`didMutate::_animateIn`);
+			this._animateIn();
+		}
+
 		let shouldReposition = false;
 		shouldReposition = Array.prototype.slice.call(mutations[0].addedNodes).some((node) => {
 			return node.nodeName !== '#comment' && !(node.nodeName === '#text' && node.nodeValue === '');
@@ -128,31 +145,29 @@ export default class TwyrBasicDropdownContentComponent extends Component {
 		}
 	}
 
-	willDestroy() {
-		this.debug(`willDestroy`);
+	@action
+	willTeardown() {
+		this.debug(`willTeardown`);
 
-		this.debug(`willDestroy::_animateOut`);
+		this.debug(`willTeardown::_animateOut`);
 		this._animateOut();
 
-		this.debug(`willDestroy::_removeScrollHandling`);
+		this.debug(`willTeardown::_removeScrollHandling`);
 		this._removeScrollHandling();
 
-		this.debug(`willDestroy::_scrollableAncestors::clear`);
+		this.debug(`willTeardown::_scrollableAncestors::clear`);
 		this._scrollableAncestors.clear();
 
 		if (this.isTouchDevice) {
-			this.debug(`willDestroy::removeTouchEventListeners`);
+			this.debug(`willTeardown::removeTouchEventListeners`);
 			document.removeEventListener('touchend', this.handleRootMousedown, true);
 			document.removeEventListener('touchstart', this.handleTouchstart, true);
 		}
 
-		this.debug(`willDestroy::removeEventListeners`);
+		this.debug(`willTeardown::removeEventListeners`);
 		window.removeEventListener('resize', this.runloopAwareReposition);
 		window.removeEventListener('orientationchange', this.runloopAwareReposition);
-		document.removeEventListener(this.rootEventType, this.handleRootMousedown, true);
-
-		this.debug(`willDestroy::super`);
-		super.willDestroy(...arguments);
+		document.removeEventListener(this.args.rootEventType, this.handleRootMousedown, true);
 	}
 	// #endregion
 
@@ -164,7 +179,7 @@ export default class TwyrBasicDropdownContentComponent extends Component {
 
 	get animationEnabled() {
 		if(isPresent(this.args.animationEnabled)) {
-			this.debug(`animationEnabled: ${this.args.animationEnabled}`);
+			this.debug(`animationEnabled::args: ${this.args.animationEnabled}`);
 			return this.args.animationEnabled;
 		}
 
@@ -186,26 +201,30 @@ export default class TwyrBasicDropdownContentComponent extends Component {
 			return htmlSafe(style);
 
 		if(isPresent(this.args.position.top)) {
-			style += `top: ${this.args.position.top}px;`;
+			style += `top:${this.args.position.top}px;`;
 		}
 
 		if(isPresent(this.args.position.left)) {
-			style += `left: ${this.args.position.left}px;`;
+			style += `left:${this.args.position.left}px;`;
+		}
+
+		if(isPresent(this.args.position.bottom)) {
+			style += `bottom:${this.args.position.bottom}px;`;
 		}
 
 		if(isPresent(this.args.position.right)) {
-			style += `right: ${this.args.position.right}px;`;
+			style += `right:${this.args.position.right}px;`;
 		}
 
 		if(isPresent(this.args.position.width)) {
-			style += `width: ${this.args.position.width}px;`;
+			style += `width:${this.args.position.width}px;`;
 		}
 
 		if(isPresent(this.args.position.height)) {
-			style += `height: ${this.args.position.height}px`;
+			style += `height:${this.args.position.height}px`;
 		}
 
-		this.debug(`computedStyle: ${htmlSafe(style)}`);
+		this.debug(`computedStyle: "${htmlSafe(style)}"`);
 		return htmlSafe(style);
 	}
 
@@ -235,6 +254,7 @@ export default class TwyrBasicDropdownContentComponent extends Component {
 		this.debug(`_addScrollHandling`);
 		if (this.args.preventScroll === true) {
 			this.debug(`_addScrollHandling::preventScroll::true`);
+
 			let wheelHandler = (event) => {
 				if (this._element.contains(event.target) || this._element === event.target) {
 					// Discover the amount of scrollable canvas that is within the dropdown.
@@ -303,6 +323,7 @@ export default class TwyrBasicDropdownContentComponent extends Component {
 		}
 		this.debug(`_animateIn::waitForAnimations`);
 		waitForAnimations(this._element, () => {
+			this.debug(`_animateIn::waitForAnimations done!`);
 			this._hasAnimatedIn = true;
 		});
 	}
@@ -319,19 +340,20 @@ export default class TwyrBasicDropdownContentComponent extends Component {
 		let clone = this._element.cloneNode(true);
 		clone.id = `${clone.id}--clone`;
 
-		clone.classList.remove(...this.animationClass.split(' '));
+		if(this.animationClass.trim() !== '') clone.classList.remove(...this.animationClass.split(' '));
 		clone.classList.add(...`twyr-basic-dropdown--transitioning-out`.split(' '));
 
 		parentElement.appendChild(clone);
 
 		this.debug(`_animateOut::waitForAnimations`);
-		waitForAnimations(clone, function () {
+		waitForAnimations(clone, () => {
+			this.debug(`_animateOut::waitForAnimations done!`);
 			parentElement.removeChild(clone);
 		});
 	}
 
 	_setScrollableAncestors() {
-		const triggerElement = document.querySelector(`[id=${this.args.dropdownId}-trigger]`);
+		const triggerElement = document.getElementById(`${this.args.dropdownId}-trigger`);
 		this.debug(`_setScrollableAncestors::triggerElement: `, triggerElement);
 
 		const scrollableElements = [];
@@ -362,14 +384,14 @@ export default class TwyrBasicDropdownContentComponent extends Component {
 	// #region Actions
 	@action
 	handleRootMousedown(event) {
-		const triggerElement = document.querySelector(`[id=${this.args.dropdownId}-trigger]`);
+		const triggerElement = document.getElementById(`${this.args.dropdownId}-trigger`);
 		this.debug(`handleRootMousedown::trigger: `, triggerElement);
 
 		if (this._hasMoved || this._element.contains(event.target) || (triggerElement && triggerElement.contains(event.target))) {
 			this.debug(`handleRootMousedown::_hasMoved #1: false`);
 			this._hasMoved = false;
 
-			return;
+			// return;
 		}
 
 		if (dropdownIsValidParent(event.target, this.args.dropdownId)) {

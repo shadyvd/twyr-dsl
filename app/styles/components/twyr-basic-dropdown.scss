@@ -1,35 +1,33 @@
-$twyr-basic-dropdown-content-background-color: #FFF !default;
+$twyr-basic-dropdown-content-background-color: $background;
 $twyr-basic-dropdown-content-z-index: 1000 !default;
 $twyr-basic-dropdown-overlay-background: rgba(0,0,0, 0.5) !default;
 $twyr-basic-dropdown-overlay-pointer-events: none !default;
 
-.twyr-basic-dropdown {
-  position: relative;
-}
 .twyr-basic-dropdown, .twyr-basic-dropdown-content, .twyr-basic-dropdown-content * {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
+
 .twyr-basic-dropdown-content {
-  position: absolute;
-  width: auto;
-  z-index: $twyr-basic-dropdown-content-z-index;
-  background-color: $twyr-basic-dropdown-content-background-color;
+	position: absolute;
+	width: auto;
+	z-index: $twyr-basic-dropdown-content-z-index;
+	background-color: $twyr-basic-dropdown-content-background-color;
 }
+
 .twyr-basic-dropdown-content--left { left: 0; }
 .twyr-basic-dropdown-content--right { right: 0; }
 
-
 .twyr-basic-dropdown-overlay {
-  position: fixed;
-  background: $twyr-basic-dropdown-overlay-background;
-  width: 100%;
-  height: 100%;
-  z-index: 10;
-  top: 0;
-  left: 0;
-  pointer-events: $twyr-basic-dropdown-overlay-pointer-events;
+	position: fixed;
+	background: $twyr-basic-dropdown-overlay-background;
+	width: 100%;
+	height: 100%;
+	z-index: 10;
+	top: 0;
+	left: 0;
+	pointer-events: $twyr-basic-dropdown-overlay-pointer-events;
 }
 
 .twyr-basic-dropdown-content-wormhole-origin {
-  display: inline;
+	display: inline;
 }

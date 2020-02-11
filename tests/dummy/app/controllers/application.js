@@ -27,6 +27,9 @@ export default class ApplicationController extends Controller {
 
 	@tracked isDialOpen = true;
 
+	@tracked _dropdownXAlign = 'auto';
+	@tracked _dropdownYAlign = 'auto';
+
 	constructor() {
 		super(...arguments);
 		this.changeOpaqueInterval = setInterval(() => {
@@ -119,5 +122,10 @@ export default class ApplicationController extends Controller {
 	@action setPizzaSize(zise) {
 		this.debug('setPizzaSize: ', zise);
 		this.pizzaSize = zise;
+	}
+
+	@action setAlign(dropAlign) {
+		this._dropdownXAlign = dropAlign.xAlign;
+		this._dropdownYAlign = dropAlign.yAlign;
 	}
 }
