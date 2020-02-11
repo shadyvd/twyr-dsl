@@ -34,6 +34,8 @@ export default class DidMutateModifier extends Modifier {
 			'subtree': this.subtree
 		};
 
+		if(!this.attributes) delete options.attributeFilter;
+
 		this._observer.disconnect();
 		this._observer.observe(this.element, options);
 	}
