@@ -7,7 +7,7 @@
 
 			{{#let (element (or @htmlTag "div")) as |Element|}}
 				<Element
-					id={{this.dropdownId}}
+					id="{{@dropdownId}}-content"
 					class="twyr-basic-dropdown-content twyr-basic-dropdown-content--{{@xAlign}} twyr-basic-dropdown-content--{{@yAlign}} {{this.animationClass}}{{if @renderInPlace " twyr-basic-dropdown-content--in-place"}}"
 					style={{this.computedStyle}}
 					dir={{@dir}}
@@ -21,6 +21,6 @@
 		{{/maybe-in-element}}
 	</div>
 {{else}}
-	<div id={{this.dropdownId}} class="twyr-basic-dropdown-content-placeholder" style="display: none;">
+	<div id="{{@dropdownId}}-content-placeholder" class="twyr-basic-dropdown-content-placeholder" style="display:none;">
 	</div>
 {{/if}}

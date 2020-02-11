@@ -34,14 +34,17 @@ export default class TwyrBasicDropdownTriggerComponent extends Component {
 		this.debug(`didInsert`);
 		this._element = element;
 
-		if(isPresent(this.args.registerWithDropdown) && (typeof this.args.registerWithDropdown === 'function'))
+		if(isPresent(this.args.registerWithDropdown) && (typeof this.args.registerWithDropdown === 'function')) {
+			this.debug(`didInsert::registerWithDropdown`);
 			this.args.registerWithDropdown(this._element);
+		}
 	}
 
 	willDestroy() {
 		this.debug(`willDestroy`);
 
 		if(typeof document !== undefined) {
+			this.debug(`willDestroy::document::removeEventListener`);
 			document.removeEventListener('mouseup', this._handleMouseup, true);
 			document.removeEventListener('touchmove', this._handleTouchmove);
 		}

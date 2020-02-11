@@ -184,7 +184,7 @@ const calculateWormholedPosition = function calculateWormholedPosition(destinati
 	return positionData;
 };
 
-export default function calculateDropdownPosition(destinationElement, triggerElement, contentElement, options) {
+export function calculateDropdownPosition(destinationElement, triggerElement, contentElement, options) {
 	const func = options.renderInPlace ? calculateInPlacePosition : calculateWormholedPosition;
 	return func(destinationElement, triggerElement, contentElement, options);
 }

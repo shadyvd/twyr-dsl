@@ -5,6 +5,7 @@ import debugLogger from 'ember-debug-logger';
 import { action } from '@ember/object';
 import { calculateDropdownPosition } from 'twyr-dsl/utils/calculate-dropdown-position';
 import { isPresent } from '@ember/utils';
+import { set } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
 export default class TwyrBasicDropdownComponent extends Component {
@@ -15,9 +16,6 @@ export default class TwyrBasicDropdownComponent extends Component {
 	// #endregion
 
 	// #region Tracked Attributes
-	@tracked _dropdownControls = {};
-	@tracked _dropdownStatus = {};
-
 	@tracked _currentPosition = {
 		'top': null,
 		'left': null,
@@ -25,6 +23,9 @@ export default class TwyrBasicDropdownComponent extends Component {
 		'width': null
 	};
 
+	@tracked _dropdownControls = {};
+	@tracked _dropdownStatus = {};
+	@tracked _elementId = null;
 	@tracked _otherStyles = {};
 	// #endregion
 
@@ -45,8 +46,8 @@ export default class TwyrBasicDropdownComponent extends Component {
 		this._dropdownControls.reposition = this.reposition.bind(this);
 		this._dropdownControls.toggle = this.toggle.bind(this);
 
-		this._dropdownStatus.isOpen = false;
-		this._dropdownStatus.isDisabled = false;
+		set(this._dropdownStatus, 'isOpen', false);
+		set(this._dropdownStatus, 'isDisabled', false);
 	}
 	// #endregion
 
@@ -55,6 +56,13 @@ export default class TwyrBasicDropdownComponent extends Component {
 	didInsert(element) {
 		this.debug(`didInsert`);
 		this._element = element;
+
+		if(element.hasAttribute('id')) {
+			this._elementId = element.getAttribute('id');
+		}
+		else {
+			this._elementId = null;
+		}
 
 		// Trigger @tracked behaviour
 		this._dropdownControls = this._dropdownControls;
@@ -70,10 +78,17 @@ export default class TwyrBasicDropdownComponent extends Component {
 	@action
 	didMutate() {
 		this.debug(`didMutate`);
-		this._dropdownStatus.isDisabled = false;
+		set(this._dropdownStatus, 'isDisabled', false);
 
 		if(this._element && this._element.hasAttribute('disabled'))
-			this._dropdownStatus.isDisabled = true;
+			set(this._dropdownStatus, 'isDisabled', true);
+
+		if(this._element.hasAttribute('id')) {
+			this._elementId = this._element.getAttribute('id');
+		}
+		else {
+			this._elementId = null;
+		}
 
 		// If open when disabled, close
 		if(this._dropdownStatus.isOpen && this._dropdownStatus.isDisabled) {
@@ -113,17 +128,6 @@ export default class TwyrBasicDropdownComponent extends Component {
 	// #region Computed Properties
 	get destinationId() {
 		return (config['twyr-basic-dropdown'] && config['twyr-basic-dropdown'].destinationId) || 'twyr-wormhole';
-	}
-
-	get id() {
-		if(!this._element)
-			return null;
-
-		if(!this._element.hasAttribute('id'))
-			return null;
-
-		this.debug(`id: ${this._element.getAttribute('id')}`);
-		return this._element.getAttribute('id');
 	}
 
 	get matchTriggerWidth() {
@@ -212,7 +216,7 @@ export default class TwyrBasicDropdownComponent extends Component {
 		if(this.isDestroying || this.isDestroyed)
 			return;
 
-		this._dropdownStatus.isOpen = false;
+		set(this._dropdownStatus, 'isOpen', false);
 		this._dropdownStatus = this._dropdownStatus;
 
 		if(isPresent(this.args.setStatus) && (typeof this.args.setStatus === 'function'))
@@ -248,7 +252,7 @@ export default class TwyrBasicDropdownComponent extends Component {
 		if(this.isDestroying || this.isDestroyed)
 			return;
 
-		this._dropdownStatus.isOpen = true;
+		set(this._dropdownStatus, 'isOpen', true);
 		this._dropdownStatus = this._dropdownStatus;
 
 		if(isPresent(this.args.setStatus) && (typeof this.args.setStatus === 'function'))
@@ -282,7 +286,8 @@ export default class TwyrBasicDropdownComponent extends Component {
 			'renderInPlace': this.renderInPlace
 		};
 
-		const positionData = (this.args.calculatePosition || calculateDropdownPosition)(destinationElement, triggerElement, contentElement, options);
+		const calcFunc = (this.args.calculatePosition || calculateDropdownPosition);
+		const positionData = calcFunc(destinationElement, triggerElement, contentElement, options);
 		if(isPresent(this.args.setAlign) && (typeof this.args.setAlign === 'function'))
 			this.args.setAlign({ 'xAlign': positionData.xAlign, 'yAlign': positionData.yAlign });
 
