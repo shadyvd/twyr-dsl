@@ -26,7 +26,7 @@
 				<TwyrMenu as |Menu|>
 					<Menu.Trigger>
 						<TwyrButton @icon={{true}}>
-							<TwyrIcon @icon="all-out" @primary={{true}} />
+							<TwyrIcon @icon="all-out" @primary={{true}} @reverseSpin={{true}} />
 						</TwyrButton>
 					</Menu.Trigger>
 
@@ -55,7 +55,7 @@
 				>
 					<Dial.Trigger>
 						<TwyrButton @fab={{true}}>
-							<TwyrIcon @icon="menu" />
+							<TwyrIcon @icon="menu" @spin={{true}} />
 						</TwyrButton>
 					</Dial.Trigger>
 
@@ -75,7 +75,13 @@
 				</TwyrSpeedDial>
 			</Text.Headline>
 			<Text.Subhead class="layout-row layout-align-start-center">
-				<TwyrBasicDropdown class="mx-4" @setAlign={{this.setAlign}} as |Dropdown|>
+				<TwyrBasicDropdown
+					class="mx-4"
+					@xAlign={{this._dropdownXAlign}}
+					@yAlign={{this._dropdownYAlign}}
+					@setAlign={{this.setAlign}}
+					as |Dropdown|
+				>
 					<Dropdown.Trigger>Click me Twyr</Dropdown.Trigger>
 					<Dropdown.Content>Hello world, Twyr</Dropdown.Content>
 				</TwyrBasicDropdown>

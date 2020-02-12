@@ -64,11 +64,6 @@ export default class TwyrBasicDropdownComponent extends Component {
 			this._elementId = this._element.getAttribute('id');
 		}
 
-		// Trigger @tracked behaviour
-		this.debug(`didInsert::Trigger tracked behaviour`);
-		this._dropdownControls = this._dropdownControls;
-		this._dropdownStatus = this._dropdownStatus;
-
 		if(isPresent(this.args.setControls) && (typeof this.args.setControls === 'function')) {
 			this.debug(`didInsert::setControls`);
 			this.args.setControls(Object.assign({}, this._dropdownControls));
@@ -262,7 +257,6 @@ export default class TwyrBasicDropdownComponent extends Component {
 
 		this.debug(`close::trigger tracked behaviour #1`);
 		set(this._dropdownStatus, 'isOpen', false);
-		this._dropdownStatus = this._dropdownStatus;
 
 		if(isPresent(this.args.setStatus) && (typeof this.args.setStatus === 'function')) {
 			this.debug(`close::setStatus`);
@@ -314,7 +308,6 @@ export default class TwyrBasicDropdownComponent extends Component {
 
 		this.debug(`open::trigger tracked behaviour`);
 		set(this._dropdownStatus, 'isOpen', true);
-		this._dropdownStatus = this._dropdownStatus;
 
 		if(isPresent(this.args.setStatus) && (typeof this.args.setStatus === 'function')) {
 			this.debug(`open::setStatus`);

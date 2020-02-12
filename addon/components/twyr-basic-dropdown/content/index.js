@@ -391,7 +391,7 @@ export default class TwyrBasicDropdownContentComponent extends Component {
 			this.debug(`handleRootMousedown::_hasMoved #1: false`);
 			this._hasMoved = false;
 
-			// return;
+			return;
 		}
 
 		if (dropdownIsValidParent(event.target, this.args.dropdownId)) {

@@ -54,16 +54,6 @@ export default class TwyrBasicDropdownTriggerComponent extends Component {
 	// #endregion
 
 	// #region Computed Properties
-	get eventType() {
-		if(isPresent(this.args.rootEventType)) {
-			this.debug(`eventType::args: ${this.args.rootEventType}`);
-			return this.args.rootEventType;
-		}
-
-		this.debug(`eventType: click`);
-		return 'click';
-	}
-
 	get stopPropagation() {
 		if(isPresent(this.args.stopPropagation)) {
 			this.debug(`stopPropagation::args: ${this.args.stopPropagation}`);
@@ -93,8 +83,8 @@ export default class TwyrBasicDropdownTriggerComponent extends Component {
 			return;
 		}
 
-		if (this.eventType !== 'click' || event.button !== 0) {
-			this.debug(`handleClick::eventType: ${this.eventType}, event.button? ${event.button}`);
+		if ((isPresent(this.args.eventType) && this.args.eventType !== 'click') || event.button !== 0) {
+			this.debug(`handleClick::eventType: ${this.args.eventType}, event.button? ${event.button}`);
 			return;
 		}
 
@@ -156,8 +146,8 @@ export default class TwyrBasicDropdownTriggerComponent extends Component {
 			return;
 		}
 
-		if (this.eventType !== 'click' || event.button !== 0) {
-			this.debug(`handleMousedown::eventType: ${this.eventType}, event.button? ${event.button}`);
+		if (this.args.eventType !== 'mousedown' || event.button !== 0) {
+			this.debug(`handleMousedown::eventType: ${this.args.eventType}, event.button? ${event.button}`);
 			return;
 		}
 
