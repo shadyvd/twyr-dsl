@@ -1,1 +1,128 @@
-{{yield}}
+<BasicDropdown
+	@destinationId={{@destinationId}}
+
+	@matchTriggerWidth={{or @matchTriggerWidth false}}
+	@preventScroll={{or @preventScroll false}}
+	@renderInPlace={{or @renderInPlace false}}
+
+	@xAlign={{@xAlign}}
+	@yAlign={{@yAlign}}
+
+	@onClose={{this.handleDropdownClose}}
+	@onOpen={{this.handleDropdownOpen}}
+
+	@calculatePosition={{@calculateDropdownPosition}}
+	as |Dropdown|
+>
+	{{#with
+		(hash
+			Controls=(assign Dropdown.Controls this._selectControls)
+			Options=this._selectOptions
+			Status=(assign Dropdown.Status this._selectStatus)
+		)
+		as |PowerSelect|
+	}}
+		<Dropdown.Trigger
+			class="twyr-power-select-trigger {{@triggerClass}}{{if PowerSelect.Status.isActive " twyr-power-select-trigger--active"}}"
+			role={{this.triggerRole}}
+			tabindex={{this.triggerTabindex}}
+
+			@eventType={{or @eventType "mousedown"}}
+
+			{{did-insert (fn this.didInsert Dropdown)}}
+			{{did-update this.didReceiveArgs}}
+
+			{{on "blur" this.handleBlur}}
+			{{on "focus" this.handleFocus}}
+			{{on "keydown" this.handleTriggerKeydown}}
+
+			...attributes
+		>
+			{{#let (component (or @triggerComponent this.subComponents.triggerComponent)) as |Trigger|}}
+				<Trigger
+					@allowClear={{@allowClear}}
+					@buildSelection={{@buildSelection}}
+					@extra={{@extra}}
+
+					@placeholder={{@placeholder}}
+					@placeholderComponent={{or @placeholderComponent this.subComponents.placeholderComponent}}
+
+					@loadingMessage={{or @loadingMessage "Loading options..."}}
+
+					@selectedItemComponent={{or @selectedItemComponent  this.subComponents.selectedItemComponent}}
+					@powerSelect={{PowerSelect}}
+
+					@searchEnabled={{@searchEnabled}}
+					@searchField={{@searchField}}
+
+					{{on "blur" this.handleBlur}}
+					{{on "focus" this.handleFocus}}
+					{{on "input" this.handleInput}}
+					{{on "keydown" this.handleTriggerComponentKeydown}}
+
+					as |Opt Term|
+				>
+				{{yield Opt Term}}
+				</Trigger>
+			{{/let}}
+		</Dropdown.Trigger>
+
+		<Dropdown.Content class="twyr-power-select-dropdown{{if PowerSelect.Status.isActive " twyr-power-select-dropdown--active"}} {{@contentClass}}">
+			{{#let (component (if (eq @beforeOptionsComponent undefined) this.subComponents.beforeOptions @beforeOptionsComponent)) as |BeforeOptions|}}
+				<BeforeOptions
+					@extra={{@extra}}
+
+					@placeholder={{@placeholder}}
+					@placeholderComponent={{or @placeholderComponent this.subComponents.placeholderComponent}}
+
+					@powerSelect={{PowerSelect}}
+
+					@searchEnabled={{@searchEnabled}}
+					@searchPlaceholder={{@searchPlaceholder}}
+
+					@selectedItemComponent={{or @selectedItemComponent this.subComponents.selectedItemComponent}}
+
+					{{on "blur" this.handleBlur}}
+					{{on "focus" this.handleFocus}}
+					{{on "input" this.handleInput}}
+					{{on "keydown" this.handleBeforeOptionsKeydown}}
+				/>
+			{{/let}}
+
+			{{#if this.mustShowSearchMessage}}
+				{{#let (component (or @searchMessageComponent this.subComponents.searchMessageComponent)) as |SearchMessage|}}
+					<SearchMessage @searchMessage={{this.searchMessage}} @powerSelect={{PowerSelect}}/>
+				{{/let}}
+			{{else if this.mustShowNoMatchesMessage}}
+				{{#if this.noMatchesMessage}}
+					<ul class="twyr-power-select-options" role="listbox">
+						<li class="twyr-power-select-option twyr-power-select-option--no-matches-message" role="option">
+							{{this.noMatchesMessage}}
+						</li>
+					</ul>
+				{{/if}}
+			{{else}}
+				{{#let (component (or @optionsComponent this.subComponents.optionsComponent)) as |Options|}}
+					<Options
+						class="twyr-power-select-options"
+						@extra={{@extra}}
+						@groupIndex=""
+						@highlightOnHover={{this.highlightOnHover}}
+						@loadingMessage={{or @loadingMessage "Loading options..."}}
+
+						@groupComponent={{or @groupComponent this.subComponents.groupComponent}}
+
+						@powerSelect={{PowerSelect}}
+						as |Option Select|
+					>
+						{{yield Option Select}}
+					</Options>
+				{{/let}}
+			{{/if}}
+
+			{{#let (component (or @afterOptionsComponent this.subComponents.afterOptionsComponent)) as |AfterOptions|}}
+				<AfterOptions @extra={{@extra}} />
+			{{/let}}
+		</Dropdown.Content>
+	{{/with}}
+</BasicDropdown>
