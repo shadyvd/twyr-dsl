@@ -80,6 +80,7 @@
 		"broccoli-merge-trees": "^4.1.0",
 		"els-addon-docs": "^1.0.2",
 		"ember-array-helper": "^5.1.0",
+		"ember-assign-helper": "^0.2.0",
 		"ember-auto-import": "^1.5.3",
 		"ember-basic-dropdown": "^2.0.13",
 		"ember-cli": "~3.15.2",
