@@ -50,10 +50,10 @@
 	as |Dropdown|
 }}
 	<div
-		class="{{if this.renderInPlace "twyr-basic-dropdown position-relative"}}"
+		class="{{if this.renderInPlace "twyr-basic-dropdown position-relative" "shadyvd"}}"
 		{{requires-id}}
 		{{did-insert this.didInsert}}
-		{{did-mutate onMutate=this.didMutate attributeFilter=(array "disabled" "id")}}
+		{{did-mutate this.didMutate attributeFilter=(array "disabled" "id")}}
 		...attributes
 	>
 		{{yield Dropdown}}

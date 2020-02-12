@@ -15,14 +15,13 @@ export default class DidMutateModifier extends Modifier {
 		super(...arguments);
 		this.debug(`constructor`);
 
-		this._observer = new MutationObserver(this.args.named.onMutate);
+		this._observer = new MutationObserver(this.args.positional[0]);
 	}
 	// #endregion
 
 	// #region Lifecycle Hooks
 	didReceiveArguments() {
 		super.didReceiveArguments(...arguments);
-		this.debug(`didReceiveArguments: `, this.args);
 
 		const options = {
 			'attributeFilter': this.attributeFilter,
@@ -37,6 +36,8 @@ export default class DidMutateModifier extends Modifier {
 		if(!this.attributes) delete options.attributeFilter;
 
 		this._observer.disconnect();
+
+		this.debug(`didReceiveArguments:\nelement: `, this.element, `\nargs: `, this.args, `\noptions: `, options);
 		this._observer.observe(this.element, options);
 	}
 

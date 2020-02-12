@@ -1,7 +1,7 @@
 <md-input-container
 	class="{{if @selected "md-input-has-value"}} {{if this.isInvalidAndTouched "md-input-invalid"}} {{if this.isFocusedAndSelected "md-input-focused"}}"
 	{{did-update this.didReceiveArgs @disabled}}
-	{{did-mutate onMutate=this.didMutate}}
+	{{did-mutate this.didMutate}}
 	...attributes
 >
 	<PowerSelect

@@ -10,7 +10,7 @@
 	{{has-class-if @placeholder "md-input-has-placeholder"}}
 	{{did-insert this.didInsert}}
 	{{did-update this.didReceiveArgs @errors @value}}
-	{{did-mutate onMutate=this.didMutate attributeFilter=(array "class" "id")}}
+	{{did-mutate this.didMutate attributeFilter=(array "class" "id")}}
 	{{color-themeable
 		accent=@accent
 		primary=@primary

@@ -7,7 +7,7 @@
 		aria-expanded={{if @dropdownStatus.isOpen "true"}}
 		aria-disabled={{if @dropdownStatus.isDisabled "true"}}
 		{{did-insert this.didInsert}}
-		{{did-mutate onMutate=this.didMutate}}
+		{{did-mutate this.didMutate}}
 		...attributes
 		{{on "click" this.handleClick}}
 		{{on "keydown" this.handleKeydown}}
