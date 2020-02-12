@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import debugLogger from 'ember-debug-logger';
 
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
 import { isPresent } from '@ember/utils';
 

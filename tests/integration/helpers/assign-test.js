@@ -10,7 +10,7 @@ module('Integration | Helper | assign', function(hooks) {
   test('it renders', async function(assert) {
     this.set('inputValue', '1234');
 
-    await render(hbs`{{assign inputValue}}`);
+    await render(hbs`{{assign this.inputValue}}`);
 
     assert.equal(this.element.textContent.trim(), '1234');
   });

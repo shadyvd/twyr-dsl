@@ -62,20 +62,18 @@ export default class TwyrMenuContentComponent extends Component {
 
 	// #region Lifecycle Hooks
 	@action
-	didInsert(element) {
+	async didInsert(element) {
 		this.debug('didInsert');
 		this._element = element;
 
-		nextTick()
-		.then(() => {
-			if (this.isDestroying || this.isDestroyed)
-				return;
+		await nextTick();
+		if (this.isDestroying || this.isDestroyed)
+			return;
 
-			this._isActive = true;
-		})
+		this._isActive = true;
 	}
 
-	willDestroy() {
+	async willDestroy() {
 		this.debug('didInsert');
 
 		const parentElement = this.args.renderInPlace ? this._element.parentElement.parentElement : this._element.parentElement;
@@ -84,20 +82,18 @@ export default class TwyrMenuContentComponent extends Component {
 		clone.id = `${clone.id}--clone`;
 		parentElement.appendChild(clone);
 
-		nextTick()
-		.then(() => {
-			if (this.isDestroyed) {
-				parentElement.removeChild(clone);
-				return;
-			}
+		await nextTick();
+		if (this.isDestroyed) {
+			parentElement.removeChild(clone);
+			return;
+		}
 
-			this._isActive = false;
-			clone.classList.add('md-leave');
+		this._isActive = false;
+		clone.classList.add('md-leave');
 
-			waitForAnimations(clone, function() {
-				clone.classList.remove('md-active');
-				parentElement.removeChild(clone);
-			});
+		waitForAnimations(clone, function() {
+			clone.classList.remove('md-active');
+			parentElement.removeChild(clone);
 		});
 
 		super.willDestroy(...arguments);

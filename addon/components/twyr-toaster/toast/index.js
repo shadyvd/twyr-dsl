@@ -27,38 +27,37 @@ export default class TwyrToasterToastComponent extends Component {
 
 	// #region Lifecycle Hooks
 	@action
-	didInsert(element) {
+	async didInsert(element) {
 		this.debug(`didInsert`);
 		this._element = element;
 
-		nextTick()
-		.then(() => {
-			if(this.isDestroying || this.isDestroyed)
-				return;
+		await nextTick();
+		if(this.isDestroying || this.isDestroyed)
+			return;
 
-			document.querySelector(this.destinationId).classList.add('md-toast-animating');
+		document.querySelector(this.destinationId).classList.add('md-toast-animating');
 
-			if(this.escapeToClose) {
-				this._escapeToClose = (function _escapeToClose(event) {
-					if ((event.keyCode === this.constants.KEYCODE.ESCAPE) && isPresent(this.args.onClose))
-						this._destroyMessage();
-				}).bind(this);
+		if(this.escapeToClose) {
+			this._escapeToClose = (function _escapeToClose(event) {
+				if ((event.keyCode === this.constants.KEYCODE.ESCAPE) && isPresent(this.args.onClose))
+					this._destroyMessage();
+			}).bind(this);
 
-				document.body.addEventListener('keydown', this._escapeToClose);
-			}
+			document.body.addEventListener('keydown', this._escapeToClose);
+		}
 
-			const y = this.top ? 'top' : 'bottom';
-			document.querySelector(this.destinationId).classList.add(`md-toast-open-${y}`);
+		const y = this.top ? 'top' : 'bottom';
+		document.querySelector(this.destinationId).classList.add(`md-toast-open-${y}`);
 
-			return (this.duration !== false) ? sleep(this.duration) : sleep(0);
-		})
-		.then(() => {
-			if(this.isDestroying || this.isDestroyed)
-				return;
+		if(this.duration !== false) {
+			await sleep(this.duration);
+		}
 
-			if(this.duration !== false)
-				this._destroyMessage();
-		});
+		if(this.isDestroying || this.isDestroyed)
+			return;
+
+		if(this.duration !== false)
+			this._destroyMessage();
 	}
 
 	willDestroy() {

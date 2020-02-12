@@ -3,7 +3,7 @@ import debugLogger from 'ember-debug-logger';
 
 import { action } from '@ember/object';
 import { nextTick } from 'ember-css-transitions/utils/transition-utils';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
 import { isPresent } from '@ember/utils';
 import { join, scheduleOnce } from '@ember/runloop';
@@ -62,20 +62,18 @@ export default class TwyrTabsComponent extends Component {
 	}
 
 	@action
-	didReceiveArgs() {
+	async didReceiveArgs() {
 		this.debug(`didReceiveArgs`);
 
 		this._updateSelectedTab();
 		this._updateCanvasWidth();
 
-		nextTick()
-		.then(() => {
-			if(this.isDestroying || this.isDestroyed)
-				return;
+		await nextTick();
+		if(this.isDestroying || this.isDestroyed)
+			return;
 
-			this._updateSelectedTab();
-			this._updateCanvasWidth();
-		});
+		this._updateSelectedTab();
+		this._updateCanvasWidth();
 	}
 
 	willDestroy() {
@@ -242,7 +240,7 @@ export default class TwyrTabsComponent extends Component {
 		this._currentStretch = currentStretch;
 	}
 
-	_doInitialTabSelection() {
+	async _doInitialTabSelection() {
 		if(this.isDestroying || this.isDestroyed)
 			return;
 
@@ -273,14 +271,12 @@ export default class TwyrTabsComponent extends Component {
 		this._updateSelectedTab();
 		this._updateCanvasWidth();
 
-		nextTick()
-		.then(() => {
-			if(this.isDestroying || this.isDestroyed)
-				return;
+		await nextTick();
+		if(this.isDestroying || this.isDestroyed)
+			return;
 
-			this._updateSelectedTab();
-			this._updateCanvasWidth();
-		});
+		this._updateSelectedTab();
+		this._updateCanvasWidth();
 	}
 	// #endregion
 

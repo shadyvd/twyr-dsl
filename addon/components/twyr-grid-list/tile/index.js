@@ -59,23 +59,21 @@ export default class TwyrGridListTileComponent extends Component {
 	}
 
 	@action
-	didReceiveArgs() {
+	async didReceiveArgs() {
 		this.debug(`didReceiveArgs`);
 		if(!isPresent(this.args.gridList))
 			return;
 
 		run.debounce(this.args.gridList, this.args.gridList.updateGrid, 0);
 
-		nextTick()
-		.then(() => {
-			if(this.isDestroying || this.isDestroyed)
-				return;
+		await nextTick();
+		if(this.isDestroying || this.isDestroyed)
+			return;
 
-			if(!isPresent(this.args.gridList))
-				return;
+		if(!isPresent(this.args.gridList))
+			return;
 
-			run.debounce(this.args.gridList, this.args.gridList.updateGrid, 0);
-		});
+		run.debounce(this.args.gridList, this.args.gridList.updateGrid, 0);
 	}
 
 	willDestroy() {

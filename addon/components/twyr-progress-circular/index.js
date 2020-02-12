@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import debugLogger from 'ember-debug-logger';
 
 import { action } from '@ember/object';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
 import { isPresent } from '@ember/utils';
 import { nextTick } from 'ember-css-transitions/utils/transition-utils';
@@ -70,7 +70,7 @@ export default class TwyrProgressCircularComponent extends Component {
 
 	// #region Lifecycle Hooks
 	@action
-	didInsert(element) {
+	async didInsert(element) {
 		this.debug(`didInsert`);
 		this._element = element;
 
@@ -82,7 +82,8 @@ export default class TwyrProgressCircularComponent extends Component {
 			this._startDeterminateAnimation(this._oldValue || 0, newValue);
 		}
 
-		nextTick().then(this._redoAnimation.bind(this));
+		await nextTick();
+		this._redoAnimation.bind(this);
 	}
 
 	@action

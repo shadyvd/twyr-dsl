@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import debugLogger from 'ember-debug-logger';
 
 import { action } from '@ember/object';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import { tracked } from '@glimmer/tracking';
 
 export default class TwyrTabsTabComponent extends Component {

@@ -2,7 +2,7 @@ import Modifier from 'ember-modifier';
 import debugLogger from 'ember-debug-logger';
 
 import { computeTimeout, nextTick, sleep } from 'ember-css-transitions/utils/transition-utils';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import { isPresent } from '@ember/utils';
 import { scheduleOnce } from '@ember/runloop';
 

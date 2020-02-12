@@ -137,7 +137,7 @@ export default class TwyrSelectEbdContentComponent extends Component {
 	}
 
 	@action
-	animateOut(dropdownElement) {
+	async animateOut(dropdownElement) {
 		this.debug(`animateOut`);
 
 		const parentElement = this.args.renderInPlace ? dropdownElement.parentElement.parentElement : dropdownElement.parentElement;
@@ -147,20 +147,18 @@ export default class TwyrSelectEbdContentComponent extends Component {
 
 		clone.children[0].children[0].scrollTop = dropdownElement.children[0].children[0].scrollTop;
 
-		nextTick()
-		.then(() => {
-			if(this.isDestroyed) {
-				parentElement.removeChild(clone);
-				return;
-			}
+		await nextTick();
+		if(this.isDestroyed) {
+			parentElement.removeChild(clone);
+			return;
+		}
 
-			this._isActive = false;
-			clone.classList.add('md-leave');
+		this._isActive = false;
+		clone.classList.add('md-leave');
 
-			waitForAnimations(clone, function() {
-				clone.classList.remove('md-active');
-				parentElement.removeChild(clone);
-			});
+		waitForAnimations(clone, function() {
+			clone.classList.remove('md-active');
+			parentElement.removeChild(clone);
 		});
 	}
 

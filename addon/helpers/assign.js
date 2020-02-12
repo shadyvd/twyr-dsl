@@ -1,7 +1,7 @@
 import debugLogger from 'ember-debug-logger';
 import { helper } from '@ember/component/helper';
 
-export default helper(function assign(params, [merge]) {
+export default helper(function assign(params, { merge }) {
 	const debug = debugLogger('twyr-assign-helper');
 
 	if(merge) {

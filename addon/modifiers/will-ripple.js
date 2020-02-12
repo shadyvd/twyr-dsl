@@ -94,31 +94,27 @@ export default class DoesRippleModifier extends Modifier {
 	}
 
 	@action
-	onMouseUp(event) {
+	async onMouseUp(event) {
 		this.debug('onMouseUp: ', event);
 		if(!(this._mouseDown || this._lastRipple))
 			return;
 
 		this._mouseDown = false;
 
-		nextTick()
-		.then(() => {
-			this.clearRipples();
-		});
+		await nextTick();
+		this.clearRipples();
 	}
 
 	@action
-	onTouchMove(event) {
+	async onTouchMove(event) {
 		this.debug('onTouchMove: ', event);
 		if(!(this._mouseDown || this._lastRipple))
 			return;
 
 		this._mouseDown = false;
 
-		nextTick()
-		.then(() => {
-			this.deleteRipples();
-		});
+		await nextTick();
+		this.deleteRipples();
 	}
 	// #endregion
 
@@ -195,7 +191,7 @@ export default class DoesRippleModifier extends Modifier {
 		}
 	}
 
-	createRipple(left, top) {
+	async createRipple(left, top) {
 		if(!this.isRippleAllowed)
 			return;
 
@@ -249,13 +245,11 @@ export default class DoesRippleModifier extends Modifier {
 		}, {}, 100);
 
 		// Finish it off
-		nextTick()
-		.then(() => {
-			ripple.classList.add('md-ripple-scaled', 'md-ripple-active');
-			run.later(this, () => {
-				this.clearRipples();
-			}, {}, 400);
-		});
+		await nextTick();
+		ripple.classList.add('md-ripple-scaled', 'md-ripple-active');
+		run.later(this, () => {
+			this.clearRipples();
+		}, {}, 400);
 	}
 
 	removeRipple(ripple) {

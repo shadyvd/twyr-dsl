@@ -66,34 +66,30 @@ export default class TwyrGridListComponent extends Component {
 
 	// #region Lifecycle Hooks
 	@action
-	didInsert(element) {
+	async didInsert(element) {
 		this.debug(`didInsert`);
 		this._element = element;
 
 		this._installMediaListener();
 		run.debounce(this, this.updateGrid, 0);
 
-		nextTick()
-		.then(() => {
-			if(this.isDestroying || this.isDestroyed)
-				return;
+		await nextTick();
+		if(this.isDestroying || this.isDestroyed)
+			return;
 
-			run.debounce(this, this.updateGrid, 0);
-		});
+		run.debounce(this, this.updateGrid, 0);
 	}
 
 	@action
-	didReceiveArgs() {
+	async didReceiveArgs() {
 		this.debug(`didReceiveArgs`);
 		run.debounce(this, this.updateGrid, 0);
 
-		nextTick()
-		.then(() => {
-			if(this.isDestroying || this.isDestroyed)
-				return;
+		await nextTick();
+		if(this.isDestroying || this.isDestroyed)
+			return;
 
-			run.debounce(this, this.updateGrid, 0);
-		});
+		run.debounce(this, this.updateGrid, 0);
 	}
 
 	willDestroy() {

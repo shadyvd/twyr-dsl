@@ -5,7 +5,7 @@ import debugLogger from 'ember-debug-logger';
 import { A } from '@ember/array';
 
 import { action } from '@ember/object';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import { isPresent } from '@ember/utils';
 import { join } from '@ember/runloop';
 import { distributeScroll, getAvailableScroll, getScrollDeltas, getScrollParent } from 'twyr-dsl/utils/scroll-helpers';

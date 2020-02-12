@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import debugLogger from 'ember-debug-logger';
 
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 
 export default class TwyrInkBarComponent extends Component {
 	// #region Private Attributes
