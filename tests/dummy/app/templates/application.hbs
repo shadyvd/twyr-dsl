@@ -77,9 +77,12 @@
 			<Text.Subhead class="layout-row layout-align-start-center">
 				<TwyrBasicDropdown
 					class="mx-4"
+					disabled={{this.isOpaque}}
+
 					@xAlign={{this._dropdownXAlign}}
 					@yAlign={{this._dropdownYAlign}}
 					@setAlign={{this.setAlign}}
+
 					as |Dropdown|
 				>
 					<Dropdown.Trigger>Click me Twyr</Dropdown.Trigger>

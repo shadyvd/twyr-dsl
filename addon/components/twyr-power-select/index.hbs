@@ -5,8 +5,8 @@
 	@preventScroll={{or @preventScroll false}}
 	@renderInPlace={{or @renderInPlace false}}
 
-	@xAlign={{@xAlign}}
-	@yAlign={{@yAlign}}
+	@xAlign={{or @xAlign "auto"}}
+	@yAlign={{or @yAlign "auto"}}
 
 	@onClose={{this.handleDropdownClose}}
 	@onOpen={{this.handleDropdownOpen}}
@@ -23,18 +23,19 @@
 		as |PowerSelect|
 	}}
 		<Dropdown.Trigger
-			class="twyr-power-select-trigger {{@triggerClass}}{{if PowerSelect.Status.isActive " twyr-power-select-trigger--active"}}"
-			role={{this.triggerRole}}
+			class="twyr-power-select-trigger {{this.triggerClass}} {{if PowerSelect.Status.isActive "twyr-power-select-trigger--active"}}"
+			role={{or @triggerRole "button"}}
 			tabindex={{this.triggerTabindex}}
 
 			@eventType={{or @eventType "mousedown"}}
 
-			{{did-insert (fn this.didInsert Dropdown)}}
-			{{did-update this.didReceiveArgs}}
+			{{did-insert (fn this.didInsertTrigger Dropdown)}}
+			{{did-mutate onMutate=this.didMutateTrigger}}
+			{{did-update this.didReceiveArgsTrigger}}
 
 			{{on "blur" this.handleBlur}}
 			{{on "focus" this.handleFocus}}
-			{{on "keydown" this.handleTriggerKeydown}}
+			{{on "keydown" this.handleKeydownTrigger}}
 
 			...attributes
 		>
@@ -43,22 +44,22 @@
 					@allowClear={{@allowClear}}
 					@buildSelection={{@buildSelection}}
 					@extra={{@extra}}
+					@loadingMessage={{or @loadingMessage this.loadingMessage}}
 
 					@placeholder={{@placeholder}}
 					@placeholderComponent={{or @placeholderComponent this.subComponents.placeholderComponent}}
 
-					@loadingMessage={{or @loadingMessage "Loading options..."}}
-
-					@selectedItemComponent={{or @selectedItemComponent  this.subComponents.selectedItemComponent}}
 					@powerSelect={{PowerSelect}}
 
 					@searchEnabled={{@searchEnabled}}
 					@searchField={{@searchField}}
 
+					@selectedItemComponent={{or @selectedItemComponent  this.subComponents.selectedItemComponent}}
+
 					{{on "blur" this.handleBlur}}
 					{{on "focus" this.handleFocus}}
 					{{on "input" this.handleInput}}
-					{{on "keydown" this.handleTriggerComponentKeydown}}
+					{{on "keydown" this.handleKeydownTriggerComponent}}
 
 					as |Opt Term|
 				>
@@ -67,8 +68,8 @@
 			{{/let}}
 		</Dropdown.Trigger>
 
-		<Dropdown.Content class="twyr-power-select-dropdown{{if PowerSelect.Status.isActive " twyr-power-select-dropdown--active"}} {{@contentClass}}">
-			{{#let (component (if (eq @beforeOptionsComponent undefined) this.subComponents.beforeOptions @beforeOptionsComponent)) as |BeforeOptions|}}
+		<Dropdown.Content class="twyr-power-select-dropdown {{if PowerSelect.Status.isActive "twyr-power-select-dropdown--active"}} {{this.contentClass}}">
+			{{#let (component (or @beforeOptionsComponent this.subComponents.beforeOptionsComponent)) as |BeforeOptions|}}
 				<BeforeOptions
 					@extra={{@extra}}
 
@@ -85,30 +86,38 @@
 					{{on "blur" this.handleBlur}}
 					{{on "focus" this.handleFocus}}
 					{{on "input" this.handleInput}}
-					{{on "keydown" this.handleBeforeOptionsKeydown}}
+					{{on "keydown" this.handleKeydownBeforeOptions}}
 				/>
 			{{/let}}
 
 			{{#if this.mustShowSearchMessage}}
 				{{#let (component (or @searchMessageComponent this.subComponents.searchMessageComponent)) as |SearchMessage|}}
-					<SearchMessage @searchMessage={{this.searchMessage}} @powerSelect={{PowerSelect}}/>
+					<SearchMessage
+						@extra={{@extra}}
+						@searchMessage={{this.searchMessage}}
+						@powerSelect={{PowerSelect}}
+					/>
 				{{/let}}
-			{{else if this.mustShowNoMatchesMessage}}
-				{{#if this.noMatchesMessage}}
-					<ul class="twyr-power-select-options" role="listbox">
-						<li class="twyr-power-select-option twyr-power-select-option--no-matches-message" role="option">
-							{{this.noMatchesMessage}}
-						</li>
-					</ul>
-				{{/if}}
-			{{else}}
+			{{/if}}
+
+			{{#if (and this.mustShowNoMatchesMessage this.noMatchesMessage)}}
+				{{#let (component (or @noMatchesMessageComponent this.subComponents.noMatchesMessageComponent)) as |NoMatchesMessage|}}
+					<NoMatchesMessage
+						@extra={{@extra}}
+						@noMatchesMessage={{this.noMatchesMessage}}
+						@powerSelect={{PowerSelect}}
+					/>
+				{{/let}}
+			{{/if}}
+
+			{{#if (not (or this.mustShowSearchMessage this.mustShowNoMatchesMessage))}}
 				{{#let (component (or @optionsComponent this.subComponents.optionsComponent)) as |Options|}}
 					<Options
 						class="twyr-power-select-options"
 						@extra={{@extra}}
 						@groupIndex=""
 						@highlightOnHover={{this.highlightOnHover}}
-						@loadingMessage={{or @loadingMessage "Loading options..."}}
+						@loadingMessage={{or @loadingMessage this.loadingMessage}}
 
 						@groupComponent={{or @groupComponent this.subComponents.groupComponent}}
 
@@ -121,7 +130,10 @@
 			{{/if}}
 
 			{{#let (component (or @afterOptionsComponent this.subComponents.afterOptionsComponent)) as |AfterOptions|}}
-				<AfterOptions @extra={{@extra}} />
+				<AfterOptions
+					@extra={{@extra}}
+					@powerSelect={{PowerSelect}}
+				/>
 			{{/let}}
 		</Dropdown.Content>
 	{{/with}}

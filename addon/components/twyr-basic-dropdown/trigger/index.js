@@ -4,6 +4,7 @@ import debugLogger from 'ember-debug-logger';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isPresent } from '@ember/utils';
+import { set } from '@ember/object';
 
 export default class TwyrBasicDropdownTriggerComponent extends Component {
 	// #region Services
@@ -37,6 +38,37 @@ export default class TwyrBasicDropdownTriggerComponent extends Component {
 		if(isPresent(this.args.registerWithDropdown) && (typeof this.args.registerWithDropdown === 'function')) {
 			this.debug(`didInsert::registerWithDropdown`);
 			this.args.registerWithDropdown(this._element);
+		}
+
+		if(this._element.hasAttribute('disabled') && (!this.args.dropdownStatus.isDisabled)) {
+			this.debug(`didInsert::isDisabled: true`);
+
+			set(this.args.dropdownStatus, 'isDisabled', true);
+			if(this.args.dropdownStatus.isOpen) this.args.dropdownControls.close();
+		}
+	}
+
+	@action
+	didMutate() {
+		this.debug(`didMutate`);
+
+		if(this._element && this._element.hasAttribute('disabled')) {
+			if(!this.args.dropdownStatus.isDisabled) {
+				this.debug(`didMutate::isDisabled: true`);
+
+				set(this.args.dropdownStatus, 'isDisabled', true);
+				if(this.args.dropdownStatus.isOpen) this.args.dropdownControls.close();
+			}
+		}
+		else {
+			if(!this.args.dropdownStatus.isDisabled)
+				return;
+
+			const dropdownElem = document.getElementById(this.args.dropdownId);
+			if(dropdownElem && dropdownElem.hasAttribute('disabled'))
+				return;
+
+			set(this.args.dropdownStatus, 'isDisabled', false);
 		}
 	}
 

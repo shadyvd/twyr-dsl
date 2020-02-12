@@ -59,6 +59,11 @@ export default class TwyrBasicDropdownComponent extends Component {
 		this.debug(`didInsert`);
 		this._element = element;
 
+		if(this._element.hasAttribute('disabled')) {
+			this.debug(`didInsert::isDisabled: true`);
+			set(this._dropdownStatus, 'isDisabled', true);
+		}
+
 		if((this._element.hasAttribute('id')) && (this._elementId !== this._element.getAttribute('id'))) {
 			this.debug(`didInsert::_elementId: ${this._element.getAttribute('id')}`);
 			this._elementId = this._element.getAttribute('id');

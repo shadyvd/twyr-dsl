@@ -1,12 +1,13 @@
 {{#let (element (or @htmlTag "div")) as |Element|}}
 	<Element
 		id="{{@dropdownId}}-trigger"
-		class="twyr-basic-dropdown-trigger{{if @renderInPlace " twyr-basic-dropdown-trigger--in-place"}}{{if @xAlign (concat " twyr-basic-dropdown-trigger--" @xAlign)}}{{if @yAlign (concat " twyr-basic-dropdown-trigger--" @yAlign)}}"
-		role="button"
-		tabindex={{unless @dropdownStatus.isDisabled "0"}}
+		class="twyr-basic-dropdown-trigger {{if @renderInPlace "twyr-basic-dropdown-trigger--in-place"}} {{if @xAlign (concat "twyr-basic-dropdown-trigger--" @xAlign)}} {{if (not-eq @xAlign @yAlign) (concat "twyr-basic-dropdown-trigger--" @yAlign)}}"
+		role={{unless @dropdownStatus.isDisabled "button"}}
+		tabindex={{unless @dropdownStatus.isDisabled "0" "-1"}}
 		aria-expanded={{if @dropdownStatus.isOpen "true"}}
 		aria-disabled={{if @dropdownStatus.isDisabled "true"}}
 		{{did-insert this.didInsert}}
+		{{did-mutate onMutate=this.didMutate}}
 		...attributes
 		{{on "click" this.handleClick}}
 		{{on "keydown" this.handleKeydown}}
