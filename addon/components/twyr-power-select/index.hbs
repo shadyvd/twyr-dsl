@@ -16,9 +16,9 @@
 >
 	{{#with
 		(hash
-			Controls=(assign Dropdown.Controls this._selectControls)
+			Controls=(assign Dropdown.Controls this._selectControls merge=true)
 			Options=this._selectOptions
-			Status=(assign Dropdown.Status this._selectStatus)
+			Status=(assign Dropdown.Status this._selectStatus merge=true)
 		)
 		as |PowerSelect|
 	}}
@@ -30,7 +30,7 @@
 			@eventType={{or @eventType "mousedown"}}
 
 			{{did-insert (fn this.didInsertTrigger Dropdown)}}
-			{{did-mutate onMutate=this.didMutateTrigger}}
+			{{did-mutate this.didMutateTrigger}}
 			{{did-update this.didReceiveArgsTrigger}}
 
 			{{on "blur" this.handleBlur}}
