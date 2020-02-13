@@ -249,7 +249,7 @@ export default class TwyrBasicDropdownComponent extends Component {
 
 		let parentCloseRetValue = true;
 		if(isPresent(this.args.onClose) && (typeof this.args.onClose === 'function'))
-			parentCloseRetValue = this.args.onClose(event);
+			parentCloseRetValue = this.args.onClose(event, skipFocus);
 
 		this.debug(`close::parentCloseRetValue: ${parentCloseRetValue}`);
 		if(!parentCloseRetValue)

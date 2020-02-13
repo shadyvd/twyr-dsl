@@ -51,7 +51,7 @@
 }}
 	<div
 		class="{{if this.renderInPlace "twyr-basic-dropdown position-relative" "shadyvd"}}"
-		{{requires-id}}
+		{{requires-id concat=true}}
 		{{did-insert this.didInsert}}
 		{{did-mutate this.didMutate attributeFilter=(array "disabled" "id")}}
 		...attributes
