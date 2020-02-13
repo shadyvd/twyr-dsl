@@ -1,6 +1,6 @@
-{{#if @href}}
-	<a
-		href={{this.isHref}}
+{{#let (element (if @href "a" "md-tab-item")) as |Element|}}
+	<Element
+		href={{if @href this.isHref}}
 		class="md-tab"
 		style={{this.computedStyle}}
 		aria-selected={{this.isSelected}}
@@ -32,39 +32,5 @@
 		{{else}}
 			{{@name}}
 		{{/if}}
-	</a>
-{{else}}
-	<md-tab-item
-		class="md-tab"
-		style={{this.computedStyle}}
-		aria-selected={{this.isSelected}}
-		{{requires-id}}
-		{{has-class-if this.isSelected "md-active"}}
-		{{is-focusable
-			focusOnlyOnKey=@focusOnlyOnKey
-			onMouseEnter=@onMouseEnter
-			onMouseLeave=@onMouseLeave
-			onMouseDown=@onMouseDown
-			onMouseUp=@onMouseUp
-			onFocusIn=@onFocusIn
-			onFocusOut=@onFocusOut
-		}}
-		{{will-ripple
-			rippleContainerSelector=@rippleContainerSelector
-			center=@rippleCenter
-			dimBackground=@dimRippleBackground
-			fitRipple=@fitRipple
-			inkColor=@rippleInkColor
-			noInk=@noRippleInk
-		}}
-		{{did-insert this.didInsert}}
-		{{on "click" this.handleClick}}
-		...attributes
-	>
-		{{#if (has-block)}}
-			{{yield}}
-		{{else}}
-			{{@name}}
-		{{/if}}
-	</md-tab-item>
-{{/if}}
+	</Element>
+{{/let}}

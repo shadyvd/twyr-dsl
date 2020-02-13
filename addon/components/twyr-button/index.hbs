@@ -1,5 +1,7 @@
-{{#if @href}}
-	<a
+{{#let (element (if @href "a" "button")) as |Element|}}
+	<Element
+		role="button"
+		type={{unless @href "button"}}
 		href={{@href}}
 		class="md-default-theme md-button"
 		{{has-class-if @raised "md-raised"}}
@@ -38,47 +40,5 @@
 		{{else}}
 			{{@label}}
 		{{/if}}
-	</a>
-
-{{else}}
-	<button
-		type="button"
-		class="md-default-theme md-button"
-		{{has-class-if @raised "md-raised"}}
-		{{has-class-if @mini "md-fab" "md-mini"}}
-		{{has-class-if @fab "md-fab"}}
-		{{has-class-if @icon "md-icon-button"}}
-		{{did-insert this.didInsert}}
-		{{color-themeable
-			accent=@accent
-			primary=@primary
-			secondary=@secondary
-			warn=@warn
-		}}
-		{{is-focusable
-			focusOnlyOnKey=@focusOnlyOnKey
-			onMouseEnter=@onMouseEnter
-			onMouseLeave=@onMouseLeave
-			onMouseDown=@onMouseDown
-			onMouseUp=@onMouseUp
-			onFocusIn=@onFocusIn
-			onFocusOut=@onFocusOut
-		}}
-		{{will-ripple
-			rippleContainerSelector=@rippleContainerSelector
-			center=@rippleCenter
-			dimBackground=@dimRippleBackground
-			fitRipple=@fitRipple
-			inkColor=@rippleInkColor
-			noInk=@noRippleInk
-		}}
-		{{on "click" this.handleClick}}
-		...attributes
-	>
-		{{#if (has-block)}}
-			{{yield}}
-		{{else}}
-			{{@label}}
-		{{/if}}
-	</button>
-{{/if}}
+	</Element>
+{{/let}}
