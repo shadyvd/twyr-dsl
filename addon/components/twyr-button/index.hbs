@@ -5,8 +5,8 @@
 		href={{@href}}
 		class="md-default-theme md-button"
 		{{has-class-if @raised "md-raised"}}
-		{{has-class-if @fab "md-fab"}}
-		{{has-class-if @mini "md-fab" "md-mini"}}
+		{{has-class-if (or @fab @mini) "md-fab"}}
+		{{has-class-if @mini "md-mini"}}
 		{{has-class-if @icon "md-icon-button"}}
 		{{did-insert this.didInsert}}
 		{{color-themeable
