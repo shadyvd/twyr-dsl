@@ -357,8 +357,12 @@ export default class TwyrBasicDropdownComponent extends Component {
 		const positionData = calcFunc(destinationElement, triggerElement, contentElement, options);
 		this.debug(`reposition::positionData: `, positionData);
 
-		if(isPresent(this.args.setAlign) && (typeof this.args.setAlign === 'function'))
-			this.args.setAlign({ 'xAlign': positionData.xAlign, 'yAlign': positionData.yAlign });
+		if(isPresent(this.args.setAlign) && (typeof this.args.setAlign === 'function')) {
+			this.args.setAlign({
+				'xAlign': positionData.xAlign,
+				'yAlign': positionData.yAlign
+			});
+		}
 
 		delete positionData.xAlign;
 		delete positionData.yAlign;

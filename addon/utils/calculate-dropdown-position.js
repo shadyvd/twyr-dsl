@@ -131,6 +131,7 @@ const calculateWormholedPosition = function calculateWormholedPosition(destinati
 		}
 	}
 
+	positionData.xAlign = positionData.xAlign || options.xAlign;
 	if (positionData.xAlign === 'center') {
 		positionData.left = triggerLeftWithScroll + (triggerWidth - contentWidth) / 2;
 	}

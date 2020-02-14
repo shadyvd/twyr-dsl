@@ -3,7 +3,7 @@ import debugLogger from 'ember-debug-logger';
 import { modifier } from 'ember-modifier';
 import { uuid } from 'ember-cli-uuid';
 
-export default modifier(function requiresId(element/*, params, hash*/) {
+export default modifier(function requiresId(element, positionalParams, namedParams) {
 	const debug = debugLogger('twyr-requires-id-modifier');
 	const id = uuid();
 
@@ -14,7 +14,7 @@ export default modifier(function requiresId(element/*, params, hash*/) {
 		return;
 	}
 
-	if(!this.args.named.concat) {
+	if(!namedParams.concat) {
 		debug(`element: `, element, `, id: ${id}`);
 		element.setAttribute('id', id);
 
@@ -22,7 +22,7 @@ export default modifier(function requiresId(element/*, params, hash*/) {
 	}
 
 	let elementId = id;
-	const append = this.args.named.append !== false && this.args.named.prepend !== true;
+	const append = namedParams.append !== false && namedParams.prepend !== true;
 
 	if(append)
 		elementId = `${element.getAttribute('id')}-${id}`;

@@ -7,13 +7,19 @@
 
 			{{#let (element (or @htmlTag "div")) as |Element|}}
 				<Element
-					id="{{@dropdownId}}-content"
-					class="twyr-basic-dropdown-content twyr-basic-dropdown-content--{{@xAlign}} twyr-basic-dropdown-content--{{@yAlign}} {{this.animationClass}}{{if @renderInPlace " twyr-basic-dropdown-content--in-place"}}"
+					id="{{@dropdownId}}-content {{this.animationClass}}"
+					class="twyr-basic-dropdown-content"
 					style={{this.computedStyle}}
 					dir={{@dir}}
+
+					{{has-class-if (and @xAlign (not @dropdownStatus.isDisabled)) (concat "twyr-basic-dropdown-content--" @xAlign)}}
+					{{has-class-if (and (not-eq @xAlign @yAlign) (not @dropdownStatus.isDisabled)) (concat "twyr-basic-dropdown-content--" @yAlign)}}
+					{{has-class-if (and @renderInPlace (not @dropdownStatus.isDisabled)) "twyr-basic-dropdown-content--in-place"}}
+
 					{{did-insert this.didInsert}}
 					{{did-mutate this.didMutate attributes=false childList=true subtree=true}}
 					{{will-destroy this.willTeardown}}
+
 					...attributes
 				>
 					{{yield}}

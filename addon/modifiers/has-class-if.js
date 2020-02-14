@@ -19,7 +19,9 @@ export default class HasClassIfModifier extends Modifier {
 		this.debug(`didReceiveArguments::element: `, this.element, `\nargs: `, this.args);
 
 		const condition = this.args.positional[0];
-		const classList = this.args.positional.slice(1);
+		const classList = this.args.positional.slice(1).map((className) => {
+			return className.trim();
+		});
 
 		if(condition)
 			this.element.classList.add(...classList);
