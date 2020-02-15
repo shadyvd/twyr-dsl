@@ -25,8 +25,18 @@ export default class TwyrBasicDropdownComponent extends Component {
 		'width': null
 	};
 
-	@tracked _dropdownControls = {};
-	@tracked _dropdownStatus = {};
+	@tracked _dropdownControls = {
+		'close': null,
+		'open': null,
+		'reposition': null,
+		'toggle': null
+	};
+
+	@tracked _dropdownStatus = {
+		'isDisabled': false,
+		'isOpen': false
+	};
+
 	@tracked _elementId = null;
 	@tracked _otherStyles = {};
 	// #endregion
@@ -47,9 +57,6 @@ export default class TwyrBasicDropdownComponent extends Component {
 		this._dropdownControls.open = this.open.bind(this);
 		this._dropdownControls.reposition = this.reposition.bind(this);
 		this._dropdownControls.toggle = this.toggle.bind(this);
-
-		set(this._dropdownStatus, 'isOpen', false);
-		set(this._dropdownStatus, 'isDisabled', false);
 	}
 	// #endregion
 

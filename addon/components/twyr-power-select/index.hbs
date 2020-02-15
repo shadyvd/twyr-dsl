@@ -13,10 +13,19 @@
 	@onOpen={{this.handleDropdownOpen}}
 
 	@calculatePosition={{@calculateDropdownPosition}}
+
+	@setAlign={{this.dropdownAlignChanged}}
+	@setControls={{this.dropdownControlsChanged}}
+	@setStatus={{this.dropdownStatusChanged}}
+
+	{{did-insert this.didInsert}}
+
 	as |Dropdown|
 >
 	{{#with
 		(hash
+			id=Dropdown.id
+
 			Controls=(assign Dropdown.Controls this._selectControls merge=true)
 			Options=this._selectOptions
 			Status=(assign Dropdown.Status this._selectStatus merge=true)
@@ -24,15 +33,22 @@
 		as |PowerSelect|
 	}}
 		<Dropdown.Trigger
-			class="twyr-power-select-trigger {{this.triggerClass}} {{if PowerSelect.Status.isActive "twyr-power-select-trigger--active"}}"
+			class="twyr-power-select-trigger"
 			role={{or @triggerRole "button"}}
-			tabindex={{this.triggerTabindex}}
+
+			aria-describedby={{@ariaDescribedBy}}
+			aria-invalid={{@ariaInvalid}}
+			aria-label={{@ariaLabel}}
+			aria-labelledby={{@ariaLabelledBy}}
+			aria-required={{@required}}
 
 			@eventType={{or @eventType "mousedown"}}
 
-			{{did-insert (fn this.didInsertTrigger Dropdown)}}
-			{{did-mutate this.didMutateTrigger}}
-			{{did-update this.didReceiveArgsTrigger}}
+			{{has-class-if @triggerClass @triggerClass}}
+			{{has-class-if PowerSelect.Status.isActive "twyr-power-select-trigger--active"}}
+
+			{{did-insert (fn this.didInsertTrigger PowerSelect)}}
+			{{did-update this.didReceiveArgsTrigger @options @selected @searchText}}
 
 			{{on "blur" this.handleBlur}}
 			{{on "focus" this.handleFocus}}
@@ -69,7 +85,11 @@
 			{{/let}}
 		</Dropdown.Trigger>
 
-		<Dropdown.Content class="twyr-power-select-dropdown {{if PowerSelect.Status.isActive "twyr-power-select-dropdown--active"}} {{this.contentClass}}">
+		<Dropdown.Content
+			class="twyr-power-select-dropdown"
+			{{has-class-if @contentClass @contentClass}}
+			{{has-class-if PowerSelect.Status.isActive "twyr-power-select-dropdown--active"}}
+		>
 			{{#let (component (or @beforeOptionsComponent this.subComponents.beforeOptionsComponent)) as |BeforeOptions|}}
 				<BeforeOptions
 					@extra={{@extra}}
@@ -80,6 +100,7 @@
 					@powerSelect={{PowerSelect}}
 
 					@searchEnabled={{@searchEnabled}}
+					@searchField={{@searchField}}
 					@searchPlaceholder={{@searchPlaceholder}}
 
 					@selectedItemComponent={{or @selectedItemComponent this.subComponents.selectedItemComponent}}
@@ -117,7 +138,7 @@
 						class="twyr-power-select-options"
 						@extra={{@extra}}
 						@groupIndex=""
-						@highlightOnHover={{this.highlightOnHover}}
+						@highlightOnHover={{or @highlightOnHover true}}
 						@loadingMessage={{or @loadingMessage this.loadingMessage}}
 
 						@groupComponent={{or @groupComponent this.subComponents.groupComponent}}

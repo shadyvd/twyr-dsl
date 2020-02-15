@@ -125,6 +125,7 @@ export default class ApplicationController extends Controller {
 	}
 
 	@action setAlign(dropAlign) {
+		this.debug('setAlign: ', dropAlign);
 		this._dropdownXAlign = dropAlign.xAlign;
 		this._dropdownYAlign = dropAlign.yAlign;
 	}

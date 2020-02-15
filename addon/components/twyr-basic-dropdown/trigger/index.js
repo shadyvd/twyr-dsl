@@ -257,7 +257,7 @@ export default class TwyrBasicDropdownTriggerComponent extends Component {
 				evt = document.createEvent('MouseEvents');
 				evt.initMouseEvent('click', true, true, window);
 			}
-			catch (e) {
+			catch(err) {
 				evt = new Event('click');
 			}
 			finally {

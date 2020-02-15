@@ -15,7 +15,7 @@ export const supportsPassiveEventListeners = (function () {
 		window.addEventListener('testPassiveEventSupport', noop, opts);
 		window.removeEventListener('testPassiveEventSupport', noop, opts);
 	}
-	catch (e) {
+	catch(err) {
 	}
 
 	return supportsPassiveOption;
