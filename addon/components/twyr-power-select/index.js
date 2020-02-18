@@ -2,12 +2,21 @@ import Component from '@glimmer/component';
 import debugLogger from 'ember-debug-logger';
 
 import { action } from '@ember/object';
-import { advanceSelectableOption, countOptions } from 'twyr-dsl/utils/power-select-group-utils'
+import { advanceSelectableOption, countOptions, defaultHighlighted, defaultMatcher, filterOptions, indexOfOption } from 'twyr-dsl/utils/power-select-utilities'
+import { get, set, setProperties } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { isPresent } from '@ember/utils';
+import { isEqual, isPresent } from '@ember/utils';
 import { restartableTask } from 'ember-concurrency-decorators';
-import { set, setProperties } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+
+// #region File Global Functions
+const getOptionMatcher = function getOptionMatcher(matcher, searchField) {
+	if(searchField)
+		return (option, text) => { return matcher(get(option, searchField), text); };
+	else
+		return (option, text) => { return matcher(option, text); };
+}
+// #endregion
 
 export default class TwyrPowerSelectComponent extends Component {
 	// #region Services
@@ -39,6 +48,7 @@ export default class TwyrPowerSelectComponent extends Component {
 		'results': null,
 		'resultsCount': 0,
 
+		'highlightedOption': null,
 		'selected': null
 	};
 
@@ -104,17 +114,26 @@ export default class TwyrPowerSelectComponent extends Component {
 		// TODO: Set _PowerSelect from the arguments here...
 		this.debug(`didInsertTrigger::arguments: `, arguments);
 
-		this._updateOptions.perform();
-		this._updateSelected.perform();
+		this._updateOptions.perform()
+		.then(() => {
+			return this._performSearch.perform();
+		})
+		.then(() => {
+			return this._updateSelected.perform();
+		});
 	}
 
 	@action
 	didReceiveArgsTrigger() {
 		this.debug(`didReceiveArgsTrigger::arguments: `, arguments);
 
-		this._updateOptions.perform();
-		this._updateSelected.perform();
-		this._performSearch.perform();
+		this._updateOptions.perform()
+		.then(() => {
+			return this._performSearch.perform();
+		})
+		.then(() => {
+			return this._updateSelected.perform();
+		});
 	}
 	// #endregion
 
@@ -205,7 +224,7 @@ export default class TwyrPowerSelectComponent extends Component {
 		}
 
 		this.debug(`handleInput::_search`);
-		this._search((typeof correctedTerm === 'string') ? correctedTerm : event.target.value);
+		this._search((typeof correctedTerm === 'string') ? correctedTerm : event.target.value, event);
 	}
 
 	@action
@@ -316,7 +335,7 @@ export default class TwyrPowerSelectComponent extends Component {
 		event.stopPropagation();
 
 		const step = event.keyCode === 40 ? 1 : -1;
-		const newHighlighted = advanceSelectableOption(this._selectOptions.results, this._selectStatus.isHighlighted, step);
+		const newHighlighted = advanceSelectableOption(this._selectOptions.results, this._selectOption.highlightedOption, step);
 
 		this._highlight(newHighlighted);
 		this._scrollTo(newHighlighted);
@@ -361,20 +380,50 @@ export default class TwyrPowerSelectComponent extends Component {
 	// #endregion
 
 	// #region Private Methods
-	_choose() {
+	_choose(event) {
 		this.debug(`_choose::arguments: `, arguments);
+
+		let selected = undefined;
+		if(isPresent(this.args.buildSelection) && (typeof this.args.buildSelection === 'function'))
+			selected = this.args.buildSelection(this._selectOptions);
+		else
+			selected = this._selectOptions.selected;
+
+		this._select(selected, event);
+
+		if(isPresent(this.args.closeOnSelect) && (this.args.closeOnSelect !== false))
+			this._PowerSelect.Controls.close(event);
 	}
 
-	_filter(options, filterText) {
+	_filter(options, filterText, skipDisabled = false) {
 		this.debug(`_filter::arguments: `, arguments);
+
+		const matcher = this.args.matcher || defaultMatcher;
+		const optionMatcher = getOptionMatcher(matcher, this.args.searchField);
+
+		return filterOptions(options, filterText, optionMatcher, skipDisabled);
 	}
 
-	_highlight() {
+	_highlight(option) {
 		this.debug(`_highlight::arguments: `, arguments);
+		if(option && (option.args.disabled || (option._element && option._element.hasAttribute('disabled'))))
+			return;
+
+		this._selectOptions.highlightedOption = option;
 	}
 
 	_resetHighlighted() {
 		this.debug(`_resetHighlighted::arguments: `, arguments);
+
+		const defHighlighted = this.args.defaultHighlighted || defaultHighlighted;
+		let highlighted = undefined;
+
+		if(typeof defHighlighted === 'function')
+			highlighted = defHighlighted(this._selectOptions);
+		else
+			highlighted = defHighlighted;
+
+		this._highlight(highlighted);
 	}
 
 	_routeKeydown(event) {
@@ -401,26 +450,66 @@ export default class TwyrPowerSelectComponent extends Component {
 		}
 	}
 
-	_scrollTo() {
+	_scrollTo(option) {
 		this.debug(`_scrollTo::arguments: `, arguments);
+		if(!option) return;
+
+		if(isPresent(this.args.scrollTo) && (typeof this.args.scrollTo === 'function'))
+			return this.args.scrollTo(option);
+
+		const optionsList = this._selectOptions.resolvedOptions;
+		if(!optionsList) return;
+
+		const resolvedResults = this._selectOptions.results;
+		if(!resolvedResults) return;
+
+		const index = indexOfOption(resolvedResults, option);
+		if(index < 0) return;
+
+		const contentElement = document.getElementById(`${this._PowerSelect.id}-content`);
+		if(!contentElement) return;
+
+		const optionElement = contentElement.querySelectorAll(`[class="twyr-power-select-options"]`).item(index);
+		if(!optionElement) return;
+
+		const optionTopScroll = optionElement.offsetTop - contentElement.offsetTop;
+		const optionBottomScroll = optionTopScroll + optionElement.offsetHeight;
+
+		if (optionBottomScroll > (contentElement.offsetHeight + contentElement.scrollTop)) {
+			contentElement.scrollTop = optionBottomScroll - contentElement.offsetHeight;
+		}
+		else if (optionTopScroll < contentElement.scrollTop) {
+			contentElement.scrollTop = optionTopScroll;
+		}
 	}
 
-	_search() {
+	_search(term, event) {
 		this.debug(`_search::arguments: `, arguments);
+		if(isPresent(this.args.search) && (typeof this.args.search === 'function'))
+			this.args.search(term, event);
+		else
+			this._performSearch.perform(term);
 	}
 
-	_select() {
+	_select(selected, event) {
 		this.debug(`_select::arguments: `, arguments);
+		if(isEqual(selected, this._selectOptions.selected))
+			return;
+
+		if(!isPresent(this.args.onChange) || (typeof this.args.onChange !== 'function'))
+			return;
+
+		this.args.onChange(selected, event);
 	}
 
 	@restartableTask
-	*_performSearch() {
+	*_performSearch(term) {
 		this.debug(`_performSearch::arguments: `, arguments);
-		if(!this.args.searchText || (this.args.searchText.trim() === '')) {
+		if((!term || term.trim() === '') && (!this.args.searchText || (this.args.searchText.trim() === ''))) {
 			this.debug(`_performSearch::no search text`);
 			setProperties(this._selectOptions, {
 				'lastSearchedText': this._selectOptions.searchText,
-				'searchText': (this.args.searchText ? this.args.searchText.trim() : ''),
+				'searchText': term || this.args.searchText,
 				'results': this._selectOptions.resolvedOptions,
 				'resultsCount': countOptions(this._selectOptions.resolvedOptions)
 			});
@@ -433,10 +522,10 @@ export default class TwyrPowerSelectComponent extends Component {
 			return;
 		}
 
-		if((this.args.options === this._selectOptions.options) && (this.args.searchText === this._selectOptions.searchText))
+		term = term || this.args.searchText;
+		if((this.args.options === this._selectOptions.options) && (term === this._selectOptions.searchText))
 			return;
 
-		const term = this.args.searchText;
 		try {
 			this.debug(`_performSearch: search start`);
 			set(this._selectStatus.isLoading, true);
@@ -448,10 +537,10 @@ export default class TwyrPowerSelectComponent extends Component {
 
 			let searchResults = null;
 			if(isPresent(this.args.search) && (typeof this.args.search === 'function')) {
-				searchResults = yield this.args.search(this._selectOptions.resolvedOptions, this.args.searchText);
+				searchResults = yield this.args.search(this._selectOptions.resolvedOptions, term);
 			}
 			else {
-				searchResults = yield this._filter(this._selectOptions.resolvedOptions, this.args.searchText);
+				searchResults = yield this._filter(this._selectOptions.resolvedOptions, term);
 			}
 
 			setProperties(this._selectOptions, {
@@ -494,7 +583,9 @@ export default class TwyrPowerSelectComponent extends Component {
 	}
 
 	@restartableTask
-	*_triggerTypingTask() {
+	*_triggerTypingTask(event) {
+		this.debug(`_triggerTypingTask::arguments: `, arguments);
+		// TODO: Actual implementation
 		yield;
 	}
 
@@ -549,7 +640,7 @@ export default class TwyrPowerSelectComponent extends Component {
 			this.debug(`_updateOptions::error: `, err);
 			setProperties(this._selectOptions, {
 				'options': this.args.options,
-				'resolvedOptions': null,
+				'resolvedOptions': this.args.options,
 				'results': null,
 				'resultsCount': 0
 			});
