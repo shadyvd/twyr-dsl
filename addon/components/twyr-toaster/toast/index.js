@@ -14,7 +14,6 @@ export default class TwyrToasterToastComponent extends Component {
 
 	// #region Private Attributes
 	debug = debugLogger('twyr-toaster-toast');
-
 	_element = null;
 	// #endregion
 

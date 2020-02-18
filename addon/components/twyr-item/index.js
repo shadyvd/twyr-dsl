@@ -8,7 +8,6 @@ import { tracked } from '@glimmer/tracking';
 export default class TwyrItemComponent extends Component {
 	// #region Private Attributes
 	debug = debugLogger('twyr-item');
-
 	_childElements = [];
 	// #endregion
 

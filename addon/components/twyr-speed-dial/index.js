@@ -9,7 +9,6 @@ import { tracked } from '@glimmer/tracking';
 export default class TwyrSpeedDialComponent extends Component {
 	// #region Private Attributes
 	debug = debugLogger('twyr-speed-dial');
-
 	_element = null;
 	// #endregion
 

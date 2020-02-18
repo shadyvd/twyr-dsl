@@ -17,8 +17,8 @@ export default class TwyrTabsComponent extends Component {
 	// #region Private Attributes
 	debug = debugLogger('twyr-tabs');
 
-	_element = null;
 	_childElements = [];
+	_element = null;
 	_initialTabSelectTimeout = null;
 	// #endregion
 

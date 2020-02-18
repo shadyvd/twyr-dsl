@@ -5,12 +5,12 @@ export default class SnifferService extends Service {
 	// #region Private Attributes
 	debug = debugLogger('twyr-sniffer-service');
 
-	animations = false;
-	transitions = false;
-	vendorPrefix = null;
-
 	_document = null;
 	_window = null;
+
+	_animations = false;
+	_transitions = false;
+	_vendorPrefix = null;
 	// #endregion
 
 	// #region Constructor
@@ -40,22 +40,22 @@ export default class SnifferService extends Service {
 		for(let prop in bodyStyle) {
 			const match = vendorRegex.exec(prop);
 			if(match) {
-				this.vendorPrefix = match[0];
-				this.vendorPrefix = this.vendorPrefix.substr(0, 1).toUpperCase() + this.vendorPrefix.substr(1);
+				this._vendorPrefix = match[0];
+				this._vendorPrefix = this._vendorPrefix.substr(0, 1).toUpperCase() + this._vendorPrefix.substr(1);
 				break;
 			}
 		}
 
-		if(!this.vendorPrefix) {
-			this.vendorPrefix = ('WebkitOpacity' in bodyStyle) && 'webkit';
+		if(!this._vendorPrefix) {
+			this._vendorPrefix = ('WebkitOpacity' in bodyStyle) && 'webkit';
 		}
 
-		this.transitions = !!(('transition' in bodyStyle) || (`${this.vendorPrefix}Transition` in bodyStyle));
-		this.animations = !!(('animation' in bodyStyle) || (`${this.vendorPrefix}Animation` in bodyStyle));
+		this._transitions = !!(('transition' in bodyStyle) || (`${this._vendorPrefix}Transition` in bodyStyle));
+		this._animations = !!(('animation' in bodyStyle) || (`${this._vendorPrefix}Animation` in bodyStyle));
 
-		if(this.isAndroid && (!this.transitions || !this.animations)) {
-			this.transitions = (typeof bodyStyle.webkitTransition === 'string');
-			this.animations = (typeof bodyStyle.webkitAnimation === 'string');
+		if(this.isAndroid && (!this._transitions || !this._animations)) {
+			this._transitions = (typeof bodyStyle.webkitTransition === 'string');
+			this._animations = (typeof bodyStyle.webkitAnimation === 'string');
 		}
 	}
 	// #endregion

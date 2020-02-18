@@ -25,7 +25,6 @@ export default class TwyrPowerSelectComponent extends Component {
 
 	// #region Private Attributes
 	debug = debugLogger('twyr-power-select');
-
 	_element = null;
 	// #endregion
 

@@ -9,7 +9,6 @@ import { tracked } from '@glimmer/tracking';
 export default class TwyrInputComponent extends Component {
 	// #region Private Attributes
 	debug = debugLogger('twyr-input');
-
 	_element = null;
 	// #endregion
 

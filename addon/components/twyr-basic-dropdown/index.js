@@ -11,7 +11,6 @@ import { tracked } from '@glimmer/tracking';
 export default class TwyrBasicDropdownComponent extends Component {
 	// #region Private Attributes
 	debug = debugLogger('twyr-basic-dropdown');
-
 	_element = null;
 	// #endregion
 

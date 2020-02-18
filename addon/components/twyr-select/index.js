@@ -28,7 +28,6 @@ const getOffsetRect = function getOffsetRect(node) {
 export default class TwyrSelectComponent extends Component {
 	// #region Private Attributes
 	debug = debugLogger('twyr-select');
-
 	_element = null;
 	// #endregion
 

@@ -14,10 +14,8 @@ export default class TwyrSwitchComponent extends Component {
 	// #region Private Attributes
 	debug = debugLogger('twyr-switch');
 
-	_element = null;
-
 	_dragAmount = null;
-
+	_element = null;
 	_switchContainerHammer = null;
 	_switchHammer = null;
 	_switchWidth = 0;

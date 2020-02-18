@@ -21,7 +21,6 @@ const getElementIndex = function getElementIndex(node) {
 export default class TwyrSpeedDialActionComponent extends Component {
 	// #region Private Attributes
 	debug = debugLogger('twyr-speed-dial-action');
-
 	_element = null;
 	// #endregion
 

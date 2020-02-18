@@ -6,7 +6,6 @@ import { action } from '@ember/object';
 export default class TwyrButtonComponent extends Component {
 	// #region Private Attributes
 	debug = debugLogger('twyr-button');
-
 	_element = null;
 	// #endregion
 

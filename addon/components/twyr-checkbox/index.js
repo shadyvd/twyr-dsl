@@ -12,7 +12,6 @@ export default class TwyrCheckboxComponent extends Component {
 
 	// #region Private Attributes
 	debug = debugLogger('twyr-checkbox');
-
 	_element = null;
 	// #endregion
 

@@ -9,14 +9,15 @@ import { supportsPassiveEventListeners } from 'twyr-dsl/utils/browser-features';
 export default class DoesRippleModifier extends Modifier {
 	// #region Private Attributes
 	debug = debugLogger('twyr-will-ripple-modifier');
+
 	_rippleElement = null;
 	_rippleContainer = null;
 
 	_ripples = [];
 
 	_lastRipple = null;
-	_timeout = null;
 	_mouseDown = null;
+	_timeout = null;
 	// #endregion
 
 	// #region Constructor

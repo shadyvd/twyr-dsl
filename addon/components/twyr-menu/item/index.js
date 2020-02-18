@@ -7,7 +7,6 @@ import { isPresent } from '@ember/utils';
 export default class TwyrMenuItemComponent extends Component {
 	// #region Private Attributes
 	debug = debugLogger('twyr-menu-item');
-
 	_element = null;
 	// #endregion
 

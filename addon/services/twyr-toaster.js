@@ -10,7 +10,9 @@ import { tracked } from "@glimmer/tracking";
 export default class TwyrToasterService extends Service {
 	// #region Private Attributes
 	debug = debugLogger('twyr-toaster-service');
+	// #endregion
 
+	// #region Tracked Attributes
 	@tracked _queue = A([]);
 	// #endregion
 

@@ -3,7 +3,6 @@ import config from 'ember-get-config';
 import debugLogger from 'ember-debug-logger';
 
 import { A } from '@ember/array';
-
 import { action } from '@ember/object';
 import { htmlSafe } from '@ember/template';
 import { isPresent } from '@ember/utils';

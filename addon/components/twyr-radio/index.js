@@ -7,7 +7,6 @@ import { isPresent } from '@ember/utils';
 export default class TwyrRadioComponent extends Component {
 	// #region Private Attributes
 	debug = debugLogger('twyr-radio-button');
-
 	_element = null;
 	// #endregion
 

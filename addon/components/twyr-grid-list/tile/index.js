@@ -24,7 +24,6 @@ const unitCSS = function unitCSS(units) {
 export default class TwyrGridListTileComponent extends Component {
 	// #region Private Attributes
 	debug = debugLogger('twyr-grid-list-tile');
-
 	_element = null;
 	// #endregion
 

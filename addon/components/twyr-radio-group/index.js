@@ -13,9 +13,8 @@ export default class TwyrRadioGroupComponent extends Component {
 	// #region Private Attributes
 	debug = debugLogger('twyr-radio-group');
 
-	_element = null;
-
 	_childElements = [];
+	_element = null;
 	// #endregion
 
 	// #region Yielded Sub-components
