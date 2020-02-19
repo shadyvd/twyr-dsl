@@ -1,0 +1,51 @@
+<ul
+	role="listbox"
+	aria-controls="twyr-power-select-trigger-{{@powerSelect.id}}"
+	{{did-insert this.didInsert}}
+	...attributes
+>
+	{{#if @powerSelect.Status.isLoading}}
+		<li class="twyr-power-select-option twyr-power-select-option--loading-message" role="option">
+			{{@loadingMessage}}
+		</li>
+	{{/if}}
+
+	{{#let (component @groupComponent) (component @optionsComponent) as |Group Options|}}
+		{{#each @powerSelect.Options.options as |Option index|}}
+			{{#if (twyr-power-select-is-group Option)}}
+				<Group
+					@extra={{@extra}}
+					@group={{Option}}
+					@powerSelect={{@powerSelect}}
+				>
+					<Options
+						class="twyr-power-select-options"
+						role="group"
+
+						@extra={{@extra}}
+						@options={{Option.options}}
+
+						@groupComponent={{@groupComponent}}
+						@optionsComponent={{@optionsComponent}}
+
+						@powerSelect={{@powerSelect}}
+						as |Opts|
+					>
+						{{yield Opts @powerSelect}}
+					</Options>
+				</Group>
+			{{else}}
+				<li
+					class="twyr-power-select-option"
+					aria-selected="{{twyr-power-select-is-selected Option @powerSelect.Options.selected}}"
+					aria-disabled={{if Option.isDisabled "true" "false"}}
+					aria-current="{{twyr-power-select-is-selected Option @powerSelect.Options.highlightedOption}}"
+					data-option-index="{{index}}"
+					role="option"
+				>
+					{{yield Option @powerSelect}}
+				</li>
+			{{/if}}
+		{{/each}}
+	{{/let}}
+</ul>

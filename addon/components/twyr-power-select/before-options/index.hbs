@@ -1,0 +1,24 @@
+{{#if @searchEnabled}}
+	<div class="twyr-power-select-search">
+		<input
+			type="search"
+			class="twyr-power-select-search-input"
+			autocapitalize="off"
+			autocomplete="off"
+			autocorrect="off"
+			role="combobox"
+			spellcheck="false"
+
+			aria-controls={{@powerSelect.id}}
+			value={{@powerSelect.Options.searchText}}
+			placeholder={{@searchPlaceholder}}
+
+			{{on "blur" @onBlur}}
+			{{on "focus" @onFocus}}
+			{{on "input" @onInput}}
+			{{on "keydown" this.handleKeydown}}
+
+			{{did-insert this.didInsert}}
+		/>
+	</div>
+{{/if}}

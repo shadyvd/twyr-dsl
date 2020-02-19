@@ -1,0 +1,22 @@
+{{#if @powerSelect.Options.selected}}
+	{{#if @selectedItemComponent}}
+		{{component @selectedItemComponent extra=@extra powerSelect=@powerSelect}}
+	{{else}}
+		<span class="twyr-power-select-selected-item">
+			{{yield @powerSelect}}
+		</span>
+	{{/if}}
+
+	{{#if (and @allowClear (not @powerSelect.Status.isDisabled))}}
+		<span
+			class="twyr-power-select-clear-btn"
+			{{on "mousedown" this.clear}}
+			{{on "touchstart" this.clear}}
+		>
+			&times;
+		</span>
+{{/if}}
+{{else}}
+	{{component @placeholderComponent placeholder=@placeholder powerSelect=@powerSelect}}
+{{/if}}
+<span class="twyr-power-select-status-icon"></span>

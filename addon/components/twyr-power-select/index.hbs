@@ -78,9 +78,9 @@
 					{{on "input" this.handleInput}}
 					{{on "keydown" this.handleKeydownTriggerComponent}}
 
-					as |Opt Term|
+					as |Option PowerSelect|
 				>
-				{{yield Opt Term}}
+					{{yield Option PowerSelect}}
 				</Trigger>
 			{{/let}}
 		</Dropdown.Trigger>
@@ -92,6 +92,7 @@
 		>
 			{{#let (component (or @beforeOptionsComponent this.subComponents.beforeOptionsComponent)) as |BeforeOptions|}}
 				<BeforeOptions
+					@autoFocus={{@autoFocus}}
 					@extra={{@extra}}
 
 					@placeholder={{@placeholder}}
@@ -137,16 +138,16 @@
 					<Options
 						class="twyr-power-select-options"
 						@extra={{@extra}}
-						@groupIndex=""
-						@highlightOnHover={{or @highlightOnHover true}}
+						@highlightOnHover={{@highlightOnHover}}
 						@loadingMessage={{or @loadingMessage this.loadingMessage}}
 
 						@groupComponent={{or @groupComponent this.subComponents.groupComponent}}
+						@optionsComponent={{Options}}
 
 						@powerSelect={{PowerSelect}}
-						as |Option Select|
+						as |Option PowerSelect|
 					>
-						{{yield Option Select}}
+						{{yield Option PowerSelect}}
 					</Options>
 				{{/let}}
 			{{/if}}
