@@ -9,7 +9,16 @@ export default class ApplicationController extends Controller {
 	@service twyrToaster;
 	_toast = null;
 
-	sizes = ['small', 'medium', 'large', 'xl'];
+	sizes = [{
+		'groupName': 'Smalls',
+		'options': ['xxxs', 'xxs', 'xs']
+	}, {
+		'groupName': 'Regulars',
+		'options': ['small', 'medium', 'large']
+	}, {
+		'groupName': 'Larges',
+		'options': ['xl', 'xxl', 'xxxl']
+	}];
 	pizzaSize = 'medium';
 
 	@tracked isOpaque = true;

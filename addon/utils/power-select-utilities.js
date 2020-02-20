@@ -849,8 +849,8 @@ function copyGroup(group, subOptions) {
 		'options': subOptions
 	};
 
-	if(group.hasOwnProperty('disabled')) {
-		groupCopy.disabled = group.disabled;
+	if(group.hasOwnProperty('isDisabled')) {
+		groupCopy.isDisabled = group.isDisabled;
 	}
 
 	return groupCopy;
@@ -875,7 +875,7 @@ export function advanceSelectableOption(options, currentOption, step) {
 		startIndex += step;
 
 		const next = optionAtIndex(options, startIndex);
-		optionAtIdx.disabled = next.disabled;
+		optionAtIdx.isDisabled = next.isDisabled;
 		optionAtIdx.option = next.option;
 	}
 
@@ -986,7 +986,7 @@ export function optionAtIndex(collection, index) {
 		let length = get(options, 'length');
 
 		while (counter <= index && localCounter < length) {
-			const entry = collection.objectAt ? collection.objectAt(localCounter) : collection[localCounter];
+			const entry = options.objectAt ? options.objectAt(localCounter) : options[localCounter];
 
 			if(isGroup(entry)) {
 				const found = walk(get(entry, 'options'), ancestorIsDisabled || !!get(entry, 'disabled'));

@@ -7,7 +7,7 @@
 
 			{{#let (element (or @htmlTag "div")) as |Element|}}
 				<Element
-					id="{{@dropdownId}}-content {{this.animationClass}}"
+					id="twyr-basic-dropdown-content-{{@dropdownId}} {{this.animationClass}}"
 					class="twyr-basic-dropdown-content"
 					style={{this.computedStyle}}
 					dir={{@dir}}
@@ -17,6 +17,7 @@
 					{{has-class-if (and @renderInPlace (not @dropdownStatus.isDisabled)) "twyr-basic-dropdown-content--in-place"}}
 
 					{{did-insert this.didInsert}}
+					{{did-update this.didReceiveArgs @dropdownId}}
 					{{did-mutate this.didMutate attributes=false childList=true subtree=true}}
 					{{will-destroy this.willTeardown}}
 
@@ -28,6 +29,13 @@
 		{{/maybe-in-element}}
 	</div>
 {{else}}
-	<div id="twyr-basic-dropdown-content-{{@dropdownId}}" class="twyr-basic-dropdown-content-placeholder" style="display:none;">
+	<div
+		id="twyr-basic-dropdown-content-{{@dropdownId}}"
+		class="twyr-basic-dropdown-content-placeholder"
+		style="display:none;"
+
+		{{did-insert this.didReceiveArgs}}
+		{{did-update this.didReceiveArgs @dropdownId}}
+	>
 	</div>
 {{/if}}

@@ -46,7 +46,7 @@ export default class TwyrPowerSelectOptionsComponent extends Component {
 		this.debug(`didInsert`);
 		this._element = element;
 
-		const findOptionAndPerform = function findOptionAndPerform(action, event) {
+		const findOptionAndPerform = (action, event) => {
 			this.debug(`findOptionAndPerform::arguments: `, arguments);
 			if (event.target === null) return;
 
@@ -111,7 +111,7 @@ export default class TwyrPowerSelectOptionsComponent extends Component {
 			});
 		}
 
-		this.args.powerSelect.Controls.scrollTo(this.args.powerSelect.options.highlightedOption);
+		this.args.powerSelect.Controls.scrollTo(this.args.powerSelect.Options.highlightedOption);
 	}
 	// #endregion
 
@@ -120,6 +120,14 @@ export default class TwyrPowerSelectOptionsComponent extends Component {
 		this.debug(`isTouchDevice: ${Boolean(!!window && 'ontouchstart' in window)}`);
 		return Boolean(!!window && 'ontouchstart' in window);
 	}
+
+	get options() {
+		let options = this.args.options;
+		if(!options) options = this.args.powerSelect.Options.options;
+
+		this.debug(`options: `, options);
+		return options;
+	}
 	// #endregion
 
 	// #region Private Methods
@@ -127,7 +135,7 @@ export default class TwyrPowerSelectOptionsComponent extends Component {
 		this.debug(`_optionFromIndex::index: ${index}`);
 		const parts = index.split('.');
 
-		let option = this.args.options[parseInt(parts[0], 10)];
+		let option = this.options[parseInt(parts[0], 10)];
 		for (let idx = 1; idx < parts.length; idx++) {
 			option = option.options[parseInt(parts[idx], 10)];
 		}

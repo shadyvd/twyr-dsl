@@ -19,6 +19,7 @@
 
 	{{did-insert this.didInsert}}
 
+	...attributes
 	as |Dropdown|
 >
 	{{#with
@@ -52,8 +53,6 @@
 			{{on "blur" this.handleBlur}}
 			{{on "focus" this.handleFocus}}
 			{{on "keydown" this.handleKeydownTrigger}}
-
-			...attributes
 		>
 			{{#let (component (or @triggerComponent this.subComponents.triggerComponent)) as |Trigger|}}
 				<Trigger
@@ -62,7 +61,7 @@
 					@extra={{@extra}}
 					@loadingMessage={{or @loadingMessage this.loadingMessage}}
 
-					@placeholder={{@placeholder}}
+					@placeholder={{this.placeholder}}
 					@placeholderComponent={{or @placeholderComponent this.subComponents.placeholderComponent}}
 
 					@powerSelect={{PowerSelect}}
@@ -136,9 +135,12 @@
 				{{#let (component (or @optionsComponent this.subComponents.optionsComponent)) as |Options|}}
 					<Options
 						class="twyr-power-select-options"
+
 						@extra={{@extra}}
+						@groupIndex=""
 						@highlightOnHover={{@highlightOnHover}}
 						@loadingMessage={{or @loadingMessage this.loadingMessage}}
+						@options={{PowerSelect.Options.options}}
 
 						@groupComponent={{or @groupComponent this.subComponents.groupComponent}}
 						@optionsComponent={{Options}}

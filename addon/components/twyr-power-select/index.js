@@ -68,7 +68,6 @@ export default class TwyrPowerSelectComponent extends Component {
 		'optionsComponent': 'twyr-power-select/options',
 		'placeholderComponent': 'twyr-power-select/placeholder',
 		'searchMessageComponent': 'twyr-power-select/search-message',
-		'selectedItemComponent': 'twyr-power-select/selected-item',
 		'triggerComponent': 'twyr-power-select/trigger'
 	};
 	// #endregion
@@ -370,6 +369,14 @@ export default class TwyrPowerSelectComponent extends Component {
 		return 'No matches available';
 	}
 
+	get placeholder() {
+		if(isPresent(this.args.placeholder))
+			return this.args.placeholder;
+
+		this.debug(`placeholder::TODO: Internationalize the message`);
+		return 'Placeholder';
+	}
+
 	get searchMessage() {
 		if(isPresent(this.args.searchMessage))
 			return this.args.searchMessage;
@@ -382,6 +389,7 @@ export default class TwyrPowerSelectComponent extends Component {
 	// #region Private Methods
 	_choose(option, event) {
 		this.debug(`_choose::arguments: `, arguments);
+		set(this._selectOptions, 'selected', option);
 
 		let selected = undefined;
 		if(isPresent(this.args.buildSelection) && (typeof this.args.buildSelection === 'function'))
@@ -391,7 +399,12 @@ export default class TwyrPowerSelectComponent extends Component {
 
 		this._select(selected, event);
 
-		if(isPresent(this.args.closeOnSelect) && (this.args.closeOnSelect !== false))
+		if(!isPresent(this.args.closeOnSelect)) {
+			this._PowerSelect.Controls.close(event);
+			return;
+		}
+
+		if(this.args.closeOnSelect !== false)
 			this._PowerSelect.Controls.close(event);
 	}
 
@@ -760,6 +773,7 @@ export default class TwyrPowerSelectComponent extends Component {
 			return false;
 
 		this._highlight();
+		return parentCloseRetValue;
 	}
 
 	@action

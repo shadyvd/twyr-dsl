@@ -3,7 +3,7 @@
 		{{component @selectedItemComponent extra=@extra powerSelect=@powerSelect}}
 	{{else}}
 		<span class="twyr-power-select-selected-item">
-			{{yield @powerSelect}}
+			{{yield @powerSelect.Options.selected @powerSelect}}
 		</span>
 	{{/if}}
 
@@ -15,7 +15,7 @@
 		>
 			&times;
 		</span>
-{{/if}}
+	{{/if}}
 {{else}}
 	{{component @placeholderComponent placeholder=@placeholder powerSelect=@powerSelect}}
 {{/if}}

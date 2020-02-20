@@ -217,7 +217,7 @@ export default class TwyrProgressCircularComponent extends Component {
 
 	_redoAnimation() {
 		const newValue = this._clamp(this.args.value, 0, 100);
-		const newDisabled = this.args.disabled || (this._element && this._element.hasAttribute('disabled'));
+		const newDisabled = this.args.isDisabled || (this._element && this._element.hasAttribute('disabled'));
 
 		if(this._element) {
 			if(newDisabled && !this._element.classList.contains('_md-progress-circular-disabled'))

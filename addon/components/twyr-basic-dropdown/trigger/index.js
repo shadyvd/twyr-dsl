@@ -49,6 +49,14 @@ export default class TwyrBasicDropdownTriggerComponent extends Component {
 	}
 
 	@action
+	didReceiveArgs() {
+		this.debug(`didReceiveArgs`);
+
+		if(!this._element) return;
+		this._element.setAttribute('id', `twyr-basic-dropdown-trigger-${this.args.dropdownId.replace('twyr-basic-dropdown-', '')}`);
+	}
+
+	@action
 	didMutate() {
 		this.debug(`didMutate`);
 

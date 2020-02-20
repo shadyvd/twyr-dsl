@@ -11,7 +11,7 @@
 	{{/if}}
 
 	{{#let (component @groupComponent) (component @optionsComponent) as |Group Options|}}
-		{{#each @powerSelect.Options.options as |Option index|}}
+		{{#each this.options as |Option index|}}
 			{{#if (twyr-power-select-is-group Option)}}
 				<Group
 					@extra={{@extra}}
@@ -23,15 +23,18 @@
 						role="group"
 
 						@extra={{@extra}}
+						@groupIndex="{{@groupIndex}}{{index}}."
+						@highlightOnHover={{@highlightOnHover}}
+						@loadingMessage={{or @loadingMessage this.loadingMessage}}
 						@options={{Option.options}}
 
 						@groupComponent={{@groupComponent}}
 						@optionsComponent={{@optionsComponent}}
 
 						@powerSelect={{@powerSelect}}
-						as |Opts|
+						as |Opts PowerSelect|
 					>
-						{{yield Opts @powerSelect}}
+						{{yield Opts PowerSelect}}
 					</Options>
 				</Group>
 			{{else}}
@@ -40,7 +43,7 @@
 					aria-selected="{{twyr-power-select-is-selected Option @powerSelect.Options.selected}}"
 					aria-disabled={{if Option.isDisabled "true" "false"}}
 					aria-current="{{twyr-power-select-is-selected Option @powerSelect.Options.highlightedOption}}"
-					data-option-index="{{index}}"
+					data-option-index="{{@groupIndex}}{{index}}"
 					role="option"
 				>
 					{{yield Option @powerSelect}}

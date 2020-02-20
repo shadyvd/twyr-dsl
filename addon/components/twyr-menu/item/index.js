@@ -28,7 +28,7 @@ export default class TwyrMenuItemComponent extends Component {
 	// #region DOM Event Handlers
 	@action
 	handleClick() {
-		if (this.args.disabled)
+		if (this.args.isDisabled)
 			return;
 
 		if(this._element && this._element.hasAttribute('disabled'))
@@ -43,7 +43,7 @@ export default class TwyrMenuItemComponent extends Component {
 
 	@action
 	handleMouseEnter(event) {
-		if (this.args.disabled)
+		if (this.args.isDisabled)
 			return;
 
 		if(this._element && this._element.hasAttribute('disabled'))

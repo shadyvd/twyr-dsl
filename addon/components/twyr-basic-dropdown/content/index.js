@@ -21,7 +21,7 @@ const closestContent = function closestContent(el) {
 const dropdownIsValidParent = function dropdownIsValidParent(el, dropdownId) {
 	const closestDropdown = closestContent(el);
 	if (closestDropdown) {
-		const trigger = document.getElementById(`twyr-basic-dropdown-trigger-${closestDropdown.getAttribute('id')}]`);
+		const trigger = document.getElementById(`twyr-basic-dropdown-trigger-${closestDropdown.getAttribute('id').replace('twyr-basic-dropdown-', '')}]`);
 		const parentDropdown = closestContent(trigger);
 
 		return (parentDropdown && parentDropdown.getAttribute('id') === dropdownId) || dropdownIsValidParent(parentDropdown, dropdownId);
@@ -78,6 +78,10 @@ export default class TwyrBasicDropdownContentComponent extends Component {
 		this._hasAnimatedIn = false;
 		this._hasMoved = false;
 
+		if(this.args.dropdownId) {
+			this._element.setAttribute('id', `twyr-basic-dropdown-content-${this.args.dropdownId.replace('twyr-basic-dropdown-', '')}`);
+		}
+
 		if(isPresent(this.args.registerWithDropdown) && (typeof this.args.registerWithDropdown === 'function')) {
 			this.debug(`didInsert::registerWithDropdown`);
 			this.args.registerWithDropdown(this._element);
@@ -107,6 +111,16 @@ export default class TwyrBasicDropdownContentComponent extends Component {
 
 		this.debug(`didInsert::_animateIn`);
 		this._animateIn();
+	}
+
+	@action
+	didReceiveArgs(element) {
+		this.debug(`didReceiveArgs::arguments: `, arguments);
+
+		if(!element) return;
+		if(!this.args.dropdownId) return;
+
+		element.setAttribute('id', `twyr-basic-dropdown-content-${this.args.dropdownId.replace('twyr-basic-dropdown-', '')}`);
 	}
 
 	@action
@@ -352,7 +366,7 @@ export default class TwyrBasicDropdownContentComponent extends Component {
 	}
 
 	_setScrollableAncestors() {
-		const triggerElement = document.getElementById(`twyr-basic-dropdown-trigger-${this.args.dropdownId}`);
+		const triggerElement = document.getElementById(`twyr-basic-dropdown-trigger-${this.args.dropdownId.replace('twyr-basic-dropdown-', '')}`);
 		this.debug(`_setScrollableAncestors::triggerElement: `, triggerElement);
 
 		const scrollableElements = [];
@@ -383,7 +397,7 @@ export default class TwyrBasicDropdownContentComponent extends Component {
 	// #region Actions
 	@action
 	handleRootMousedown(event) {
-		const triggerElement = document.getElementById(`twyr-basic-dropdown-trigger-${this.args.dropdownId}`);
+		const triggerElement = document.getElementById(`twyr-basic-dropdown-trigger-${this.args.dropdownId.replace('twyr-basic-dropdown-', '')}`);
 		this.debug(`handleRootMousedown::trigger: `, triggerElement);
 
 		if (this._hasMoved || this._element.contains(event.target) || (triggerElement && triggerElement.contains(event.target))) {

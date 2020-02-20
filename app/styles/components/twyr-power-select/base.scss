@@ -179,7 +179,9 @@
 
 // Dropdown
 .twyr-power-select-dropdown {
+	border-top: $twyr-power-select-dropdown-top-border;
 	border-left: $twyr-power-select-dropdown-left-border;
+	border-bottom: $twyr-power-select-dropdown-bottom-border;
 	border-right: $twyr-power-select-dropdown-right-border;
 	line-height: $twyr-power-select-line-height;
 	border-radius: $twyr-power-select-dropdown-default-border-radius;

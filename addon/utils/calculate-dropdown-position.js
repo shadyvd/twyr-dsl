@@ -36,6 +36,13 @@ const calculateInPlacePosition = function calculateInPlacePosition(destinationEl
 		positionData.yAlign = 'below';
 	}
 
+	// Calculate drop down width
+	let contentWidth = contentRect.width;
+	const triggerWidth = triggerRect.width;
+
+	contentWidth = options.matchTriggerWidth ? triggerWidth : ((contentWidth >= triggerWidth) ? contentWidth : triggerWidth);
+	positionData.width = contentWidth;
+
 	return positionData;
 };
 
@@ -82,7 +89,7 @@ const calculateWormholedPosition = function calculateWormholedPosition(destinati
 	}
 
 	// Calculate drop down width
-	contentWidth = options.matchTriggerWidth ? triggerWidth : contentWidth;
+	contentWidth = options.matchTriggerWidth ? triggerWidth : ((contentWidth >= triggerWidth) ? contentWidth : triggerWidth);
 	positionData.width = contentWidth;
 
 	// Calculate horizontal position

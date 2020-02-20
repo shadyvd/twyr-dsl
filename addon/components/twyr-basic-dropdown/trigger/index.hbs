@@ -12,7 +12,8 @@
 		{{has-class-if (and (not-eq @xAlign @yAlign) (not @dropdownStatus.isDisabled)) (concat "twyr-basic-dropdown-trigger--" @yAlign)}}
 
 		{{did-insert this.didInsert}}
-		{{did-mutate this.didMutate}}
+		{{did-update this.didReceiveArgs @dropdownId}}
+		{{did-mutate this.didMutate attributeFilter=(array "disabled" "id")}}
 
 		{{on "click" this.handleClick}}
 		{{on "keydown" this.handleKeydown}}
