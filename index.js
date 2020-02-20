@@ -284,7 +284,6 @@ module.exports = {
 				response = `
 		${response || ''}
 		<div id="twyr-wormhole"></div>
-		<div id="twyr-toast-fab-wormhole"></div>
 				`;
 			}
 

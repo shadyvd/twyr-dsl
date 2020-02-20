@@ -20,7 +20,10 @@ export default class HasClassIfModifier extends Modifier {
 
 		const condition = this.args.positional[0];
 		const classList = this.args.positional.slice(1).map((className) => {
-			return className.trim();
+			return className ? className.trim() : null;
+		})
+		.filter((className) => {
+			return !!className;
 		});
 
 		if(condition)

@@ -867,18 +867,19 @@ function stripDiacritics(text) {
 
 export function advanceSelectableOption(options, currentOption, step) {
 	const resultsLength = countOptions(options);
-	const optionAtIndex = optionAtIndex(options, startIndex);
 
 	let startIndex = Math.min(Math.max(indexOfOption(options, currentOption) + step, 0), resultsLength - 1);
-	while (optionAtIndex.option && optionAtIndex.disabled) {
+
+	const optionAtIdx = optionAtIndex(options, startIndex);
+	while (optionAtIdx.option && optionAtIdx.isDisabled) {
 		startIndex += step;
 
 		const next = optionAtIndex(options, startIndex);
-		optionAtIndex.disabled = next.disabled;
-		optionAtIndex.option = next.option;
+		optionAtIdx.disabled = next.disabled;
+		optionAtIdx.option = next.option;
 	}
 
-	return optionAtIndex.option;
+	return optionAtIdx.option;
 }
 
 export function countOptions(collection) {

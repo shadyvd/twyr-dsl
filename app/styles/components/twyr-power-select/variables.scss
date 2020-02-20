@@ -1,0 +1,73 @@
+// Variables
+
+// Backgrounds
+$twyr-power-select-background-color: #ffffff !default;
+$twyr-power-select-disabled-background-color: #eeeeee !default;
+$twyr-power-select-multiple-selection-background-color: #e4e4e4 !default;
+$twyr-power-select-highlighted-background: #5897fb !default;
+$twyr-power-select-selected-background: #dddddd !default;
+
+// Texts
+$twyr-power-select-text-color: inherit !default;
+$twyr-power-select-placeholder-color: #999999 !default;
+$twyr-power-select-highlighted-color: #ffffff !default;
+$twyr-power-select-disabled-option-color: #999999 !default;
+$twyr-power-select-multiple-selection-color: #333333 !default;
+
+// Borders
+$twyr-power-select-border-color: #aaaaaa !default;
+$twyr-power-select-focus-border-color: $twyr-power-select-border-color !default;
+$twyr-power-select-default-border: 1px solid $twyr-power-select-border-color !default;
+$twyr-power-select-default-focus-border: 1px solid $twyr-power-select-focus-border-color !default;
+
+$twyr-power-select-trigger-border: $twyr-power-select-default-border !default;
+$twyr-power-select-trigger-border-top: $twyr-power-select-trigger-border !default;
+$twyr-power-select-trigger-border-bottom: $twyr-power-select-trigger-border !default;
+$twyr-power-select-trigger-border-right: $twyr-power-select-trigger-border !default;
+$twyr-power-select-trigger-border-left: $twyr-power-select-trigger-border !default;
+$twyr-power-select-active-trigger-border: $twyr-power-select-default-focus-border !default;
+$twyr-power-select-active-trigger-border-top: $twyr-power-select-active-trigger-border !default;
+$twyr-power-select-active-trigger-border-bottom: $twyr-power-select-active-trigger-border !default;
+$twyr-power-select-active-trigger-border-right: $twyr-power-select-active-trigger-border !default;
+$twyr-power-select-active-trigger-border-left: $twyr-power-select-active-trigger-border !default;
+$twyr-power-select-dropdown-border: $twyr-power-select-default-focus-border !default;
+$twyr-power-select-search-field-border: $twyr-power-select-default-border !default;
+$twyr-power-select-search-field-focus-border: $twyr-power-select-default-focus-border !default;
+
+$twyr-power-select-dropdown-top-border: $twyr-power-select-dropdown-border !default;
+$twyr-power-select-dropdown-right-border: $twyr-power-select-dropdown-border !default;
+$twyr-power-select-dropdown-bottom-border: $twyr-power-select-dropdown-border !default;
+$twyr-power-select-dropdown-left-border: $twyr-power-select-dropdown-border !default;
+
+$twyr-power-select-dropdown-contiguous-border: none !default;
+
+$twyr-power-select-multiple-option-border-color: gray !default;
+$twyr-power-select-multiple-option-border: 1px solid $twyr-power-select-multiple-option-border-color !default;
+
+// Borders radius
+$twyr-power-select-default-border-radius: 4px !default; // General border radius
+$twyr-power-select-trigger-default-border-radius: $twyr-power-select-default-border-radius !default;
+$twyr-power-select-dropdown-default-border-radius: $twyr-power-select-default-border-radius !default;
+
+$twyr-power-select-opened-border-radius: 0 !default; // Border radius of the side of the dropdown and the trigger where they touch
+
+$twyr-power-select-search-input-border-radius: 0 !default;
+$twyr-power-select-multiple-option-border-radius: $twyr-power-select-default-border-radius !default;
+
+// Other
+$twyr-power-select-focus-box-shadow: none !default;
+$twyr-power-select-dropdown-margin: 0 !default; // Margin between the dropdown and the trigger
+$twyr-power-select-dropdown-box-shadow: none !default;
+$twyr-power-select-line-height: 1.75 !default;
+$twyr-power-select-trigger-icon-color: $twyr-power-select-border-color !default;
+$twyr-power-select-clear-btn-margin: 25px !default;
+$twyr-power-select-option-padding: 8px !default;
+$twyr-power-select-number-of-visible-options: 7 !default;
+$twyr-power-select-focus-outline: null !default;
+$twyr-power-select-trigger-ltr-padding: 0 16px 0 0 !default;
+$twyr-power-select-trigger-rtl-padding: 0 0 0 16px !default;
+$twyr-power-select-multiple-option-padding: 0 4px !default;
+$twyr-power-select-multiple-option-line-height: 1.45 !default;
+
+// twyr-basic-dropdown
+$twyr-basic-dropdown-content-background-color: $twyr-power-select-background-color;

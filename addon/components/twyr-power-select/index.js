@@ -109,9 +109,10 @@ export default class TwyrPowerSelectComponent extends Component {
 	}
 
 	@action
-	didInsertTrigger() {
+	didInsertTrigger(powerSelect) {
 		// TODO: Set _PowerSelect from the arguments here...
 		this.debug(`didInsertTrigger::arguments: `, arguments);
+		this._PowerSelect = powerSelect;
 
 		this._updateOptions.perform()
 		.then(() => {
@@ -145,7 +146,7 @@ export default class TwyrPowerSelectComponent extends Component {
 			return;
 		}
 
-		set(this._selectStatus.isActive, false);
+		set(this._selectStatus, 'isActive', false);
 
 		if(isPresent(this.args.setStatus) && (typeof this.args.setStatus === 'function')) {
 			this.debug(`handleBlur::setStatus`);
@@ -185,7 +186,7 @@ export default class TwyrPowerSelectComponent extends Component {
 			return;
 		}
 
-		set(this._selectStatus.isActive, true);
+		set(this._selectStatus, 'isActive', true);
 
 		if(isPresent(this.args.setStatus) && (typeof this.args.setStatus === 'function')) {
 			this.debug(`handleFocus::setStatus`);
@@ -379,7 +380,7 @@ export default class TwyrPowerSelectComponent extends Component {
 	// #endregion
 
 	// #region Private Methods
-	_choose(event) {
+	_choose(option, event) {
 		this.debug(`_choose::arguments: `, arguments);
 
 		let selected = undefined;
@@ -405,10 +406,10 @@ export default class TwyrPowerSelectComponent extends Component {
 
 	_highlight(option) {
 		this.debug(`_highlight::arguments: `, arguments);
-		if(option && (option.args.disabled || (option._element && option._element.hasAttribute('disabled'))))
+		if(option && option.args && (option.args.isDisabled || (option._element && option._element.hasAttribute('disabled'))))
 			return;
 
-		this._selectOptions.highlightedOption = option;
+		set(this._selectOptions, 'highlightedOption', option);
 	}
 
 	_resetHighlighted() {
@@ -527,7 +528,7 @@ export default class TwyrPowerSelectComponent extends Component {
 
 		try {
 			this.debug(`_performSearch: search start`);
-			set(this._selectStatus.isLoading, true);
+			set(this._selectStatus, 'isLoading', true);
 
 			if(isPresent(this.args.setStatus) && (typeof this.args.setStatus === 'function')) {
 				this.debug(`_performSearch::setStatus`);
@@ -572,7 +573,7 @@ export default class TwyrPowerSelectComponent extends Component {
 			}
 		}
 		finally {
-			set(this._selectStatus.isLoading, false);
+			set(this._selectStatus, 'isLoading', false);
 
 			if(isPresent(this.args.setStatus) && (typeof this.args.setStatus === 'function')) {
 				this.debug(`_performSearch::setStatus`);
@@ -583,7 +584,7 @@ export default class TwyrPowerSelectComponent extends Component {
 
 	@restartableTask
 	*_triggerTypingTask(event) {
-		this.debug(`_triggerTypingTask::arguments: `, arguments);
+		this.debug(`_triggerTypingTask::arguments: `, event);
 		// TODO: Actual implementation
 		yield;
 	}
@@ -613,7 +614,7 @@ export default class TwyrPowerSelectComponent extends Component {
 
 		try {
 			this.debug(`_updateOptions::start`);
-			set(this._selectStatus.isLoading, true);
+			set(this._selectStatus, 'isLoading', true);
 
 			if(isPresent(this.args.setStatus) && (typeof this.args.setStatus === 'function')) {
 				this.debug(`_updateOptions::setStatus`);
@@ -650,7 +651,7 @@ export default class TwyrPowerSelectComponent extends Component {
 			}
 		}
 		finally {
-			set(this._selectStatus.isLoading, false);
+			set(this._selectStatus, 'isLoading', false);
 
 			if(isPresent(this.args.setStatus) && (typeof this.args.setStatus === 'function')) {
 				this.debug(`_updateOptions::setStatus`);
@@ -666,7 +667,7 @@ export default class TwyrPowerSelectComponent extends Component {
 		this.debug(`_updateSelected::arguments: `, arguments);
 		if(!isPresent(this.args.selected)) {
 			this.debug(`_updateSelected::nothing selected`);
-			set(this._selectOptions.selected, null);
+			set(this._selectOptions, 'selected', null);
 
 			if(isPresent(this.args.setOptions) && (typeof this.args.setOptions === 'function')) {
 				this.debug(`_updateSelected::setOptions`);
@@ -681,7 +682,7 @@ export default class TwyrPowerSelectComponent extends Component {
 
 		try {
 			this.debug(`_updateSelected::start`);
-			set(this._selectStatus.isLoading, true);
+			set(this._selectStatus, 'isLoading', true);
 
 			if(isPresent(this.args.setStatus) && (typeof this.args.setStatus === 'function')) {
 				this.debug(`_updateSelected::setStatus`);
@@ -689,7 +690,7 @@ export default class TwyrPowerSelectComponent extends Component {
 			}
 
 			const resolvedSelected = yield this.args.selected;
-			set(this._selectOptions.selected, resolvedSelected);
+			set(this._selectOptions, 'selected', resolvedSelected);
 
 			if(isPresent(this.args.setOptions) && (typeof this.args.setOptions === 'function')) {
 				this.debug(`_updateSelected::setOptions`);
@@ -700,7 +701,7 @@ export default class TwyrPowerSelectComponent extends Component {
 		}
 		catch(err) {
 			this.debug(`_updateOptions::error: `, err);
-			set(this._selectOptions.selected, null);
+			set(this._selectOptions, 'selected', null);
 
 			if(isPresent(this.args.setOptions) && (typeof this.args.setOptions === 'function')) {
 				this.debug(`_updateSelected::setOptions`);
@@ -708,7 +709,7 @@ export default class TwyrPowerSelectComponent extends Component {
 			}
 		}
 		finally {
-			set(this._selectStatus.isLoading, false);
+			set(this._selectStatus, 'isLoading', false);
 
 			if(isPresent(this.args.setStatus) && (typeof this.args.setStatus === 'function')) {
 				this.debug(`_updateSelected::setStatus`);
@@ -751,7 +752,7 @@ export default class TwyrPowerSelectComponent extends Component {
 	handleDropdownClose(event, skipFocus) {
 		this.debug(`handleDropdownClose::skipFocus: ${skipFocus}, event: `, event);
 
-		let parentCloseRetValue = null;
+		let parentCloseRetValue = true;
 		if(isPresent(this.args.onClose) && (typeof this.args.onClose === 'function'))
 			parentCloseRetValue = this.args.onClose(event);
 
@@ -765,7 +766,7 @@ export default class TwyrPowerSelectComponent extends Component {
 	handleDropdownOpen(event) {
 		this.debug(`handleDropdownOpen::event: `, event);
 
-		let parentOpenRetValue = null;
+		let parentOpenRetValue = true;
 		if(isPresent(this.args.onOpen) && (typeof this.args.onOpen === 'function'))
 			parentOpenRetValue = this.args.onOpen(event);
 
@@ -776,6 +777,7 @@ export default class TwyrPowerSelectComponent extends Component {
 			event.preventDefault();
 
 		this._resetHighlighted();
+		return parentOpenRetValue;
 	}
 	// #endregion
 }

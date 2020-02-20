@@ -86,7 +86,7 @@ export default class TwyrToasterToastComponent extends Component {
 		if(isPresent(this.args.parent))
 			return this.args.parent;
 
-		return '#twyr-toast-fab-wormhole';
+		return '#twyr-wormhole';
 	}
 
 	get destinationElement() {

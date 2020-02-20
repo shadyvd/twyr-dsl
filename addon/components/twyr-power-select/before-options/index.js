@@ -42,7 +42,7 @@ export default class TwyrPowerSelectBeforeOptionsComponent extends Component {
 	willDestroy() {
 		this.debug(`willDestroy`);
 
-		set(this.args.powerSelect.Options.searchText, '');
+		set(this.args.powerSelect.Options, 'searchText', '');
 		super.willDestroy(...arguments);
 	}
 	// #endregion

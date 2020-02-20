@@ -1,6 +1,6 @@
 {{#let (element (or @htmlTag "div")) as |Element|}}
 	<Element
-		id="{{@dropdownId}}-trigger"
+		id="twyr-basic-dropdown-trigger-{{@dropdownId}}"
 		class="twyr-basic-dropdown-trigger"
 		role={{unless @dropdownStatus.isDisabled "button"}}
 		tabindex={{unless @dropdownStatus.isDisabled "0" "-1"}}

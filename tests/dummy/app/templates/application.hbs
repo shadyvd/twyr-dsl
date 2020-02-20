@@ -89,10 +89,9 @@
 					<Dropdown.Content class="bg-primary text-light p-3">Hello world, Twyr</Dropdown.Content>
 				</TwyrBasicDropdown>
 
-				<BasicDropdown class="ml-4" as |Dropdown|>
-					<Dropdown.Trigger>Click me Basic</Dropdown.Trigger>
-					<Dropdown.Content>Hello world, basic</Dropdown.Content>
-				</BasicDropdown>
+				<TwyrPowerSelect class="ml-4" @options={{this.sizes}} @onChange={{this.setPizzaSize}} as |pizzSize|>
+					{{pizzSize}}
+				</TwyrPowerSelect>
 			</Text.Subhead>
 		</Title.Text>
 	</Card.Title>
