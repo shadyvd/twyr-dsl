@@ -419,7 +419,7 @@ export default class TwyrPowerSelectComponent extends Component {
 
 	_highlight(option) {
 		this.debug(`_highlight::arguments: `, arguments);
-		if(option && option.args && (option.args.isDisabled || (option._element && option._element.hasAttribute('disabled'))))
+		if(option && option.isDisabled)
 			return;
 
 		set(this._selectOptions, 'highlightedOption', option);

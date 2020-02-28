@@ -69,9 +69,9 @@ export default class TwyrPowerSelectOptionsComponent extends Component {
 			findOptionAndPerform(this.args.powerSelect.Controls.choose, event);
 		});
 
-		if(this.args.highlightOnHover) {
+		if(this.args.powerSelect.Controls.highlight) {
 			this._element.addEventListener('mouseover', (event) => {
-				findOptionAndPerform(this.args.powerSelectControls.hightlight, event);
+				findOptionAndPerform(this.args.powerSelect.Controls.highlight, event);
 			});
 		}
 

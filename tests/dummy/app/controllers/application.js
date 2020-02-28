@@ -3,6 +3,7 @@ import debugLogger from 'ember-debug-logger';
 
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { set } from '@ember/object';
 import { tracked } from "@glimmer/tracking";
 
 export default class ApplicationController extends Controller {
@@ -130,7 +131,7 @@ export default class ApplicationController extends Controller {
 
 	@action setPizzaSize(zise) {
 		this.debug('setPizzaSize: ', zise);
-		this.pizzaSize = zise;
+		set(this, 'pizzaSize', zise);
 	}
 
 	@action setAlign(dropAlign) {

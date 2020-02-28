@@ -24,7 +24,6 @@
 
 						@extra={{@extra}}
 						@groupIndex="{{@groupIndex}}{{index}}."
-						@highlightOnHover={{@highlightOnHover}}
 						@loadingMessage={{or @loadingMessage this.loadingMessage}}
 						@options={{Option.options}}
 
@@ -42,7 +41,7 @@
 					class="twyr-power-select-option"
 					aria-selected="{{twyr-power-select-is-selected Option @powerSelect.Options.selected}}"
 					aria-disabled={{if Option.isDisabled "true" "false"}}
-					aria-current="{{twyr-power-select-is-selected Option @powerSelect.Options.highlightedOption}}"
+					aria-current="{{eq Option @powerSelect.Options.highlightedOption}}"
 					data-option-index="{{@groupIndex}}{{index}}"
 					role="option"
 				>
