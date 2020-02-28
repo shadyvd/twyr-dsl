@@ -506,8 +506,8 @@ export default class TwyrPowerSelectComponent extends Component {
 
 	_select(selected, event) {
 		this.debug(`_select::arguments: `, arguments);
-		if(isEqual(selected, this._selectOptions.selected))
-			return;
+		if(!isEqual(selected, this._selectOptions.selected))
+			set(this._selectOptions, 'selected', selected);
 
 		if(!isPresent(this.args.onChange) || (typeof this.args.onChange !== 'function'))
 			return;

@@ -89,7 +89,13 @@
 					<Dropdown.Content class="bg-primary text-light p-3">Hello world, Twyr</Dropdown.Content>
 				</TwyrBasicDropdown>
 
-				<TwyrPowerSelect class="ml-4" @options={{this.sizes}} @onChange={{this.setPizzaSize}} as |pizzSize|>
+				<TwyrPowerSelect
+					class="ml-4"
+					@options={{this.sizes}}
+					@selected={{this.pizzaSize}}
+					@onChange={{this.setPizzaSize}}
+					as |pizzSize|
+				>
 					{{pizzSize}}
 				</TwyrPowerSelect>
 			</Text.Subhead>
