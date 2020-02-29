@@ -38,7 +38,7 @@ export default class TwyrToasterToastComponent extends Component {
 
 		if(this.escapeToClose) {
 			this._escapeToClose = (function _escapeToClose(event) {
-				if ((event.keyCode === this.constants.KEYCODE.ESCAPE) && isPresent(this.args.onClose))
+				if((event.keyCode === this.constants.KEYCODE.ESCAPE) && isPresent(this.args.onClose))
 					this._destroyMessage();
 			}).bind(this);
 
@@ -94,7 +94,7 @@ export default class TwyrToasterToastComponent extends Component {
 	}
 
 	get destinationId() {
-		if (config.environment === 'test' && !this.args.parent)
+		if(config.environment === 'test' && !this.args.parent)
 			return '#ember-testing';
 
 		const parent = this.defaultedParent;
@@ -104,11 +104,11 @@ export default class TwyrToasterToastComponent extends Component {
 		// If the parent isn't found, assume that it is an id, but that the DOM doesn't
 		// exist yet. This only happens during integration tests or if entire application
 		// route is a dialog.
-		if (typeof parentElem === 'string' && parentElem.charAt(0) === '#')
+		if(typeof parentElem === 'string' && parentElem.charAt(0) === '#')
 			return `#${parentElem.substring(1)}`;
 
 		let { id } = parentElem;
-		if (!id) {
+		if(!id) {
 			id = this._element ? this._element.getAttribute('id') : `${this.uniqueId}-parent`;
 			parentElem.id = id;
 		}
@@ -157,7 +157,7 @@ export default class TwyrToasterToastComponent extends Component {
 
 	// #region Private Methods
 	_destroyMessage() {
-		if (this.isDestroying || this.isDestroyed)
+		if(this.isDestroying || this.isDestroyed)
 			return;
 
 		if(isPresent(this.args.onClose) && (typeof this.args.onClose === 'function'))

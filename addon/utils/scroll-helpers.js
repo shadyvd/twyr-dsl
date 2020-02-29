@@ -61,17 +61,17 @@ function _calculateScrollDistribution(deltaX, deltaY, element, container, accumu
 
 	const elementStyle = window.getComputedStyle(element);
 
-	if (elementStyle.overflowX !== 'hidden') {
+	if(elementStyle.overflowX !== 'hidden') {
 		// The `deltaX` can be larger than the available scroll for the element, thus overshooting.
 		// The result of that is that it scrolls the element as far as possible. We don't need to
 		// calculate exactly because we reduce the amount of desired scroll for the
 		// parent elements by the correct amount below.
 		scrollInformation.scrollLeft = element.scrollLeft + deltaX;
 
-		if (deltaX > availableScroll.deltaXPositive) {
+		if(deltaX > availableScroll.deltaXPositive) {
 			deltaX = deltaX - availableScroll.deltaXPositive;
 		}
-		else if (deltaX < availableScroll.deltaXNegative) {
+		else if(deltaX < availableScroll.deltaXNegative) {
 			deltaX = deltaX - availableScroll.deltaXNegative;
 		}
 		else {
@@ -79,13 +79,13 @@ function _calculateScrollDistribution(deltaX, deltaY, element, container, accumu
 		}
 	}
 
-	if (elementStyle.overflowY !== 'hidden') {
+	if(elementStyle.overflowY !== 'hidden') {
 		scrollInformation.scrollTop = element.scrollTop + deltaY;
 
-		if (deltaY > availableScroll.deltaYPositive) {
+		if(deltaY > availableScroll.deltaYPositive) {
 			deltaY = deltaY - availableScroll.deltaYPositive;
 		}
-		else if (deltaY < availableScroll.deltaYNegative) {
+		else if(deltaY < availableScroll.deltaYNegative) {
 			deltaY = deltaY - availableScroll.deltaYNegative;
 		}
 		else {
@@ -93,7 +93,7 @@ function _calculateScrollDistribution(deltaX, deltaY, element, container, accumu
 		}
 	}
 
-	if (element !== container && (deltaX || deltaY)) {
+	if(element !== container && (deltaX || deltaY)) {
 		return _calculateScrollDistribution(deltaX, deltaY, element.parentNode, container, accumulator.concat([scrollInformation]));
 	}
 
@@ -149,8 +149,8 @@ export function getAvailableScroll(element, container) {
  * @return {Object} Object with deltaX and deltaY properties
  */
 export function getScrollDeltas({ deltaX = 0, deltaY = 0, deltaMode = DOM_DELTA_PIXEL }) {
-	if (deltaMode !== DOM_DELTA_PIXEL) {
-		if (deltaMode === DOM_DELTA_PAGE) {
+	if(deltaMode !== DOM_DELTA_PIXEL) {
+		if(deltaMode === DOM_DELTA_PAGE) {
 			deltaX *= LINES_PER_PAGE;
 			deltaY *= LINES_PER_PAGE;
 		}
@@ -193,15 +193,15 @@ export function getScrollParent(element) {
 	const excludeStaticParent = (style.position === "absolute");
 	const overflowRegex = /(auto|scroll)/;
 
-	if (style.position === "fixed")
+	if(style.position === "fixed")
 		return document.body;
 
 	for (let parent = element; (parent = parent.parentElement);) {
 		style = window.getComputedStyle(parent);
-		if (excludeStaticParent && style.position === "static")
+		if(excludeStaticParent && style.position === "static")
 			continue;
 
-		if (overflowRegex.test(style.overflow + style.overflowY + style.overflowX))
+		if(overflowRegex.test(style.overflow + style.overflowY + style.overflowX))
 			return parent;
 	}
 

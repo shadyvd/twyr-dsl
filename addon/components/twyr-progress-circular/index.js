@@ -74,7 +74,7 @@ export default class TwyrProgressCircularComponent extends Component {
 		this.debug(`didInsert`);
 		this._element = element;
 
-		if (this.mode === MODE_INDETERMINATE) {
+		if(this.mode === MODE_INDETERMINATE) {
 			this._startIndeterminateAnimation();
 		}
 		else {
@@ -99,7 +99,7 @@ export default class TwyrProgressCircularComponent extends Component {
 	}
 
 	willDestroy() {
-		if (this._lastDrawFrame) {
+		if(this._lastDrawFrame) {
 			cAF(this._lastDrawFrame);
 		}
 
@@ -164,7 +164,7 @@ export default class TwyrProgressCircularComponent extends Component {
 	}
 
 	get strokeDasharray() {
-		if (this.mode === MODE_INDETERMINATE) {
+		if(this.mode === MODE_INDETERMINATE) {
 			return ((this.diameter - this.strokeWidth) * Math.PI * 0.75);
 		}
 
@@ -230,16 +230,16 @@ export default class TwyrProgressCircularComponent extends Component {
 		const hasDiameterChanged = (this._oldDiameter !== this.diameter);
 		const hasStrokeRatioChanged = (this._oldStrokeRatio !== this.strokeRatio);
 
-		if (this._oldValue !== newValue || hasDiameterChanged || hasStrokeRatioChanged) {
+		if(this._oldValue !== newValue || hasDiameterChanged || hasStrokeRatioChanged) {
 			this._startDeterminateAnimation(this._oldValue || 0, newValue);
 			this._oldValue = newValue;
 		}
 
-		if (this._oldDisabled !== newDisabled) {
-			if (newDisabled && this._lastDrawFrame) {
+		if(this._oldDisabled !== newDisabled) {
+			if(newDisabled && this._lastDrawFrame) {
 				cAF(this._lastDrawFrame);
 			}
-			else if (this.mode === MODE_INDETERMINATE) {
+			else if(this.mode === MODE_INDETERMINATE) {
 				this._startIndeterminateAnimation();
 			}
 
@@ -265,18 +265,18 @@ export default class TwyrProgressCircularComponent extends Component {
 		const rotation = -90 * iterationCount;
 
 		const renderFrame = (value, diameter, strokeWidth, dashLimit) => {
-			if (this.isDestroyed || this.isDestroying || !this._element)
+			if(this.isDestroyed || this.isDestroying || !this._element)
 				return;
 
 			const path = this._element.querySelector('path');
-			if (!path) return;
+			if(!path) return;
 
 			path.setAttribute('stroke-dashoffset', this._getDashLength(diameter, strokeWidth, value, dashLimit));
 			path.setAttribute('transform', `rotate(${rotation} ${diameter / 2} ${diameter / 2})`);
 		};
 
 		// No need to animate it if the values are the same
-		if (animateTo === animateFrom) {
+		if(animateTo === animateFrom) {
 			renderFrame(animateTo, diameter, strokeWidth, dashLimit);
 			return;
 		}
@@ -286,11 +286,11 @@ export default class TwyrProgressCircularComponent extends Component {
 			renderFrame(ease(currentTime, animateFrom, changeInValue, animationDuration), diameter, strokeWidth, dashLimit);
 
 			// Do not allow overlapping animations
-			if (id === this._lastAnimationId && currentTime < animationDuration) {
+			if(id === this._lastAnimationId && currentTime < animationDuration) {
 				this._lastDrawFrame = rAF(animation);
 			}
 
-			if (currentTime >= animationDuration && this.mode === MODE_INDETERMINATE) {
+			if(currentTime >= animationDuration && this.mode === MODE_INDETERMINATE) {
 				this._startIndeterminateAnimation();
 			}
 		};

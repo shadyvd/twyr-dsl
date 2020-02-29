@@ -37,7 +37,7 @@ function calculateGridfor(colCount, tiles) {
 		let colspan = tile.currentColspan;
 		let rowspan = tile.currentRowspan;
 
-		if (colspan > colCount) {
+		if(colspan > colCount) {
 			throw new Error(`md-grid-list: Tile at position ${i} has a colspan (${colspan}) that exceeds the column count (${colCount})`);
 		}
 
@@ -50,13 +50,13 @@ function calculateGridfor(colCount, tiles) {
 		// space, and if so fast-forward by the minimum rowSpan count. Repeat
 		// until the required space opens up.
 		while ((end - start) < colspan) {
-			if (curCol >= colCount) {
+			if(curCol >= colCount) {
 				nextRow();
 				continue;
 			}
 
 			start = spaceTracker.indexOf(0, curCol);
-			if (start === -1 || (end = findEnd(start + 1)) === -1) {
+			if(start === -1 || (end = findEnd(start + 1)) === -1) {
 				start = end = 0;
 				nextRow();
 				continue;
@@ -91,10 +91,10 @@ function calculateGridfor(colCount, tiles) {
 		let idx = undefined;
 
 		for (idx = start; idx < spaceTracker.length; idx++) {
-			if (spaceTracker[idx] !== 0) return idx;
+			if(spaceTracker[idx] !== 0) return idx;
 		}
 
-		if (idx === spaceTracker.length)
+		if(idx === spaceTracker.length)
 			return idx;
 	}
 

@@ -91,7 +91,7 @@ export default class TwyrToasterService extends Service {
 		};
 
 		let toasterOptions = {};
-		if (config['twyr-dsl'] && config['twyr-dsl']['twyr-toaster']) {
+		if(config['twyr-dsl'] && config['twyr-dsl']['twyr-toaster']) {
 			toasterOptions = config['twyr-dsl']['twyr-toaster'];
 		}
 

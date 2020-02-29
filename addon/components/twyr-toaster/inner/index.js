@@ -67,7 +67,7 @@ export default class TwyrToasterInnerComponent extends Component {
 
 	// #region Private Methods
 	_dragStart(event) {
-		if (!this.args.swipeToClose)
+		if(!this.args.swipeToClose)
 			return;
 
 		this._isActive = true;
@@ -78,14 +78,14 @@ export default class TwyrToasterInnerComponent extends Component {
 	}
 
 	_drag(event) {
-		if (!this.args.swipeToClose || this._isDragging)
+		if(!this.args.swipeToClose || this._isDragging)
 			return;
 
 		this._x = event.deltaX;
 	}
 
 	_dragEnd() {
-		if (!this.args.swipeToClose)
+		if(!this.args.swipeToClose)
 			return;
 
 		this._isActive = false;

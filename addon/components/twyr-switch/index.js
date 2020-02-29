@@ -89,7 +89,7 @@ export default class TwyrSwitchComponent extends Component {
 	handleKeypress(event) {
 		this.debug(`handleKeypress`);
 
-		if ((event.which !== this.constants.KEYCODE.SPACE) && (event.which !== this.constants.KEYCODE.ENTER))
+		if((event.which !== this.constants.KEYCODE.SPACE) && (event.which !== this.constants.KEYCODE.ENTER))
 			return;
 
 		event.preventDefault();
@@ -114,7 +114,7 @@ export default class TwyrSwitchComponent extends Component {
 	}
 
 	get thumbContainerStyle() {
-		if (!this._isDragging) {
+		if(!this._isDragging) {
 			this.debug(`thumbContainerStyle: undefined`);
 			return undefined;
 		}
@@ -164,7 +164,7 @@ export default class TwyrSwitchComponent extends Component {
 		if(typeof this.args.onChange !== 'function')
 			return;
 
-		if (!this._isDragging || (this.args.value && (this._dragAmount < 0.5)) || (!this.args.value && (this._dragAmount > 0.5))) {
+		if(!this._isDragging || (this.args.value && (this._dragAmount < 0.5)) || (!this.args.value && (this._dragAmount > 0.5))) {
 			this.args.onChange(!this.args.value);
 		}
 	}
@@ -195,7 +195,7 @@ export default class TwyrSwitchComponent extends Component {
 
 	_teardownSwitch() {
 		this.debug(`_teardownSwitch`);
-		if (this._switchContainerHammer) {
+		if(this._switchContainerHammer) {
 			this._switchContainerHammer.destroy();
 			this._switchHammer.destroy();
 		}

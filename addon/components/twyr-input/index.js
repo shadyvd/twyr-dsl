@@ -227,14 +227,14 @@ export default class TwyrInputComponent extends Component {
 		let height = this._getHeight(inputElement);
 		let lineHeight = 0;
 
-		if (minRows) {
-			if (!lineHeight) {
+		if(minRows) {
+			if(!lineHeight) {
 				inputElement.style.minHeight = 0;
 				lineHeight = inputElement.clientHeight;
 				inputElement.style.minHeight = null;
 			}
 
-			if (lineHeight) {
+			if(lineHeight) {
 				height = Math.max(height, lineHeight * minRows);
 			}
 
@@ -245,7 +245,7 @@ export default class TwyrInputComponent extends Component {
 			inputElement.style.height = `${lineHeight * rowsToSet}px`;
 			inputElement.setAttribute('rows', rowsToSet);
 
-			if (proposedHeight >= maxRows) {
+			if(proposedHeight >= maxRows) {
 				inputElement.classList.add('md-textarea-scrollable');
 			}
 			else {
@@ -256,7 +256,7 @@ export default class TwyrInputComponent extends Component {
 			inputElement.style.height = 'auto';
 			inputElement.scrollTop = 0;
 
-			if (height) {
+			if(height) {
 				inputElement.style.height = `${height}px`;
 			}
 		}
@@ -277,7 +277,7 @@ export default class TwyrInputComponent extends Component {
 
 		const value = isEmpty(this.args.value) ? '' : this.args.value;
 		const element = this._element.querySelector('input, textarea');
-		if (!element || (element.value === value)) {
+		if(!element || (element.value === value)) {
 			this.debug(`_setValue::element:null OR _setValue::element::value`);
 			return;
 		}

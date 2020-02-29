@@ -10,7 +10,7 @@ import { tracked } from '@glimmer/tracking';
 function waitForAnimations(element, callback) {
 	const computedStyle = window.getComputedStyle(element);
 
-	if (computedStyle.transitionDuration && computedStyle.transitionDuration !== '0s') {
+	if(computedStyle.transitionDuration && computedStyle.transitionDuration !== '0s') {
 		const eventCallback = function eventCallback() {
 			element.removeEventListener('transitionend', eventCallback);
 			callback();
@@ -18,7 +18,7 @@ function waitForAnimations(element, callback) {
 
 		element.addEventListener('transitionend', eventCallback);
 	}
-	else if (computedStyle.animationName !== 'none' && computedStyle.animationPlayState === 'running') {
+	else if(computedStyle.animationName !== 'none' && computedStyle.animationPlayState === 'running') {
 		const eventCallback = function eventCallback() {
 			element.removeEventListener('animationend', eventCallback);
 			callback();
@@ -67,7 +67,7 @@ export default class TwyrMenuContentComponent extends Component {
 		this._element = element;
 
 		await nextTick();
-		if (this.isDestroying || this.isDestroyed)
+		if(this.isDestroying || this.isDestroyed)
 			return;
 
 		this._isActive = true;
@@ -83,7 +83,7 @@ export default class TwyrMenuContentComponent extends Component {
 		parentElement.appendChild(clone);
 
 		await nextTick();
-		if (this.isDestroyed) {
+		if(this.isDestroyed) {
 			parentElement.removeChild(clone);
 			return;
 		}
@@ -106,11 +106,11 @@ export default class TwyrMenuContentComponent extends Component {
 		let focusTarget = contentElement.querySelector('.md-menu-focus-target');
 
 		// default to first non disabled item
-		if (!focusTarget) {
+		if(!focusTarget) {
 			focusTarget = contentElement.querySelector('md-menu-item:not([disabled])').firstElementChild;
 		}
 
-		if (focusTarget) {
+		if(focusTarget) {
 			focusTarget.focus();
 		}
 	}
@@ -139,7 +139,7 @@ export default class TwyrMenuContentComponent extends Component {
 
 	// #region Computed Properties
 	get customStyles() {
-		if (this._isActive)
+		if(this._isActive)
 			return {};
 
 		return this.args.otherStyles;
@@ -155,7 +155,7 @@ export default class TwyrMenuContentComponent extends Component {
 		let focusTarget = event.target.closest('md-menu-item');
 
 		do {
-			if (direction > 0) {
+			if(direction > 0) {
 				focusTarget = focusTarget.nextElementSibling;
 			} else {
 				focusTarget = focusTarget.previousElementSibling;
@@ -163,7 +163,7 @@ export default class TwyrMenuContentComponent extends Component {
 		} while (focusTarget && !this._isFocusable(focusTarget));
 
 		focusTarget = focusTarget && focusTarget.firstElementChild;
-		if (focusTarget) focusTarget.focus();
+		if(focusTarget) focusTarget.focus();
 	}
 
 	_isFocusable(element) {

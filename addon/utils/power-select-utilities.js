@@ -919,6 +919,50 @@ export function defaultMatcher(value, text) {
 	return stripDiacritics(value).toUpperCase().indexOf(stripDiacritics(text).toUpperCase());
 }
 
+export function defaultTypeAheadMatcher(value, text) {
+	return stripDiacritics(value).toUpperCase().startsWith(stripDiacritics(text).toUpperCase()) ? 1 : -1;
+}
+
+export function findOptionWithOffset(options, text, matcher, offset, skipDisabled = false) {
+	let counter = 0;
+	let foundBeforeOffset = false;
+	let foundAfterOffset = false;
+
+	let canStop = () => !!foundAfterOffset;
+
+	(function walk(options, ancestorIsDisabled) {
+		let length = get(options, 'length');
+
+		for (let i = 0; i < length; i++) {
+			let entry = options.objectAt ? options.objectAt(i) : options[i];
+			let entryIsDisabled = !!get(entry, 'disabled');
+
+			if(!skipDisabled || !entryIsDisabled) {
+				if(isGroup(entry)) {
+					walk(get(entry, 'options'), ancestorIsDisabled || entryIsDisabled);
+					if(canStop()) return;
+				}
+				else if(matcher(entry, text) >= 0) {
+					if(counter < offset)
+						if(!foundBeforeOffset) foundBeforeOffset = entry;
+					else
+						foundAfterOffset = entry;
+
+					counter++;
+				}
+				else {
+					counter++;
+				}
+
+				if(canStop())
+					return;
+			}
+		}
+	})(options, false);
+
+	return foundAfterOffset ? foundAfterOffset : foundBeforeOffset;
+}
+
 export function filterOptions(options, text, matcher, skipDisabled = false) {
 	const opts = A();
 	const length = get(options, 'length');
@@ -975,7 +1019,7 @@ export function optionAtIndex(collection, index) {
 	let counter = 0;
 
 	return function walk(options, ancestorIsDisabled) {
-		if (!options || index < 0) {
+		if(!options || index < 0) {
 			return {
 				'disabled': false,
 				'option': undefined
@@ -990,7 +1034,7 @@ export function optionAtIndex(collection, index) {
 
 			if(isGroup(entry)) {
 				const found = walk(get(entry, 'options'), ancestorIsDisabled || !!get(entry, 'disabled'));
-				if (found) return found;
+				if(found) return found;
 			}
 			else if(counter === index) {
 				return {

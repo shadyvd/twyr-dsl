@@ -118,22 +118,22 @@ export default class TwyrBasicDropdownTriggerComponent extends Component {
 	handleClick(event) {
 		this.debug(`handleClick: `, event);
 
-		if (this.isDestroying || this.isDestroyed || this.args.dropdownStatus.isDisabled) {
+		if(this.isDestroying || this.isDestroyed || this.args.dropdownStatus.isDisabled) {
 			this.debug(`handleClick::isDestroying`);
 			return;
 		}
 
-		if ((isPresent(this.args.eventType) && this.args.eventType !== 'click') || event.button !== 0) {
+		if((isPresent(this.args.eventType) && this.args.eventType !== 'click') || event.button !== 0) {
 			this.debug(`handleClick::eventType: ${this.args.eventType}, event.button? ${event.button}`);
 			return;
 		}
 
-		if (this.stopPropagation) {
+		if(this.stopPropagation) {
 			this.debug(`handleClick::stopPropagation: ${this.stopPropagation}`);
 			event.stopPropagation();
 		}
 
-		if (this._toggleIsBeingHandledByTouchEvents) {
+		if(this._toggleIsBeingHandledByTouchEvents) {
 			this.debug(`handleClick::_toggleIsBeingHandledByTouchEvents: ${this._toggleIsBeingHandledByTouchEvents}`);
 
 			// Some devises have both touchscreen & mouse, and they are not mutually exclusive
@@ -181,17 +181,17 @@ export default class TwyrBasicDropdownTriggerComponent extends Component {
 	handleMousedown(event) {
 		this.debug(`handleMousedown: `, event);
 
-		if (this.isDestroying || this.isDestroyed || this.args.dropdownStatus.isDisabled) {
+		if(this.isDestroying || this.isDestroyed || this.args.dropdownStatus.isDisabled) {
 			this.debug(`handleMousedown::isDestroying: true`);
 			return;
 		}
 
-		if (this.args.eventType !== 'mousedown' || event.button !== 0) {
+		if(this.args.eventType !== 'mousedown' || event.button !== 0) {
 			this.debug(`handleMousedown::eventType: ${this.args.eventType}, event.button? ${event.button}`);
 			return;
 		}
 
-		if (this.stopPropagation) {
+		if(this.stopPropagation) {
 			this.debug(`handleMousedown::stopPropagation: ${this.stopPropagation}`);
 			event.stopPropagation();
 		}
@@ -199,7 +199,7 @@ export default class TwyrBasicDropdownTriggerComponent extends Component {
 		this.debug(`handleMousedown::_stopTextSelectionUntilMouseup`);
 		this._stopTextSelectionUntilMouseup();
 
-		if (this._toggleIsBeingHandledByTouchEvents) {
+		if(this._toggleIsBeingHandledByTouchEvents) {
 			this.debug(`handleMousedown::_toggleIsBeingHandledByTouchEvents: ${this._toggleIsBeingHandledByTouchEvents}`);
 
 			// Some devises have both touchscreen & mouse, and they are not mutually exclusive
@@ -236,7 +236,7 @@ export default class TwyrBasicDropdownTriggerComponent extends Component {
 		this.debug(`handleTouchend::event: preventDefault`);
 		event.preventDefault();
 
-		if (!this._hasMoved) {
+		if(!this._hasMoved) {
 			this.debug(`handleTouchend::_hasMoved::toggle`);
 			this.args.dropdownControls.toggle(event);
 		}
@@ -255,7 +255,7 @@ export default class TwyrBasicDropdownTriggerComponent extends Component {
 
 		setTimeout(function() {
 			this.debug(`handleTouchend::setTimeout`);
-			if (!event.target) {
+			if(!event.target) {
 				this.debug(`handleTouchend::setTimeout::event::target: null`);
 				return;
 			}

@@ -2,11 +2,12 @@ import Component from '@glimmer/component';
 import debugLogger from 'ember-debug-logger';
 
 import { action } from '@ember/object';
-import { advanceSelectableOption, countOptions, defaultHighlighted, defaultMatcher, filterOptions, indexOfOption } from 'twyr-dsl/utils/power-select-utilities'
+import { advanceSelectableOption, countOptions, defaultHighlighted, defaultMatcher, defaultTypeAheadMatcher, filterOptions, findOptionWithOffset, indexOfOption } from 'twyr-dsl/utils/power-select-utilities'
 import { get, set, setProperties } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isEqual, isPresent } from '@ember/utils';
 import { restartableTask } from 'ember-concurrency-decorators';
+import { timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 
 // #region File Global Functions
@@ -109,7 +110,6 @@ export default class TwyrPowerSelectComponent extends Component {
 
 	@action
 	didInsertTrigger(powerSelect) {
-		// TODO: Set _PowerSelect from the arguments here...
 		this.debug(`didInsertTrigger::arguments: `, arguments);
 		this._PowerSelect = powerSelect;
 
@@ -123,8 +123,11 @@ export default class TwyrPowerSelectComponent extends Component {
 	}
 
 	@action
-	didReceiveArgsTrigger() {
+	didReceiveArgsTrigger(element, changedArgs) {
 		this.debug(`didReceiveArgsTrigger::arguments: `, arguments);
+		if(this._PowerSelect && (this._PowerSelect.id !== changedArgs[3])) {
+			this._PowerSelect.id = changedArgs[3];
+		}
 
 		this._updateOptions.perform()
 		.then(() => {
@@ -165,7 +168,7 @@ export default class TwyrPowerSelectComponent extends Component {
 		if(!(this._PowerSelect.Status.isOpen && this._selectStatus.isHighlighted !== undefined))
 			return true;
 
-		this._choose(event);
+		this._choose(this._selectOptions.highlightedOption, event);
 		event.stopImmediatePropagation();
 
 		return false;
@@ -268,11 +271,11 @@ export default class TwyrPowerSelectComponent extends Component {
 			return;
 		}
 
-		if ((event.keyCode >= 48 && event.keyCode <= 90) || (event.keyCode >= 96 && event.keyCode <= 105)) {
+		if((event.keyCode >= 48 && event.keyCode <= 90) || (event.keyCode >= 96 && event.keyCode <= 105)) {
 			// Keys 0-9, a-z or numpad keys
 			this._triggerTypingTask.perform(event);
 		}
-		else if (event.keyCode === 32) {
+		else if(event.keyCode === 32) {
 			this.handleKeySpace(event);
 		}
 		else {
@@ -302,16 +305,16 @@ export default class TwyrPowerSelectComponent extends Component {
 	handleKeySpace(event) {
 		this.debug(`handleKeySpace::arguments: `, arguments);
 
-		if (event.target !== null && ['TEXTAREA', 'INPUT'].includes(event.target.nodeName)) {
+		if(event.target !== null && ['TEXTAREA', 'INPUT'].includes(event.target.nodeName)) {
 			event.stopImmediatePropagation();
 			return;
 		}
 
-		if (this._PowerSelect.Status.isOpen && this._PowerSelect.Status.isHighlighted !== undefined) {
+		if(this._PowerSelect.Status.isOpen && this._PowerSelect.Status.isHighlighted !== undefined) {
 			event.stopImmediatePropagation();
 			event.preventDefault(); // Prevents scrolling of the page.
 
-			this._choose(event);
+			this._choose(this._selectOptions.highlightedOption, event);
 		}
 	}
 
@@ -325,7 +328,7 @@ export default class TwyrPowerSelectComponent extends Component {
 	handleKeyUpDown(event) {
 		this.debug(`handleKeyUpDown::arguments: `, arguments);
 
-		if(this._PowerSelect.Status.isOpen) {
+		if(!this._PowerSelect.Status.isOpen) {
 			this._PowerSelect.Controls.open(event);
 			return;
 		}
@@ -334,7 +337,7 @@ export default class TwyrPowerSelectComponent extends Component {
 		event.stopPropagation();
 
 		const step = event.keyCode === 40 ? 1 : -1;
-		const newHighlighted = advanceSelectableOption(this._selectOptions.results, this._selectOption.highlightedOption, step);
+		const newHighlighted = advanceSelectableOption(this._selectOptions.resolvedOptions, this._selectOptions.highlightedOption, step);
 
 		this._highlight(newHighlighted);
 		this._scrollTo(newHighlighted);
@@ -417,6 +420,11 @@ export default class TwyrPowerSelectComponent extends Component {
 		return filterOptions(options, filterText, optionMatcher, skipDisabled);
 	}
 
+	_findWithOffset(options, term, offset, skipDisabled = false) {
+		const typeAheadOptionMatcher = getOptionMatcher(this.args.typeAheadOptionMatcher || defaultTypeAheadMatcher, defaultTypeAheadMatcher, this.args.searchField);
+		return findOptionWithOffset(options || [], term, typeAheadOptionMatcher, offset, skipDisabled);
+	}
+
 	_highlight(option) {
 		this.debug(`_highlight::arguments: `, arguments);
 		if(option && option.isDisabled)
@@ -443,23 +451,23 @@ export default class TwyrPowerSelectComponent extends Component {
 		this.debug(`_routeKeydown::arguments: `, arguments);
 
 		// Up & Down
-		if (event.keyCode === this.constants.KEYCODE.UP_ARROW || event.keyCode === this.constants.KEYCODE.DOWN_ARROW) {
-			return this._handleKeyUpDown(event);
+		if(event.keyCode === this.constants.KEYCODE.UP_ARROW || event.keyCode === this.constants.KEYCODE.DOWN_ARROW) {
+			return this.handleKeyUpDown(event);
 		}
 
 		// ENTER
-		if (event.keyCode === this.constants.KEYCODE.ENTER) {
-			return this._handleKeyEnter(event);
+		if(event.keyCode === this.constants.KEYCODE.ENTER) {
+			return this.handleKeyEnter(event);
 		}
 
 		// Tab
-		if (event.keyCode === this.constants.KEYCODE.TAB) {
-			return this._handleKeyTab(event);
+		if(event.keyCode === this.constants.KEYCODE.TAB) {
+			return this.handleKeyTab(event);
 		}
 
 		// ESCAPE
-		if (event.keyCode === this.constants.KEYCODE.ESCAPE) {
-			return this._handleKeyEscape(event);
+		if(event.keyCode === this.constants.KEYCODE.ESCAPE) {
+			return this.handleKeyEscape(event);
 		}
 	}
 
@@ -479,19 +487,19 @@ export default class TwyrPowerSelectComponent extends Component {
 		const index = indexOfOption(resolvedResults, option);
 		if(index < 0) return;
 
-		const contentElement = document.getElementById(`${this._PowerSelect.id}-content`);
+		const contentElement = document.querySelector(`[aria-controls="twyr-power-select-trigger-${this._PowerSelect.id}"`);
 		if(!contentElement) return;
 
-		const optionElement = contentElement.querySelectorAll(`[class="twyr-power-select-options"]`).item(index);
+		const optionElement = contentElement.querySelectorAll(`[class="twyr-power-select-option"]`).item(index);
 		if(!optionElement) return;
 
 		const optionTopScroll = optionElement.offsetTop - contentElement.offsetTop;
 		const optionBottomScroll = optionTopScroll + optionElement.offsetHeight;
 
-		if (optionBottomScroll > (contentElement.offsetHeight + contentElement.scrollTop)) {
+		if(optionBottomScroll > (contentElement.offsetHeight + contentElement.scrollTop)) {
 			contentElement.scrollTop = optionBottomScroll - contentElement.offsetHeight;
 		}
-		else if (optionTopScroll < contentElement.scrollTop) {
+		else if(optionTopScroll < contentElement.scrollTop) {
 			contentElement.scrollTop = optionTopScroll;
 		}
 	}
@@ -598,8 +606,66 @@ export default class TwyrPowerSelectComponent extends Component {
 	@restartableTask
 	*_triggerTypingTask(event) {
 		this.debug(`_triggerTypingTask::arguments: `, event);
-		// TODO: Actual implementation
-		yield;
+
+		// In general, a user doing this interaction means to have a different result.
+		let charCode = event.keyCode;
+
+		let repeatingChar = this._repeatingChar || '';
+		let expirableSearchText = this._expirableSearchText || '';
+
+		let searchStartOffset = 1;
+
+		if((event.keyCode >= 96) && (event.keyCode <= 105)) {
+			charCode -= 48; // Adjust char code offset for Numpad key codes. Check here for numapd key code behavior: https://goo.gl/Qwc9u4
+		}
+
+		let term;
+
+		// Check if user intends to cycle through results. _repeatingChar can only be the first character.
+		let c = String.fromCharCode(charCode);
+		if(c === repeatingChar)
+			term = c;
+		else
+			term = expirableSearchText + c;
+
+		if(term.length > 1) {
+			// If the term is longer than one char, the user is in the middle of a non-cycling interaction
+			// so the offset is just zero (the current selection is a valid match).
+			searchStartOffset = 0;
+			repeatingChar = '';
+		} else {
+			repeatingChar = c;
+		}
+
+		// When the select is open, the "selection" is just highlighted.
+		if(this._PowerSelect.Status.isOpen && this._selectOptions.highlightedOption) {
+			searchStartOffset += indexOfOption(this._selectOptions.resolvedOptions, this._selectOptions.highlightedOption);
+		}
+		else if(!this._PowerSelect.Status.isOpen && this._selectOptions.selected) {
+			searchStartOffset += indexOfOption(this._selectOptions.resolvedOptions, this._selectOptions.selected);
+		} else {
+			searchStartOffset = 0;
+		}
+
+		// The char is always appended. That way, searching for words like "Aaron" will work even
+		// if "Aa" would cycle through the results.
+		this._expirableSearchText = expirableSearchText + c;
+		this._repeatingChar = repeatingChar;
+
+		let match = this._findWithOffset(this._selectOptions.resolvedOptions, term, searchStartOffset, true);
+		if(match !== undefined) {
+			if(this._PowerSelect.Status.isOpen) {
+				this._highlight(match);
+				this._scrollTo(match);
+			}
+			else {
+				this._select(match, event);
+			}
+		}
+
+		yield timeout(1000);
+		this._expirableSearchText = '';
+		this._repeatingChar = '';
 	}
 
 	@restartableTask

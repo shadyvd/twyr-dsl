@@ -42,7 +42,7 @@ export default class TwyrSpeedDialActionComponent extends Component {
 		this._element = element;
 
 		run.next(() => {
-			if (this.isDestroying || this.isDestroyed)
+			if(this.isDestroying || this.isDestroyed)
 				return;
 
 			this._elementDidRender = true;
@@ -72,7 +72,7 @@ export default class TwyrSpeedDialActionComponent extends Component {
 			return compStyle;
 		}
 
-		if (animation === 'md-scale') {
+		if(animation === 'md-scale') {
 			const compStyle = this._scaleClosed();
 			this.debug(`_computedStyle::animation::md-scale::style: ${compStyle}`);
 

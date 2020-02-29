@@ -37,7 +37,7 @@ export default class TwyrSpeedDialComponent extends Component {
 		this._element = element;
 
 		run.next(() => {
-			if (this.isDestroying || this.isDestroyed)
+			if(this.isDestroying || this.isDestroyed)
 				return;
 
 			this._elementDidRender = true;

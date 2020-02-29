@@ -7,8 +7,8 @@
 
 			{{#let (element (or @htmlTag "div")) as |Element|}}
 				<Element
-					id="twyr-basic-dropdown-content-{{@dropdownId}} {{this.animationClass}}"
-					class="twyr-basic-dropdown-content"
+					id="twyr-basic-dropdown-content-{{@dropdownId}}"
+					class="twyr-basic-dropdown-content {{this.animationClass}}"
 					style={{this.computedStyle}}
 					dir={{@dir}}
 

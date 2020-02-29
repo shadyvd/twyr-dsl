@@ -3,12 +3,12 @@ import { isArray as isEmberArray } from '@ember/array';
 import { isEqual } from '@ember/utils';
 
 export default helper(function twyrPowerSelectIsSelected(option, selectedOption) {
-	if (selectedOption === undefined || selectedOption === null)
+	if(selectedOption === undefined || selectedOption === null)
 		return false;
 
-	if (isEmberArray(selectedOption)) {
+	if(isEmberArray(selectedOption)) {
 		for (let idx = 0; idx < selectedOption.length; idx++) {
-			if (isEqual(selectedOption[idx], option))
+			if(isEqual(selectedOption[idx], option))
 				return true;
 		}
 

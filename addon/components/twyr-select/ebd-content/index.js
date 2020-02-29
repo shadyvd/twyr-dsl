@@ -17,7 +17,7 @@ const isFocusable = function isFocusable(el) {
 const waitForAnimations = function waitForAnimations(element, callback) {
 	const computedStyle = window.getComputedStyle(element);
 
-	if (computedStyle.transitionDuration && computedStyle.transitionDuration !== '0s') {
+	if(computedStyle.transitionDuration && computedStyle.transitionDuration !== '0s') {
 		const eventCallback = function() {
 			element.removeEventListener('transitionend', eventCallback);
 			callback();
@@ -25,7 +25,7 @@ const waitForAnimations = function waitForAnimations(element, callback) {
 
 		element.addEventListener('transitionend', eventCallback);
 	}
-	else if (computedStyle.animationName !== 'none' && computedStyle.animationPlayState === 'running') {
+	else if(computedStyle.animationName !== 'none' && computedStyle.animationPlayState === 'running') {
 		const eventCallback = function() {
 			element.removeEventListener('animationend', eventCallback);
 			callback();
@@ -91,14 +91,14 @@ export default class TwyrSelectEbdContentComponent extends Component {
 		let focusTarget = e.target.closest('md-option');
 
 		do {
-			if (direction > 0) {
+			if(direction > 0) {
 				focusTarget = focusTarget.nextElementSibling;
 			} else {
 				focusTarget = focusTarget.previousElementSibling;
 			}
 		} while (focusTarget && !isFocusable(focusTarget));
 
-		if (focusTarget) {
+		if(focusTarget) {
 			focusTarget.focus();
 		}
 	}
@@ -108,7 +108,7 @@ export default class TwyrSelectEbdContentComponent extends Component {
 		let shouldReposition = false;
 
 		shouldReposition = Array.prototype.slice.call(mutations[0].addedNodes).some((node) => {
-			if (node.classList) {
+			if(node.classList) {
 				return !node.classList.contains('md-ripple') && (node.nodeName !== '#comment') && !(node.nodeName === '#text' && node.nodeValue === '');
 			}
 
@@ -116,7 +116,7 @@ export default class TwyrSelectEbdContentComponent extends Component {
 		});
 
 		shouldReposition = shouldReposition || Array.prototype.slice.call(mutations[0].removedNodes).some((node) => {
-			if (node.classList) {
+			if(node.classList) {
 				return !node.classList.contains('md-ripple') && (node.nodeName !== '#comment') && !(node.nodeName === '#text' && node.nodeValue === '');
 			}
 			return false;
@@ -168,11 +168,11 @@ export default class TwyrSelectEbdContentComponent extends Component {
 		let focusTarget = element.querySelector('md-option[aria-selected="true"]');
 
 		// default to first not disabled option
-		if (!focusTarget) {
+		if(!focusTarget) {
 			focusTarget = element.querySelector('md-option:not([aria-disabled="true"])');
 		}
 
-		if (focusTarget) {
+		if(focusTarget) {
 			focusTarget.focus();
 		}
 	}

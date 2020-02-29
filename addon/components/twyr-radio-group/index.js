@@ -111,7 +111,7 @@ export default class TwyrRadioGroupComponent extends Component {
 		const groupValue = this.args.groupValue;
 
 		let index = 0;
-		if (isPresent(groupValue)) {
+		if(isPresent(groupValue)) {
 			index = this.childValues.indexOf(groupValue);
 			index += increment;
 

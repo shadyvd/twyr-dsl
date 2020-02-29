@@ -11,7 +11,7 @@ const MENU_EDGE_MARGIN = 8;
 // #region File Global Functions
 function firstVisibleChild(node) {
 	for (let i = 0; i < node.children.length; ++i) {
-		if (window.getComputedStyle(node.children[i]).display === 'none')
+		if(window.getComputedStyle(node.children[i]).display === 'none')
 			continue;
 
 		return node.children[i];
@@ -82,10 +82,10 @@ export default class TwyrMenuComponent extends Component {
 		let alignTargetRect = { 'top': 0, 'left': 0, 'right': 0, 'bottom': 0 };
 
 		let positionMode = this.positionMode;
-		if ((positionMode.top === 'target') || (positionMode.left === 'target') || (positionMode.left === 'target-right')) {
+		if((positionMode.top === 'target') || (positionMode.left === 'target') || (positionMode.left === 'target-right')) {
 			alignTarget = firstVisibleChild(openMenuNode);
 
-			if (alignTarget) {
+			if(alignTarget) {
 				// TODO: Allow centering on an arbitrary node, for now center on first menu-item's child
 				alignTarget = alignTarget.firstElementChild || alignTarget;
 				alignTarget = alignTarget.querySelector('md-icon') || alignTarget.querySelector('.md-menu-align-target') || alignTarget;

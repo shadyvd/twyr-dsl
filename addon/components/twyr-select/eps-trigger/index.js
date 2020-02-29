@@ -30,7 +30,7 @@ export default class TwyrSelectEpsTriggerComponent extends Component {
 		event.stopPropagation();
 		this.args.select.actions.select(null);
 
-		if (event.type === 'touchstart')
+		if(event.type === 'touchstart')
 			return false;
 	}
 	// #endregion

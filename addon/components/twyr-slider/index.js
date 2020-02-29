@@ -170,15 +170,15 @@ export default class TwyrSliderComponent extends Component {
 		}
 
 		let changeAmount = 0;
-		if (event.keyCode === this.constants.KEYCODE.LEFT_ARROW) {
+		if(event.keyCode === this.constants.KEYCODE.LEFT_ARROW) {
 			changeAmount = parseFloat(this.step) * -1;
 		}
 
-		if (event.keyCode === this.constants.KEYCODE.RIGHT_ARROW) {
+		if(event.keyCode === this.constants.KEYCODE.RIGHT_ARROW) {
 			changeAmount = parseFloat(this.step);
 		}
 
-		if (!changeAmount) {
+		if(!changeAmount) {
 			this.debug(`handleKeydown::changeAmount: ${changeAmount}`);
 			return;
 		}
@@ -186,7 +186,7 @@ export default class TwyrSliderComponent extends Component {
 		event.preventDefault();
 		event.stopPropagation();
 
-		if (event.metaKey || event.ctrlKey || event.altKey)
+		if(event.metaKey || event.ctrlKey || event.altKey)
 			changeAmount *= 4;
 
 		const newValue = this.args.value + changeAmount;

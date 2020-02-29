@@ -138,15 +138,15 @@ export default class TwyrSelectComponent extends Component {
 		let transformOrigin = undefined;
 
 		// If a selected node, center around that
-		if (selectedNode) {
+		if(selectedNode) {
 			centeredNode = selectedNode;
 		}
 		// If there are option groups, center around the first option group
-		else if (optgroupNodes.length) {
+		else if(optgroupNodes.length) {
 			centeredNode = optgroupNodes[0];
 		}
 		// Otherwise, center around the first optionNode
-		else if (optionNodes.length) {
+		else if(optionNodes.length) {
 			centeredNode = optionNodes[0];
 		}
 		// In case there are no options, center on whatever's in there... (eg progress indicator)
@@ -154,13 +154,13 @@ export default class TwyrSelectComponent extends Component {
 			centeredNode = contentNode.firstElementChild || contentNode;
 		}
 
-		if (contentNode.offsetWidth > maxWidth) {
+		if(contentNode.offsetWidth > maxWidth) {
 			contentNode.style['max-width'] = `${maxWidth}px`;
 		}
 
 		// Remove padding before we compute the position of the menu
 		let focusedNode = centeredNode;
-		if ((focusedNode.tagName || '').toUpperCase() === 'MD-OPTGROUP') {
+		if((focusedNode.tagName || '').toUpperCase() === 'MD-OPTGROUP') {
 			focusedNode = optionNodes[0] || contentNode.firstElementChild || contentNode;
 			centeredNode = focusedNode;
 		}
@@ -171,7 +171,7 @@ export default class TwyrSelectComponent extends Component {
 		const selectMenuRect = selectNode.getBoundingClientRect();
 		const centeredRect = getOffsetRect(centeredNode);
 
-		if (centeredNode) {
+		if(centeredNode) {
 			const centeredStyle = window.getComputedStyle(centeredNode);
 			centeredRect.paddingLeft = parseInt(centeredStyle.paddingLeft, 10) || 0;
 			centeredRect.paddingRight = parseInt(centeredStyle.paddingRight, 10) || 0;
@@ -179,14 +179,14 @@ export default class TwyrSelectComponent extends Component {
 
 		// Get scrollHeight/offsetHeight *after* container is set with display:block
 		const isScrollable = contentNode.scrollHeight > contentNode.offsetHeight;
-		if (isScrollable) {
+		if(isScrollable) {
 			const scrollBuffer = contentNode.offsetHeight / 2;
 			contentNode.scrollTop = centeredRect.top + centeredRect.height / 2 - scrollBuffer;
 
-			if (spaceAvailable.top < scrollBuffer) {
+			if(spaceAvailable.top < scrollBuffer) {
 				contentNode.scrollTop = Math.min(centeredRect.top, contentNode.scrollTop + scrollBuffer - spaceAvailable.top);
 			}
-			else if (spaceAvailable.bottom < scrollBuffer) {
+			else if(spaceAvailable.bottom < scrollBuffer) {
 				contentNode.scrollTop = Math.max(centeredRect.top + centeredRect.height - selectMenuRect.height, contentNode.scrollTop - scrollBuffer + spaceAvailable.bottom);
 			}
 		}

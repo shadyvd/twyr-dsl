@@ -9,11 +9,11 @@ import { action } from '@ember/object';
 		ElementProto.matches = ElementProto.msMatchesSelector || ElementProto.mozMatchesSelector || ElementProto.webkitMatchesSelector;
 	}
 
-	if (typeof ElementProto.closest !== 'function') {
+	if(typeof ElementProto.closest !== 'function') {
 		ElementProto.closest = function closest(selector) {
 			let element = this;
 			while (element !== null && element.nodeType === 1) {
-				if (element.matches(selector))
+				if(element.matches(selector))
 					return element;
 
 				element = element.parentNode;
@@ -48,16 +48,16 @@ export default class TwyrPowerSelectOptionsComponent extends Component {
 
 		const findOptionAndPerform = (action, event) => {
 			this.debug(`findOptionAndPerform::arguments: `, arguments);
-			if (event.target === null) return;
+			if(event.target === null) return;
 
 			const optionItem = event.target.closest('[data-option-index]');
-			if (!optionItem) return;
+			if(!optionItem) return;
 
-			if (optionItem.closest('[aria-disabled=true]'))
+			if(optionItem.closest('[aria-disabled=true]'))
 				return;
 
 			const optionIndex = optionItem.getAttribute('data-option-index');
-			if (optionIndex === null) return;
+			if(optionIndex === null) return;
 
 			action(this._optionFromIndex(optionIndex), event);
 		};
@@ -75,10 +75,10 @@ export default class TwyrPowerSelectOptionsComponent extends Component {
 			});
 		}
 
-		if (this.isTouchDevice) {
+		if(this.isTouchDevice) {
 			const touchMoveHandler = () => {
 				this._hasMoved = true;
-				if (!this._element) return;
+				if(!this._element) return;
 
 				this._element.removeEventListener('touchmove', touchMoveHandler);
 			};
@@ -89,23 +89,23 @@ export default class TwyrPowerSelectOptionsComponent extends Component {
 			});
 
 			this._element.addEventListener('touchend', (event) => {
-				if (event.target === null) return;
+				if(event.target === null) return;
 
 				const optionItem = (event.target).closest('[data-option-index]');
-				if (optionItem === null) return;
+				if(optionItem === null) return;
 
 				event.preventDefault();
-				if (this._hasMoved) {
+				if(this._hasMoved) {
 					this._hasMoved = false;
 					return;
 				}
 
-				if (optionItem.closest('[aria-disabled=true]')) {
+				if(optionItem.closest('[aria-disabled=true]')) {
 					return; // Abort if the item or an ancestor is disabled
 				}
 
 				const optionIndex = optionItem.getAttribute('data-option-index');
-				if (optionIndex === null) return;
+				if(optionIndex === null) return;
 
 				this.args.powerSelect.Controls.choose(this._optionFromIndex(optionIndex), event);
 			});

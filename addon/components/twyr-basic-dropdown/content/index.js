@@ -20,7 +20,7 @@ const closestContent = function closestContent(el) {
 
 const dropdownIsValidParent = function dropdownIsValidParent(el, dropdownId) {
 	const closestDropdown = closestContent(el);
-	if (closestDropdown) {
+	if(closestDropdown) {
 		const trigger = document.getElementById(`twyr-basic-dropdown-trigger-${closestDropdown.getAttribute('id').replace('twyr-basic-dropdown-', '')}]`);
 		const parentDropdown = closestContent(trigger);
 
@@ -34,7 +34,7 @@ const waitForAnimations = function waitForAnimations(element, callback) {
 	window.requestAnimationFrame(function() {
 		let computedStyle = window.getComputedStyle(element);
 
-		if (computedStyle.animationName !== 'none' && computedStyle.animationPlayState === 'running') {
+		if(computedStyle.animationName !== 'none' && computedStyle.animationPlayState === 'running') {
 			const eventCallback = function() {
 				element.removeEventListener('animationend', eventCallback);
 				callback();
@@ -97,7 +97,7 @@ export default class TwyrBasicDropdownContentComponent extends Component {
 		window.addEventListener('orientationchange', this.runloopAwareReposition);
 		window.addEventListener('resize', this.runloopAwareReposition);
 
-		if (this.isTouchDevice) {
+		if(this.isTouchDevice) {
 			this.debug(`didInsert::addTouchEventListeners`);
 			document.addEventListener('touchstart', this.handleTouchstart, true);
 			document.addEventListener('touchend', this.handleRootMousedown, true);
@@ -148,11 +148,11 @@ export default class TwyrBasicDropdownContentComponent extends Component {
 			return node.nodeName !== '#comment' && !(node.nodeName === '#text' && node.nodeValue === '');
 		});
 
-		if (shouldReposition && this._shouldReposition && (typeof this._shouldReposition === 'function')) {
+		if(shouldReposition && this._shouldReposition && (typeof this._shouldReposition === 'function')) {
 			shouldReposition = this._shouldReposition(mutations, this.args.dropdownControls);
 		}
 
-		if (shouldReposition) {
+		if(shouldReposition) {
 			this.debug(`didMutate::runloopAwareReposition`);
 			this.runloopAwareReposition();
 		}
@@ -171,7 +171,7 @@ export default class TwyrBasicDropdownContentComponent extends Component {
 		this.debug(`willTeardown::_scrollableAncestors::clear`);
 		this._scrollableAncestors.clear();
 
-		if (this.isTouchDevice) {
+		if(this.isTouchDevice) {
 			this.debug(`willTeardown::removeTouchEventListeners`);
 			document.removeEventListener('touchend', this.handleRootMousedown, true);
 			document.removeEventListener('touchstart', this.handleTouchstart, true);
@@ -265,11 +265,11 @@ export default class TwyrBasicDropdownContentComponent extends Component {
 
 	_addScrollHandling() {
 		this.debug(`_addScrollHandling`);
-		if (this.args.preventScroll === true) {
+		if(this.args.preventScroll === true) {
 			this.debug(`_addScrollHandling::preventScroll::true`);
 
 			let wheelHandler = (event) => {
-				if (this._element.contains(event.target) || this._element === event.target) {
+				if(this._element.contains(event.target) || this._element === event.target) {
 					// Discover the amount of scrollable canvas that is within the dropdown.
 					const availableScroll = getAvailableScroll(event.target, this._element);
 
@@ -279,19 +279,19 @@ export default class TwyrBasicDropdownContentComponent extends Component {
 					// If the consequence of the wheel action would result in scrolling beyond
 					// the scrollable canvas of the dropdown, call preventDefault() and clamp
 					// the value of the delta to the available scroll size.
-					if (deltaX < availableScroll.deltaXNegative) {
+					if(deltaX < availableScroll.deltaXNegative) {
 						deltaX = availableScroll.deltaXNegative;
 						event.preventDefault();
 					}
-					else if (deltaX > availableScroll.deltaXPositive) {
+					else if(deltaX > availableScroll.deltaXPositive) {
 						deltaX = availableScroll.deltaXPositive;
 						event.preventDefault();
 					}
-					else if (deltaY < availableScroll.deltaYNegative) {
+					else if(deltaY < availableScroll.deltaYNegative) {
 						deltaY = availableScroll.deltaYNegative;
 						event.preventDefault();
 					}
-					else if (deltaY > availableScroll.deltaYPositive) {
+					else if(deltaY > availableScroll.deltaYPositive) {
 						deltaY = availableScroll.deltaYPositive;
 						event.preventDefault();
 					}
@@ -302,7 +302,7 @@ export default class TwyrBasicDropdownContentComponent extends Component {
 					// - The last relevant wheel event if the scroll is overshooting
 
 					// Also, don't attempt to do this if both of `deltaX` or `deltaY` are 0.
-					if (event.defaultPrevented && (deltaX || deltaY)) {
+					if(event.defaultPrevented && (deltaX || deltaY)) {
 						distributeScroll(deltaX, deltaY, event.target, this._element);
 					}
 				}
@@ -342,7 +342,7 @@ export default class TwyrBasicDropdownContentComponent extends Component {
 	}
 
 	_animateOut() {
-		if (!this.animationEnabled) {
+		if(!this.animationEnabled) {
 			this.debug(`_animateOut::animationEnabled::false`);
 			return;
 		}
@@ -370,7 +370,7 @@ export default class TwyrBasicDropdownContentComponent extends Component {
 		this.debug(`_setScrollableAncestors::triggerElement: `, triggerElement);
 
 		const scrollableElements = [];
-		if (triggerElement) {
+		if(triggerElement) {
 			let nextScrollable = getScrollParent(triggerElement.parentNode);
 
 			while (nextScrollable && nextScrollable.tagName.toUpperCase() !== 'BODY' && nextScrollable.tagName.toUpperCase() !== 'HTML') {
@@ -400,14 +400,14 @@ export default class TwyrBasicDropdownContentComponent extends Component {
 		const triggerElement = document.getElementById(`twyr-basic-dropdown-trigger-${this.args.dropdownId.replace('twyr-basic-dropdown-', '')}`);
 		this.debug(`handleRootMousedown::trigger: `, triggerElement);
 
-		if (this._hasMoved || this._element.contains(event.target) || (triggerElement && triggerElement.contains(event.target))) {
+		if(this._hasMoved || this._element.contains(event.target) || (triggerElement && triggerElement.contains(event.target))) {
 			this.debug(`handleRootMousedown::_hasMoved #1: false`);
 			this._hasMoved = false;
 
 			return;
 		}
 
-		if (dropdownIsValidParent(event.target, this.args.dropdownId)) {
+		if(dropdownIsValidParent(event.target, this.args.dropdownId)) {
 			this.debug(`handleRootMousedown::_hasMoved #2: false`);
 			this._hasMoved = false;
 

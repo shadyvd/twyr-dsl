@@ -44,7 +44,7 @@ export default class TwyrChipComponent extends Component {
 	handleKeydown(event) {
 		let input = event.currentTarget.querySelector('.md-chip-input-container input');
 
-		if (!this.args.readOnly && isEmpty(input.value) && this.args.content.length) {
+		if(!this.args.readOnly && isEmpty(input.value) && this.args.content.length) {
 				this._keyboardNavigation(event, input);
 		}
 	}
@@ -57,30 +57,30 @@ export default class TwyrChipComponent extends Component {
 		const chips = this.args.content;
 		const key = event.key;
 
-		if (['ArrowLeft', 'Left'].includes(key) || (key === 'Backspace' && current === -1)) {
-			if (current === -1) {
+		if(['ArrowLeft', 'Left'].includes(key) || (key === 'Backspace' && current === -1)) {
+			if(current === -1) {
 				input.blur();
 				event.currentTarget.focus();
 
 				this._activeChip = (chips.length - 1);
 			}
-			else if (current > 0) {
+			else if(current > 0) {
 				this._activeChip = (this._activeChip - 1);
 			}
 		}
 
-		if (['ArrowRight', 'Right'].includes(key)) {
-			if (current >= 0) {
+		if(['ArrowRight', 'Right'].includes(key)) {
+			if(current >= 0) {
 				this._activeChip = (this.activeChip + 1);
 			}
 
-			if (this._activeChip >= chips.length) {
+			if(this._activeChip >= chips.length) {
 				this._activeChip = -1;
 				input.focus();
 			}
 		}
 
-		if (['Backspace', 'Delete', 'Del'].includes(key) && (current >= 0)) {
+		if(['Backspace', 'Delete', 'Del'].includes(key) && (current >= 0)) {
 			this._activeChip = (Math.min(chips.length - 1, this._activeChip));
 			if(isPresent(this.args.removeItem) && (typeof this.args.removeItem === 'function'))
 				this.argsremoveItem(chips[current]);
@@ -146,13 +146,13 @@ export default class TwyrChipComponent extends Component {
 		if(isPresent(this.args.removeItem) && (typeof this.args.removeItem === 'function'))
 			this.argsremoveItem(item);
 
-		if ((this._activeChip === -1) || (this._activeChip >= this.args.content.length))
+		if((this._activeChip === -1) || (this._activeChip >= this.args.content.length))
 			this.set('activeChip', -1);
 	}
 
 	@action
 	handleInputKeydown(event) {
-		if (event.key !== 'Enter')
+		if(event.key !== 'Enter')
 			return;
 
 		this.handleAddItem(event.target.value);
@@ -163,7 +163,7 @@ export default class TwyrChipComponent extends Component {
 	handleChipClick(index, event) {
 		event.stopPropagation();
 
-		if (this.args.readOnly)
+		if(this.args.readOnly)
 			return;
 
 		this._activeChip = index;

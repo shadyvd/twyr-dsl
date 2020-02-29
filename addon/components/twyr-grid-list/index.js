@@ -104,7 +104,7 @@ export default class TwyrGridListComponent extends Component {
 	// #region Computed Properties
 	get colsMedia() {
 		const sizes = this._extractResponsiveSizes(this.args.cols);
-		if (Object.keys(sizes).length === 0) {
+		if(Object.keys(sizes).length === 0) {
 			throw new Error('md-grid-list: No valid cols found');
 		}
 
@@ -152,7 +152,7 @@ export default class TwyrGridListComponent extends Component {
 
 	get rowHeightMedia() {
 		const rowHeights = this._extractResponsiveSizes(this.args.rowHeight, rowHeightRegex);
-		if (Object.keys(rowHeights).length === 0) {
+		if(Object.keys(rowHeights).length === 0) {
 			throw new Error('md-grid-list: No valid rowHeight found');
 		}
 
@@ -174,7 +174,7 @@ export default class TwyrGridListComponent extends Component {
 		let match = undefined;
 
 		while ((match = regex.exec(string))) {
-			if (match[2]) {
+			if(match[2]) {
 				matches[match[2].slice(0, -1)] = match[3];
 			}
 			else {
@@ -189,7 +189,7 @@ export default class TwyrGridListComponent extends Component {
 		let retVal = undefined;
 
 		for (let idx = 0; idx < currentMedia.length; idx++) {
-			if (!sizes[currentMedia[idx]])
+			if(!sizes[currentMedia[idx]])
 				continue;
 
 			retVal= sizes[currentMedia[idx]];
@@ -200,10 +200,10 @@ export default class TwyrGridListComponent extends Component {
 	}
 
 	_getRowMode(rowHeight) {
-		if (rowHeight === 'fit')
+		if(rowHeight === 'fit')
 			return 'fit';
 
-		if (rowHeight.indexOf(':') !== -1)
+		if(rowHeight.indexOf(':') !== -1)
 			return 'ratio';
 
 		return 'fixed';

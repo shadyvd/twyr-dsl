@@ -10,7 +10,7 @@ const calculateInPlacePosition = function calculateInPlacePosition(destinationEl
 		positionData.xAlign = ((triggerRect.left + contentRect.width) > viewportRight) ? 'right' : 'left';
 	}
 
-	if (options.xAlign === 'auto-right') {
+	if(options.xAlign === 'auto-right') {
 		positionData.xAlign = (triggerRect.right > contentRect.width) ? 'right' : 'left';
 	}
 
@@ -75,14 +75,14 @@ const calculateWormholedPosition = function calculateWormholedPosition(destinati
 		anchorPosition = window.getComputedStyle(anchorElement).position;
 	}
 
-	if (anchorPosition === 'relative' || anchorPosition === 'absolute') {
+	if(anchorPosition === 'relative' || anchorPosition === 'absolute') {
 		const anchorRect = anchorElement.getBoundingClientRect();
 
 		triggerLeft = triggerLeft - anchorRect.left;
 		triggerTop = triggerTop - anchorRect.top;
 
 		const anchorOffsetParent  = anchorElement.offsetParent;
-		if (anchorOffsetParent) {
+		if(anchorOffsetParent) {
 			triggerLeft -= anchorOffsetParent.scrollLeft;
 			triggerTop -= anchorOffsetParent.scrollTop;
 		}
@@ -100,12 +100,12 @@ const calculateWormholedPosition = function calculateWormholedPosition(destinati
 		let leftVisible = Math.min(currentViewportWidth, triggerLeft + contentWidth) - Math.max(0, triggerLeft);
 		let rightVisible = Math.min(currentViewportWidth, triggerLeft + triggerWidth) - Math.max(0, triggerLeft + triggerWidth - contentWidth);
 
-		if ((contentWidth > leftVisible) && (rightVisible > leftVisible)) {
+		if((contentWidth > leftVisible) && (rightVisible > leftVisible)) {
 			// If the drop down won't fit left-aligned, and there is more space on the
 			// right than on the left, then force right-aligned
 			positionData.xAlign = 'right';
 		}
-		else if ((contentWidth > rightVisible) && (leftVisible > rightVisible)) {
+		else if((contentWidth > rightVisible) && (leftVisible > rightVisible)) {
 			// If the drop down won't fit right-aligned, and there is more space on
 			// the left than on the right, then force left-aligned
 			positionData.xAlign = 'left';
@@ -122,12 +122,12 @@ const calculateWormholedPosition = function calculateWormholedPosition(destinati
 		const leftVisible = Math.min(currentViewportWidth, triggerLeft + contentWidth) - Math.max(0, triggerLeft);
 		const rightVisible = Math.min(currentViewportWidth, triggerLeft + triggerWidth) - Math.max(0, triggerLeft + triggerWidth - contentWidth);
 
-		if ((contentWidth > rightVisible) && (leftVisible > rightVisible)) {
+		if((contentWidth > rightVisible) && (leftVisible > rightVisible)) {
 			// If the drop down won't fit right-aligned, and there is more space on the
 			// left than on the right, then force left-aligned
 			positionData.xAlign = 'left';
 		}
-		else if ((contentWidth > leftVisible) && (rightVisible > leftVisible)) {
+		else if((contentWidth > leftVisible) && (rightVisible > leftVisible)) {
 			// If the drop down won't fit left-aligned, and there is more space on
 			// the right than on the left, then force right-aligned
 			positionData.xAlign = 'right';
@@ -139,7 +139,7 @@ const calculateWormholedPosition = function calculateWormholedPosition(destinati
 	}
 
 	positionData.xAlign = positionData.xAlign || options.xAlign;
-	if (positionData.xAlign === 'center') {
+	if(positionData.xAlign === 'center') {
 		positionData.left = triggerLeftWithScroll + (triggerWidth - contentWidth) / 2;
 	}
 	else if(positionData.xAlign === 'right') {
@@ -162,13 +162,13 @@ const calculateWormholedPosition = function calculateWormholedPosition(destinati
 	const enoughRoomBelow = (triggerTopWithScroll + triggerHeight + contentHeight) < viewportBottom;
 	const enoughRoomAbove = (triggerTop > contentHeight);
 
-	if (options.yAlign === 'below' && !enoughRoomBelow && enoughRoomAbove) {
+	if(options.yAlign === 'below' && !enoughRoomBelow && enoughRoomAbove) {
 		positionData.yAlign = 'above';
 	}
-	else if (options.yAlign === 'above' && !enoughRoomAbove && enoughRoomBelow) {
+	else if(options.yAlign === 'above' && !enoughRoomAbove && enoughRoomBelow) {
 		positionData.yAlign = 'below';
 	}
-	else if (options.yAlign === 'auto') {
+	else if(options.yAlign === 'auto') {
 		positionData.yAlign = enoughRoomBelow ? 'below' : 'above';
 	}
 	else {
@@ -177,10 +177,10 @@ const calculateWormholedPosition = function calculateWormholedPosition(destinati
 
 	positionData.top = triggerTopWithScroll + (positionData.yAlign === 'below' ? triggerHeight : -contentHeight);
 
-	if (positionData.yAlign === 'above') {
+	if(positionData.yAlign === 'above') {
 		positionData.top = triggerTopWithScroll - contentHeight;
 	}
-	else if (positionData.yAlign === 'below') {
+	else if(positionData.yAlign === 'below') {
 		positionData.top = triggerTopWithScroll + triggerHeight;
 	}
 

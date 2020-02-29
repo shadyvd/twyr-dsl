@@ -48,7 +48,7 @@
 			{{has-class-if PowerSelect.Status.isActive "twyr-power-select-trigger--active"}}
 
 			{{did-insert (fn this.didInsertTrigger PowerSelect)}}
-			{{did-update this.didReceiveArgsTrigger @options @selected @searchText}}
+			{{did-update this.didReceiveArgsTrigger @options @selected @searchText PowerSelect.id}}
 
 			{{on "blur" this.handleBlur}}
 			{{on "focus" this.handleFocus}}

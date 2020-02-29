@@ -101,7 +101,7 @@ export default class TwyrTabsComponent extends Component {
 		if(this.args.noInkBar)
 			return null;
 
-		if (!this._selectedTab || (this._selectedTab.left === undefined))
+		if(!this._selectedTab || (this._selectedTab.left === undefined))
 			return null;
 
 		this.debug(`inkBar: `, {
@@ -158,7 +158,7 @@ export default class TwyrTabsComponent extends Component {
 
 	// #region Private Methods
 	_fixOffsetIfNeeded() {
-		if (this.isDestroying || this.isDestroyed)
+		if(this.isDestroying || this.isDestroyed)
 			return;
 
 		if(!this._selectedTab) return;
@@ -168,15 +168,15 @@ export default class TwyrTabsComponent extends Component {
 
 		let newOffset = this._currentOffset;
 
-		if (this._canvasWidth < this._selectedTab.width) {
+		if(this._canvasWidth < this._selectedTab.width) {
 			// align with selectedTab if canvas smaller than selected tab
 			newOffset = tabLeftOffset;
 		}
-		else if ((tabRightOffset - this._currentOffset) > this._canvasWidth) {
+		else if((tabRightOffset - this._currentOffset) > this._canvasWidth) {
 			// ensure selectedTab is not partially hidden on the right side
 			newOffset = tabRightOffset - this._canvasWidth;
 		}
-		else if (tabLeftOffset < this._currentOffset) {
+		else if(tabLeftOffset < this._currentOffset) {
 			// ensure selectedTab is not partially hidden on the left side
 			newOffset = tabLeftOffset;
 		}
@@ -184,7 +184,7 @@ export default class TwyrTabsComponent extends Component {
 			newOffset = this._currentOffset;
 		}
 
-		if (newOffset === this._currentOffset)
+		if(newOffset === this._currentOffset)
 			return;
 
 		this._currentOffset = newOffset;
@@ -229,7 +229,7 @@ export default class TwyrTabsComponent extends Component {
 
 		// if `true` or `false` is specified, always/never "stretch tabs"
 		// otherwise proceed with normal matchMedia test
-		if (typeof this.stretch === 'boolean') {
+		if(typeof this.stretch === 'boolean') {
 			currentStretch = this.stretch;
 		}
 		else {
@@ -316,7 +316,7 @@ export default class TwyrTabsComponent extends Component {
 			return ((child.left > this._currentOffset) && ((child.left + child.width - this._currentOffset) > this._canvasWidth));
 		})[0];
 
-		if (!tab) return;
+		if(!tab) return;
 		this._currentOffset = tab.left;
 	}
 
