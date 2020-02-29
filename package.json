@@ -64,7 +64,7 @@
 		"matchmedia-polyfill": "^0.3.2",
 		"polyfill-nodelist-foreach": "^1.0.1",
 		"propagating-hammerjs": "^1.4.7",
-		"vega": "^5.9.1",
+		"vega": "^5.9.2",
 		"vega-embed": "^6.3.2",
 		"vega-lite": "^4.4.0"
 	},
