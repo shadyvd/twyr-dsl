@@ -421,7 +421,7 @@ export default class TwyrPowerSelectComponent extends Component {
 	}
 
 	_findWithOffset(options, term, offset, skipDisabled = false) {
-		const typeAheadOptionMatcher = getOptionMatcher(this.args.typeAheadOptionMatcher || defaultTypeAheadMatcher, defaultTypeAheadMatcher, this.args.searchField);
+		const typeAheadOptionMatcher = getOptionMatcher(this.args.typeAheadOptionMatcher || defaultTypeAheadMatcher, this.args.searchField);
 		return findOptionWithOffset(options || [], term, typeAheadOptionMatcher, offset, skipDisabled);
 	}
 
@@ -655,8 +655,8 @@ export default class TwyrPowerSelectComponent extends Component {
 		let match = this._findWithOffset(this._selectOptions.resolvedOptions, term, searchStartOffset, true);
 		if(match !== undefined) {
 			if(this._PowerSelect.Status.isOpen) {
-				this._highlight(match);
 				this._scrollTo(match);
+				this._highlight(match);
 			}
 			else {
 				this._select(match, event);

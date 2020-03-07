@@ -943,10 +943,12 @@ export function findOptionWithOffset(options, text, matcher, offset, skipDisable
 					if(canStop()) return;
 				}
 				else if(matcher(entry, text) >= 0) {
-					if(counter < offset)
+					if(counter < offset) {
 						if(!foundBeforeOffset) foundBeforeOffset = entry;
-					else
+					}
+					else {
 						foundAfterOffset = entry;
+					}
 
 					counter++;
 				}
