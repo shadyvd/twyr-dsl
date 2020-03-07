@@ -158,11 +158,6 @@ export default class TwyrBasicDropdownTriggerComponent extends Component {
 			return;
 		}
 
-		if(!this.args.dropdownControls || !isPresent(this.args.dropdownControls.toggle) || (typeof this.args.dropdownControls.toggle !== 'function')) {
-			this.debug(`handleKeydown::dropdownControls::toggle: not available`);
-			return;
-		}
-
 		if((event.keyCode !== this.constants.KEYCODE.ENTER) && (event.keyCode !== this.constants.KEYCODE.SPACE) && (event.keyCode !== this.constants.KEYCODE.ESCAPE)) {
 			this.debug(`handleKeydown::keyCode: useless`);
 			return;
@@ -173,8 +168,26 @@ export default class TwyrBasicDropdownTriggerComponent extends Component {
 			event.preventDefault();
 		}
 
-		this.debug(`handleKeydown::dropdownControls::toggle`);
-		this.args.dropdownControls.toggle(event);
+		if((event.keyCode === this.constants.KEYCODE.ENTER) || (event.keyCode === this.constants.KEYCODE.SPACE)) {
+			if(!this.args.dropdownControls || !isPresent(this.args.dropdownControls.toggle) || (typeof this.args.dropdownControls.toggle !== 'function')) {
+				this.debug(`handleKeydown::dropdownControls::toggle: not available`);
+				return;
+			}
+
+			this.debug(`handleKeydown::dropdownControls::toggle`);
+			this.args.dropdownControls.toggle(event);
+
+			return;
+		}
+
+		if(event.keyCode === this.constants.KEYCODE.ESCAPE) {
+			if(!this.args.dropdownControls || !isPresent(this.args.dropdownControls.close) || (typeof this.args.dropdownControls.close !== 'function')) {
+				this.debug(`handleKeydown::dropdownControls::close: not available`);
+				return;
+			}
+
+			this.args.dropdownControls.close(event);
+		}
 	}
 
 	@action
