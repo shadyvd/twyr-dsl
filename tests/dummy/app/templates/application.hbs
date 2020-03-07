@@ -131,46 +131,6 @@
 
 			<div>
 				{{#if (eq this.selectedTabValue "one")}}
-					<TwyrGridList @cols="1 md-2 gt-md-6" @rowHeight="gt-md-1:1 2:2" @gutter="12px gt-sm-8px" as |Grid|>
-						<Grid.Tile style="background-color:antiquewhite;" @rowspan="2" @colspan="sm-1 gt-sm-2" as |Tile|>
-							<Tile.Footer>
-								<h3>#1: (3r x 2c)</h3>
-							</Tile.Footer>
-						</Grid.Tile>
-
-						<Grid.Tile style="background-color:aqua;" as |Tile|>
-							<Tile.Footer>
-								<h3>#2: (1r x 1c)</h3>
-							</Tile.Footer>
-						</Grid.Tile>
-
-						<Grid.Tile style="background-color:brown;" as |Tile|>
-							<Tile.Footer>
-								<h3>#3: (1r x 1c)</h3>
-							</Tile.Footer>
-						</Grid.Tile>
-
-						<Grid.Tile style="background-color:darkgray;" @rowspan="2" as |Tile|>
-							<Tile.Footer>
-								<h3>#4: (2r x 1c)</h3>
-							</Tile.Footer>
-						</Grid.Tile>
-
-						<Grid.Tile style="background-color:hotpink;" @rowspan="2" @colspan="sm-1 gt-sm-2" as |Tile|>
-							<Tile.Footer>
-								<h3>#5: (2r x 2c)</h3>
-							</Tile.Footer>
-						</Grid.Tile>
-
-						<Grid.Tile style="background-color:red;" @rowspan="2" as |Tile|>
-							<Tile.Footer>
-								<h3>#6: (2r x 1c)</h3>
-							</Tile.Footer>
-						</Grid.Tile>
-					</TwyrGridList>
-				{{/if}}
-
-				{{#if (eq this.selectedTabValue "three")}}
 					<TwyrList>
 						<TwyrItem
 							as |Controls|
@@ -213,6 +173,46 @@
 							</div>
 						</TwyrItem>
 					</TwyrList>
+				{{/if}}
+
+				{{#if (eq this.selectedTabValue "three")}}
+					<TwyrGridList @cols="1 md-2 gt-md-6" @rowHeight="gt-md-1:1 2:2" @gutter="12px gt-sm-8px" as |Grid|>
+						<Grid.Tile style="background-color:antiquewhite;" @rowspan="2" @colspan="sm-1 gt-sm-2" as |Tile|>
+							<Tile.Footer>
+								<h3>#1: (3r x 2c)</h3>
+							</Tile.Footer>
+						</Grid.Tile>
+
+						<Grid.Tile style="background-color:aqua;" as |Tile|>
+							<Tile.Footer>
+								<h3>#2: (1r x 1c)</h3>
+							</Tile.Footer>
+						</Grid.Tile>
+
+						<Grid.Tile style="background-color:brown;" as |Tile|>
+							<Tile.Footer>
+								<h3>#3: (1r x 1c)</h3>
+							</Tile.Footer>
+						</Grid.Tile>
+
+						<Grid.Tile style="background-color:darkgray;" @rowspan="2" as |Tile|>
+							<Tile.Footer>
+								<h3>#4: (2r x 1c)</h3>
+							</Tile.Footer>
+						</Grid.Tile>
+
+						<Grid.Tile style="background-color:hotpink;" @rowspan="2" @colspan="sm-1 gt-sm-2" as |Tile|>
+							<Tile.Footer>
+								<h3>#5: (2r x 2c)</h3>
+							</Tile.Footer>
+						</Grid.Tile>
+
+						<Grid.Tile style="background-color:red;" @rowspan="2" as |Tile|>
+							<Tile.Footer>
+								<h3>#6: (2r x 1c)</h3>
+							</Tile.Footer>
+						</Grid.Tile>
+					</TwyrGridList>
 				{{/if}}
 			</div>
 			<TwyrProgressLinear @primary={{true}} />
