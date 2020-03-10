@@ -148,8 +148,8 @@ export default class TwyrBasicDropdownContentComponent extends Component {
 			return node.nodeName !== '#comment' && !(node.nodeName === '#text' && node.nodeValue === '');
 		});
 
-		if(shouldReposition && this._shouldReposition && (typeof this._shouldReposition === 'function')) {
-			shouldReposition = this._shouldReposition(mutations, this.args.dropdownControls);
+		if(shouldReposition && this.args.shouldReposition && (typeof this.args.shouldReposition === 'function')) {
+			shouldReposition = this.args.shouldReposition(mutations);
 		}
 
 		if(shouldReposition) {
