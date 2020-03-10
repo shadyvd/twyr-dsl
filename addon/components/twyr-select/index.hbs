@@ -1,11 +1,12 @@
 <md-input-container
-	class="{{if @selected "md-input-has-value"}} {{if this.isInvalidAndTouched "md-input-invalid"}} {{if this.isFocusedAndSelected "md-input-focused"}}"
+	class="{{if @selected "md-input-has-value"}}{{if this.isInvalidAndTouched " md-input-invalid"}}{{if this.isFocusedAndSelected " md-input-focused"}}"
+
 	{{did-update this.didReceiveArgs @disabled}}
 	{{did-mutate this.didMutate}}
+
 	...attributes
 >
-	<PowerSelect
-		@disabled={{this.isDisabled}}
+	<TwyrPowerSelect
 		@extra={{hash label=@label}}
 		@options={{@options}}
 		@placeholder={{@placeholder}}
@@ -16,26 +17,27 @@
 		@searchField={{@searchField}}
 		@searchPlaceholder={{@searchPlaceholder}}
 
-		@registerAPI={{this.setPublicAPI}}
-		@calculatePosition={{this.calculatePosition}}
+		@calculateDropdownPosition={{this.calculatePosition}}
 
-		@_ebdContentComponent={{component this.subComponents.ebdContent searchEnabled=@searchEnabled select=this.publicAPI}}
-		@_ebdTriggerComponent={{component this.subComponents.ebdTrigger label=@label selected=@selected required=@required disabled=this.isDisabled}}
-		@triggerComponent={{this.subComponents.epsTrigger}}
-		@triggerClass="{{if this.isInvalid "ng-invalid"}} {{if this.isTouched "ng-dirty"}}"
+		@ebdTriggerComponent={{component this.subComponents.ebdTriggerComponent label=@label selected=@selected required=@required}}
+		@ebdContentComponent={{component this.subComponents.ebdContentComponent searchEnabled=@searchEnabled}}
 
-		@beforeOptionsComponent={{this.subComponents.beforeOptions}}
-		@optionsComponent={{this.subComponents.options}}
-		@noMatchesMessageComponent={{this.subComponents.noMatchesMessage}}
-		@searchMessageComponent={{this.subComponents.searchMessage}}
+		@triggerClass="{{if this.isInvalid "ng-invalid"}}{{if this.isTouched " ng-dirty"}}"
+		@triggerComponent={{this.subComponents.epsTriggerComponent}}
+
+		@beforeOptionsComponent={{this.subComponents.beforeOptionsComponent}}
+		@optionsComponent={{this.subComponents.optionsComponent}}
+		@noMatchesMessageComponent={{this.subComponents.noMatchesMessageComponent}}
+		@searchMessageComponent={{this.subComponents.searchMessageComponent}}
 
 		@onBlur={{this.onBlur}}
 		@onChange={{this.onChange}}
 		@onClose={{this.onClose}}
 		@onFocus={{this.onFocus}}
 		@onOpen={{this.onOpen}}
-		as |Opt Term|
+
+		as |TwyrSelect|
 	>
-		{{yield Opt Term}}
-	</PowerSelect>
+		{{yield TwyrSelect}}
+	</TwyrPowerSelect>
 </md-input-container>

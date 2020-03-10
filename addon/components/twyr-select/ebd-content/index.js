@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import debugLogger from 'ember-debug-logger';
 
 import { action } from '@ember/object';
-import { advanceSelectableOption } from 'ember-power-select/utils/group-utils';
+import { advanceSelectableOption } from 'twyr-dsl/utils/power-select-utilities'
 import { inject as service } from '@ember/service';
 import { next, scheduleOnce } from '@ember/runloop';
 import { nextTick } from 'ember-css-transitions/utils/transition-utils';
@@ -71,8 +71,8 @@ export default class TwyrSelectEbdContentComponent extends Component {
 	}
 
 	get destinationElement() {
-		this.debug(`destinationElement: `, document.getElementById(this.args.destination));
-		return document.getElementById(this.args.destination);
+		this.debug(`destinationElement: `, document.getElementById(this.args.destinationId));
+		return document.getElementById(this.args.destinationId);
 	}
 	// #endregion
 
@@ -80,7 +80,7 @@ export default class TwyrSelectEbdContentComponent extends Component {
 	_afterAnimateIn(dropdownElement) {
 		this.debug(`_afterAnimateIn`);
 
-		this.args.dropdown.actions.reposition();
+		this.args.dropdownControls.reposition();
 		this._isActive = true;
 
 		this.focusItem(dropdownElement);
@@ -101,29 +101,6 @@ export default class TwyrSelectEbdContentComponent extends Component {
 		if(focusTarget) {
 			focusTarget.focus();
 		}
-	}
-
-	@action
-	_shouldReposition(mutations) {
-		let shouldReposition = false;
-
-		shouldReposition = Array.prototype.slice.call(mutations[0].addedNodes).some((node) => {
-			if(node.classList) {
-				return !node.classList.contains('md-ripple') && (node.nodeName !== '#comment') && !(node.nodeName === '#text' && node.nodeValue === '');
-			}
-
-			return false;
-		});
-
-		shouldReposition = shouldReposition || Array.prototype.slice.call(mutations[0].removedNodes).some((node) => {
-			if(node.classList) {
-				return !node.classList.contains('md-ripple') && (node.nodeName !== '#comment') && !(node.nodeName === '#text' && node.nodeValue === '');
-			}
-			return false;
-		});
-
-		this.debug(`_shouldReposition: ${shouldReposition}`);
-		return shouldReposition;
 	}
 	// #endregion
 
@@ -214,6 +191,29 @@ export default class TwyrSelectEbdContentComponent extends Component {
 				this.select.actions.choose(this.select.highlighted);
 			break;
 		}
+	}
+
+	@action
+	shouldReposition(mutations) {
+		let shouldReposition = false;
+
+		shouldReposition = Array.prototype.slice.call(mutations[0].addedNodes).some((node) => {
+			if(node.classList) {
+				return !node.classList.contains('md-ripple') && (node.nodeName !== '#comment') && !(node.nodeName === '#text' && node.nodeValue === '');
+			}
+
+			return false;
+		});
+
+		shouldReposition = shouldReposition || Array.prototype.slice.call(mutations[0].removedNodes).some((node) => {
+			if(node.classList) {
+				return !node.classList.contains('md-ripple') && (node.nodeName !== '#comment') && !(node.nodeName === '#text' && node.nodeValue === '');
+			}
+			return false;
+		});
+
+		this.debug(`shouldReposition: ${shouldReposition}`);
+		return shouldReposition;
 	}
 	// #endregion
 }

@@ -1,37 +1,43 @@
 {{!-- send the backdrop to the same place as the content --}}
-{{#if @dropdown.isOpen}}
+{{#if @dropdownStatus.isOpen}}
 	{{#maybe-in-element this.destinationElement @renderInPlace}}
-		<TwyrBackdrop class="md-select-backdrop md-click-catcher" @onClick={{@dropdown.actions.close}} />
+		<TwyrBackdrop
+			class="md-select-backdrop md-click-catcher"
+			{{on "click" @dropdownControls.close}}
+		/>
 	{{/maybe-in-element}}
 {{/if}}
 
-<BasicDropdownContent
-	class="md-select-menu-container md-clickable {{if this._isActive "md-active"}}"
-	{{!-- proxy all the things that ebd gives us --}}
-	@dropdown={{@dropdown}}
-	@hPosition={{@hPosition}}
-	@renderInPlace={{@renderInPlace}}
+<TwyrBasicDropdown::Content
+	class="md-select-menu-container md-clickable{{if this._isActive " md-active"}}"
+
+	@destinationId={{@destinationId}}
+	@dropdownId={{@dropdownId}}
+	@dropdownControls={{@dropdownControls}}
+	@dropdownStatus={{@dropdownStatus}}
+
 	@preventScroll={{@preventScroll}}
+	@renderInPlace={{@renderInPlace}}
 	@rootEventType={{@rootEventType}}
-	@vPosition={{@vPosition}}
-	@destination={{@destination}}
-	@top={{@top}}
-	@left={{@left}}
-	@right={{@right}}
-	{{!-- @width={{@width}} --}}
-	@height={{@height}}
+
+	@position={{@position}}
 	@otherStyles={{this.customStyles}}
-	@shouldReposition={{this._shouldReposition}}
+
+	@xAlign={{@xAlign}}
+	@yAlign={{@yAlign}}
+
+	@registerWithDropdown={{@registerWithDropdown}}
+	@shouldReposition={{this.shouldReposition}}
+
 	{{did-insert this.animateIn}}
 	{{will-destroy this.animateOut}}
+
 	...attributes
 >
-
-	{{! template-lint-disable no-invalid-interactive }}
 	<md-select-menu
-		class="md-default-theme {{if @searchEnabled "md-overflow"}}"
+		class="md-default-theme{{if @searchEnabled " md-overflow"}}"
 		{{on "keydown" this.handleKeyDown}}
 	>
 		{{yield}}
 	</md-select-menu>
-</BasicDropdownContent>
+</TwyrBasicDropdown::Content>

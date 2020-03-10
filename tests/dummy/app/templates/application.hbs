@@ -98,6 +98,16 @@
 				>
 					{{pizzSize}}
 				</TwyrPowerSelect>
+
+				<TwyrSelect
+					class="ml-4"
+					@options={{this.sizes}}
+					@selected={{this.pizzaSize}}
+					@onChange={{this.setPizzaSize}}
+					as |pizzSize|
+				>
+					{{pizzSize}}
+				</TwyrSelect>
 			</Text.Subhead>
 		</Title.Text>
 	</Card.Title>

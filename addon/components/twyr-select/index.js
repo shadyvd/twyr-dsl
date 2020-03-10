@@ -32,23 +32,23 @@ export default class TwyrSelectComponent extends Component {
 	// #endregion
 
 	// #region Tracked Attributes
-	@tracked isDisabled = false;
-	@tracked isFocused = false;
-	@tracked isInvalid = false;
-	@tracked isTouched = false;
-	@tracked publicAPI = null;
+	@tracked _selectStatus = {
+		'isFocused': false,
+		'isInvalid': false,
+		'isTouched': false
+	};
 	// #endregion
 
 	// #region Yielded Sub-components
 	subComponents = {
-		'ebdContent': 'twyr-select/ebd-content',
-		'ebdTrigger': 'twyr-select/ebd-trigger',
-		'epsTrigger': 'twyr-select/eps-trigger',
+		'ebdContentComponent': 'twyr-select/ebd-content',
+		'ebdTriggerComponent': 'twyr-select/ebd-trigger',
+		'epsTriggerComponent': 'twyr-select/eps-trigger',
 
-		'beforeOptions': 'twyr-select/search',
-		'options': 'twyr-select/options',
-		'noMatchesMessage': 'twyr-select/no-matches-message',
-		'searchMessage': 'twyr-select/search-message'
+		'beforeOptionsComponent': 'twyr-select/search',
+		'optionsComponent': 'twyr-select/options',
+		'noMatchesMessageComponent': 'twyr-select/no-matches-message',
+		'searchMessageComponent': 'twyr-select/search-message'
 	};
 	// #endregion
 
@@ -81,13 +81,13 @@ export default class TwyrSelectComponent extends Component {
 
 	// #region Computed Properties
 	get isFocusedAndSelected() {
-		this.debug(`isFocusedAndSelected: ${this.args.selected && this.isFocused}`);
-		return (this.args.selected && this.isFocused);
+		this.debug(`isFocusedAndSelected: ${this.args.selected && this._selectStatus.isFocused}`);
+		return (this.args.selected && this._selectStatus.isFocused);
 	}
 
 	get isInvalidAndTouched() {
-		this.debug(`isInvalidAndTouched: ${this.isInvalid && this.isTouched}`);
-		return (this.isInvalid && this.isTouched);
+		this.debug(`isInvalidAndTouched: ${this._selectStatus.isInvalid && this._selectStatus.isTouched}`);
+		return (this._selectStatus.isInvalid && this._selectStatus.isTouched);
 	}
 	// #endregion
 
@@ -103,10 +103,12 @@ export default class TwyrSelectComponent extends Component {
 	}
 
 	@action
-	_calculatePosition(trigger, content) {
+	calculatePosition(destination, trigger, content, options) {
 		const containerNode = content;
 		const contentNode = content.querySelector('md-content');
+
 		const parentNode = document.body;
+
 		const selectNode = content.querySelector('md-select-menu');
 		const targetNode = trigger.firstElementChild; // target the label
 
@@ -207,26 +209,26 @@ export default class TwyrSelectComponent extends Component {
 		const scaleX = Math.min(targetRect.width / selectMenuRect.width, 1.0);
 		const scaleY = Math.min(targetRect.height / selectMenuRect.height, 1.0);
 
-		let style = {
+		const style = {
+			'otherStyles': options.otherStyles,
+			'matchTriggerWidth': options.matchTriggerWidth,
+			'renderInPlace': options.renderInPlace,
+
 			'top': dropdownTop,
 			'left': dropdownLeft,
+
+			'xAlign': options.xAlign,
+			'yAlign': options.yAlign,
+
 			// Animate a scale out if we aren't just repositioning
 			'transform': !this.didAnimateScale ? `scale(${scaleX}, ${scaleY})` : undefined,
 			'transform-origin': transformOrigin
 		};
 
 		this._didAnimateScale = true;
-		this.debug(`_calculatePosition: `, {
-			'style': style,
-			'horizontalPosition': '',
-			'verticalPosition': ''
-		});
+		this.debug(`_calculatePosition: `, style);
 
-		return {
-			'style': style,
-			'horizontalPosition': '',
-			'verticalPosition': ''
-		};
+		return style;
 	}
 	// #endregion
 
@@ -234,7 +236,7 @@ export default class TwyrSelectComponent extends Component {
 	@action
 	onBlur() {
 		this.debug(`onBlur`);
-		this.isFocused = false;
+		this._selectStatus.isFocused = false;
 	}
 
 	@action
@@ -251,15 +253,18 @@ export default class TwyrSelectComponent extends Component {
 		this.debug(`onClose`);
 
 		this._didAnimateScale = false;
-		this.isTouched = true;
+		this._selectStatus.isTouched = true;
 
 		this._notifyValidityChange();
+		return true;
 	}
 
 	@action
 	onFocus() {
 		this.debug(`onFocus`);
-		this.isFocused = true;
+		this._selectStatus.isFocused = true;
+
+		return true;
 	}
 
 	@action
@@ -268,12 +273,8 @@ export default class TwyrSelectComponent extends Component {
 
 		this._didAnimateScale = false;
 		this._notifyValidityChange();
-	}
 
-	@action
-	setPublicAPI(publicAPI) {
-		this.debug(`setPublicAPI: `, publicAPI);
-		this.publicAPI = publicAPI;
+		return true;
 	}
 	// #endregion
 }

@@ -1,8 +1,8 @@
 {{#if @searchEnabled}}
-	<md-select-header class="ember-power-select-search md-searchbox">
+	<md-select-header class="twyr-power-select-search md-searchbox">
 		<input
 			type="search"
-			class="ember-power-select-search-input md-searchinput"
+			class="twyr-power-select-search-input md-searchinput"
 			autocapitalize="off"
 			autocomplete="off"
 			autocorrect="off"
@@ -11,7 +11,9 @@
 			value={{@select.searchText}}
 			aria-controls={{@listboxId}}
 			placeholder={{@searchPlaceholder}}
+
 			{{did-insert this.focusInput}}
+
 			{{on "input" @onInput}}
 			{{on "focus" @onFocus}}
 			{{on "blur" @onBlur}}

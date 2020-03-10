@@ -17,8 +17,8 @@ export default class TwyrSelectEpsTriggerComponent extends Component {
 
 	// #region Computed Properties
 	get isPlaceholder() {
-		this.debug(`isPlaceholder: ${(this.args.placeholder || this.args.extra.label) && !this.args.select.selected}`);
-		return ((this.args.placeholder || this.args.extra.label) && !this.args.select.selected);
+		this.debug(`isPlaceholder: ${(this.args.placeholder || this.args.extra.label) && !this.args.powerSelect.Options.selected}`);
+		return ((this.args.placeholder || this.args.extra.label) && !this.args.powerSelect.Options.selected);
 	}
 	// #endregion
 
@@ -28,7 +28,7 @@ export default class TwyrSelectEpsTriggerComponent extends Component {
 		this.debug(`clear`);
 
 		event.stopPropagation();
-		this.args.select.actions.select(null);
+		this.args.powerSelect.Controls.select(null);
 
 		if(event.type === 'touchstart')
 			return false;

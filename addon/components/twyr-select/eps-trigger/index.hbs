@@ -1,12 +1,12 @@
-<md-select-value class="md-select-value {{if this.isPlaceholder "md-select-placeholder"}}">
-	{{#if @select.selected}}
-		<span class="ember-power-select-selected-item">
-			{{yield @select.selected @select}}
+<md-select-value class="md-select-value{{if this.isPlaceholder " md-select-placeholder"}}">
+	{{#if @powerSelect.Options.selected}}
+		<span class="twyr-power-select-selected-item">
+			{{yield @powerSelect.Options.selected @powerSelect}}
 		</span>
 
-		{{#if (and @allowClear (not @select.disabled))}}
+		{{#if (and @allowClear (not @powerSelect.Status.isDisabled))}}
 			<span
-				class="ember-power-select-clear-btn"
+				class="twyr-power-select-clear-btn"
 				role="button"
 				{{on "mousedown" this.clear}}
 				{{on "touchstart" this.clear}}
@@ -15,11 +15,11 @@
 			</span>
 		{{/if}}
 	{{else if @placeholder}}
-		<span class="ember-power-select-placeholder">
+		<span class="twyr-power-select-placeholder">
 			{{@placeholder}}
 		</span>
 	{{else if @extra.label}}
-		<span class="ember-power-select-placeholder">
+		<span class="twyr-power-select-placeholder">
 			{{@extra.label}}
 		</span>
 	{{/if}}

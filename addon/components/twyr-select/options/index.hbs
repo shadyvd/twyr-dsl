@@ -1,88 +1,103 @@
-{{#if @isGroup}}
-	{{#if @select.loading}}
-		{{#if @loadingMessage}}
-			<TwyrProgressCircular/>
-		{{/if}}
+{{#if @powerSelect.Status.isLoading}}
+	{{#if @loadingMessage}}
+		<TwyrProgressCircular/>
 	{{/if}}
+{{/if}}
 
+{{#if @isGroup}}
 	{{#let (component @optionsComponent) as |Options|}}
-		{{#each @options as |opt index|}}
+		{{#each @options as |Option index|}}
 
-		{{#if (ember-power-select-is-group opt)}}
-			<md-optgroup class="ember-power-select-group" aria-disabled={{if @group.disabled "true"}}>
-				<label class="ember-power-select-group-name">{{opt.groupName}}</label>
+		{{#if (twyr-power-select-is-group Option)}}
+			<md-optgroup
+				class="twyr-power-select-group"
+				aria-disabled={{if @group.disabled "true"}}
+			>
+				<label class="twyr-power-select-group-name">{{Option.groupName}}</label>
 				<Options
-					@options={{opt.options}}
-					@select={{@select}}
-					@groupIndex="{{@groupIndex}}{{index}}."
-					@optionsComponent={{@optionsComponent}}
-					@groupComponent={{@groupComponent}}
-					@extra={{@extra}}
-					@isGroup={{true}}
+					class="twyr-power-select-options"
 					role="group"
-					class="ember-power-select-options"
-					as |option|
+
+					@extra={{@extra}}
+					@groupIndex="{{@groupIndex}}{{index}}."
+					@isGroup={{true}}
+					@options={{Option.options}}
+
+					@groupComponent={{@groupComponent}}
+					@optionsComponent={{@optionsComponent}}
+
+					@powerSelect={{@powerSelect}}
+					as |Opts|
 				>
-					{{yield option @select}}
+					{{yield Opts @powerSelect}}
 				</Options>
 			</md-optgroup>
 		{{else}}
 			<TwyrSelect::Option
-				class="ember-power-select-option"
-				aria-selected="{{ember-power-select-is-selected opt @select.selected}}"
-				aria-disabled={{if opt.disabled "true"}}
-				aria-current="{{eq opt @select.highlighted}}"
-				data-option-index="{{@groupIndex}}{{index}}"
+				class="twyr-power-select-option"
 				role="option"
-				tabindex={{if opt.disabled "-1" "0"}}
-				selected={{if (ember-power-select-is-selected opt @select.selected) "selected" undefined}}
+				tabindex={{if Option.disabled "-1" "0"}}
+
+				aria-current="{{eq Option @powerSelect.Options.highlightedOption}}"
+				aria-disabled={{if Option.isDisabled "true" "false"}}
+				aria-selected="{{twyr-power-select-is-selected Option @powerSelect.Options.selected}}"
+
+				data-option-index="{{@groupIndex}}{{index}}"
 			>
-				{{yield opt @select}}
+				{{yield Option @powerSelect}}
 			</TwyrSelect::Option>
 		{{/if}}
 
 		{{/each}}
 	{{/let}}
 {{else}}
-	<md-content role={{this.role}} aria-controls={{this.ariaControls}}>
-		{{#if @select.loading}}
-			{{#if @loadingMessage}}
-				<TwyrProgressCircular />
-			{{/if}}
-		{{/if}}
+	<md-content
+		class="twyr-power-select-options"
+		role={{this.role}}
+		aria-controls={{this.ariaControls}}
 
+		{{did-insert this.didInsert}}
+	>
 		{{#let (component @optionsComponent) as |Options|}}
-			{{#each @options as |opt index|}}
+			{{#each @options as |Option index|}}
 
-			{{#if (ember-power-select-is-group opt)}}
-				<md-optgroup class="ember-power-select-group" aria-disabled={{if @group.disabled "true"}}>
-					<label class="ember-power-select-group-name">{{opt.groupName}}</label>
+			{{#if (twyr-power-select-is-group Option)}}
+				<md-optgroup
+					class="twyr-power-select-group"
+					aria-disabled={{if @group.disabled "true"}}
+				>
+					<label class="twyr-power-select-group-name">{{Option.groupName}}</label>
 					<Options
-						@options={{opt.options}}
-						@select={{@select}}
+						class="ember-power-select-options"
+						role="group"
+
+						@extra={{@extra}}
 						@groupIndex="{{@groupIndex}}{{index}}."
+						@isGroup={{true}}
+						@options={{Option.options}}
+
 						@optionsComponent={{@optionsComponent}}
 						@groupComponent={{@groupComponent}}
-						@extra={{@extra}}
-						@isGroup={{true}}
-						role="group"
-						class="ember-power-select-options" as |option|
+
+						@powerSelect={{@powerSelect}}
+						as |Opts|
 					>
-					{{yield option @select}}
+						{{yield Opts @powerSelect}}
 					</Options>
 				</md-optgroup>
 			{{else}}
 				<TwyrSelect::Option
-					class="ember-power-select-option"
-					aria-selected="{{ember-power-select-is-selected opt @select.selected}}"
-					aria-disabled={{if opt.disabled "true"}}
-					aria-current="{{eq opt @select.highlighted}}"
-					data-option-index="{{@groupIndex}}{{index}}"
+					class="twyr-power-select-option"
 					role="option"
-					tabindex={{if opt.disabled "-1" "0"}}
-					selected={{if (ember-power-select-is-selected opt @select.selected) "selected" undefined}}
+					tabindex={{if Option.isDisabled "-1" "0"}}
+
+					aria-current="{{eq Option @powerSelect.Options.highlightedOption}}"
+					aria-disabled={{if Option.isDisabled "true" "false"}}
+					aria-selected="{{twyr-power-select-is-selected Option @powerSelect.Options.selected}}"
+
+					data-option-index="{{@groupIndex}}{{index}}"
 				>
-					{{yield opt @select}}
+					{{yield Option @powerSelect}}
 				</TwyrSelect::Option>
 			{{/if}}
 

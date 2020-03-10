@@ -1,24 +1,27 @@
 {{#if this.shouldShowLabel}}
-	<label for="twyr-basic-dropdown-trigger-{{@dropdown.uniqueId}}" class={{if @required "md-required"}}>
+	<label for="twyr-basic-dropdown-trigger-{{@dropdownId}}" class={{if @required "md-required"}}>
 		{{@label}}
 	</label>
 {{/if}}
 
-<BasicDropdownTrigger
-	@htmlTag="md-select"
+<TwyrBasicDropdown::Trigger @htmlTag="md-select"
 	@eventType="click"
 
-	{{!-- proxy all the things that ebd gives us --}}
-	@dropdown={{@dropdown}}
-	@hPosition={{@hPosition}}
+	@dropdownId={{@dropdownId}}
+	@dropdownControls={{@dropdownControls}}
+	@dropdownStatus={{@dropdownStatus}}
+
 	@renderInPlace={{@renderInPlace}}
-	@vPosition={{@this.vPosition}}
+
+	@position={{@position}}
+	@otherStyles={{@otherStyles}}
+
+	@xAlign={{@xAlign}}
+	@yAlign={{@yAlign}}
+
+	@registerWithDropdown={{@registerWithDropdown}}
 
 	...attributes
-
-	id="twyr-basic-dropdown-trigger-{{@dropdown.uniqueId}}"
-	disabled={{@disabled}}
-	required={{@required}}
 >
 	{{yield}}
-</BasicDropdownTrigger>
+</TwyrBasicDropdown::Trigger>
