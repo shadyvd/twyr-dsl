@@ -1,28 +1,35 @@
 {{!-- send the backdrop to the same place as the content --}}
-{{#if @dropdown.isOpen}}
+{{#if @dropdownStatus.isOpen}}
 	{{#maybe-in-element this.destinationElement @renderInPlace}}
 		<TwyrBackdrop
 			class="md-menu-backdrop md-click-catcher"
-			{{on "click" @dropdown.actions.close}}
+			{{on "click" @dropdownControls.close}}
 		/>
 	{{/maybe-in-element}}
 {{/if}}
 
-<BasicDropdownContent
-	class="md-open-menu-container md-whiteframe-z2 md-clickable {{if this._isActive "md-active"}}"
-	@dropdown={{@dropdown}}
-	@hPosition={{@hPosition}}
-	@renderInPlace={{@renderInPlace}}
+<TwyrBasicDropdown::Content
+	class="md-open-menu-container md-whiteframe-z2 md-clickable{{if this._isActive " md-active"}}"
+
+	@destinationId={{@destinationId}}
+	@dropdownId={{@dropdownId}}
+	@dropdownControls={{@dropdownControls}}
+	@dropdownStatus={{@dropdownStatus}}
+
 	@preventScroll={{@preventScroll}}
+	@renderInPlace={{@renderInPlace}}
 	@rootEventType={{@rootEventType}}
-	@vPosition={{@vPosition}}
-	@destination={{@destination}}
-	@top={{@top}}
-	@left={{@left}}
-	@right={{@right}}
-	@height={{@height}}
+
+	@position={{@position}}
 	@otherStyles={{this.customStyles}}
+
+	@xAlign={{@xAlign}}
+	@yAlign={{@yAlign}}
+
+	@registerWithDropdown={{@registerWithDropdown}}
+
 	{{did-insert this.didInsert}}
+
 	...attributes
 >
 	<md-menu-content
@@ -32,7 +39,13 @@
 		{{on "keydown" this.handleContentKeydown}}
 	>
 		{{yield (hash
-			MenuItem=(component this.subComponents.menuItem dropdown=@dropdown)
+			MenuItem=(component
+				this.subComponents.menuItem
+
+				dropdownId=@dropdownId
+				dropdownControls=@dropdownControls
+				dropdownStatus=@dropdownStatus
+			)
 		)}}
 	</md-menu-content>
-</BasicDropdownContent>
+</TwyrBasicDropdown::Content>

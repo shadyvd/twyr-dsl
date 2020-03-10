@@ -1,13 +1,23 @@
 {{!-- proxy all the things that ebd gives us --}}
-<BasicDropdownTrigger
+<TwyrBasicDropdown::Trigger @htmlTag="md-menu"
 	class="md-menu"
-	@htmlTag="md-menu"
 	tabindex="-1"
-	@dropdown={{@dropdown}}
-	@hPosition={{@hPosition}}
+
+	@dropdownId={{@dropdownId}}
+	@dropdownControls={{@dropdownControls}}
+	@dropdownStatus={{@dropdownStatus}}
+
 	@renderInPlace={{@renderInPlace}}
-	@vPosition={{@vPosition}}
+
+	@position={{@position}}
+	@otherStyles={{@otherStyles}}
+
+	@xAlign={{@xAlign}}
+	@yAlign={{@yAlign}}
+
+	@registerWithDropdown={{@registerWithDropdown}}
+
 	...attributes
 >
 	  {{yield}}
-</BasicDropdownTrigger>
+</TwyrBasicDropdown::Trigger>

@@ -34,22 +34,22 @@ export default class TwyrMenuItemComponent extends Component {
 		if(this._element && this._element.hasAttribute('disabled'))
 			return;
 
-		if(isPresent(this.args.dropdown) && isPresent(this.args.dropdown.actions) && (typeof this.args.dropdown.actions.close === 'function'))
-			this.args.dropdown.actions.close();
+		if(isPresent(this.args.dropdownControls) && isPresent(this.args.dropdownControls.close) && (typeof this.args.dropdownControls.close === 'function'))
+			this.args.dropdownControls.close();
 
 		if(isPresent(this.args.onClick) && (typeof this.args.onClick === 'function'))
 			this.args.onClick(...arguments);
 	}
 
 	@action
-	handleMouseEnter(event) {
+	handleMouseEnter() {
 		if(this.args.isDisabled)
 			return;
 
 		if(this._element && this._element.hasAttribute('disabled'))
 			return;
 
-		let button = event.target.querySelector('button');
+		let button = this._element.querySelector('button');
 		if(button) button.focus();
 	}
 	// #endregion

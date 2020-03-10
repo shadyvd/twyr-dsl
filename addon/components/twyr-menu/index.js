@@ -22,6 +22,7 @@ function firstVisibleChild(node) {
 export default class TwyrMenuComponent extends Component {
 	// #region Private Attributes
 	debug = debugLogger('twyr-menu');
+	_Dropdown = null;
 	// #endregion
 
 	// #region Tracked Attribues
@@ -30,8 +31,8 @@ export default class TwyrMenuComponent extends Component {
 
 	// #region Yielded Sub-components
 	subComponents = {
-		'content': 'twyr-menu/content',
-		'trigger': 'twyr-menu/trigger'
+		'ContentComponent': 'twyr-menu/content',
+		'TriggerComponent': 'twyr-menu/trigger'
 	};
 	// #endregion
 
@@ -39,6 +40,13 @@ export default class TwyrMenuComponent extends Component {
 	constructor() {
 		super(...arguments);
 		this.debug(`constructor`);
+	}
+	// #endregion
+
+	// #region Lifecycle Hooks
+	@action
+	didInsert(dropdown) {
+		this._Dropdown = dropdown;
 	}
 	// #endregion
 
@@ -59,15 +67,17 @@ export default class TwyrMenuComponent extends Component {
 		top = top || left;
 
 		return { left, top };
-	}
+	}destinationElement
 	// #endregion
 
 	// #region Private Methods
 	@action
-	_calculatePosition(trigger, content) {
+	calculatePosition(destination, trigger, content, options) {
 		const containerNode = content;
+
 		const openMenuNode = content.firstElementChild;
 		const openMenuNodeRect = openMenuNode.getBoundingClientRect();
+
 		const boundaryNode = document.body;
 		const boundaryNodeRect = boundaryNode.getBoundingClientRect();
 
@@ -169,20 +179,23 @@ export default class TwyrMenuComponent extends Component {
 		const scaleY = Math.round(100 * Math.min(originNodeRect.height / containerNode.offsetHeight, 1.0)) / 100;
 
 		const style = {
+			'otherStyles': options.otherStyles,
+			'matchTriggerWidth': options.matchTriggerWidth,
+			'renderInPlace': options.renderInPlace,
+
 			'top': dropdownTop,
 			'left': dropdownLeft,
+
+			'xAlign': options.xAlign,
+			'yAlign': options.yAlign,
+
 			// Animate a scale out if we aren't just repositioning
 			'transform': !this._didAnimateScale ? `scale(${scaleX}, ${scaleY})` : undefined,
 			'transform-origin': transformOrigin
 		};
 
 		this._didAnimateScale = true;
-
-		return {
-			'style': style,
-			'horizontalPosition': '',
-			'verticalPosition': ''
-		};
+		return style;
 	}
 
 	_clamp(num, min, max) {
@@ -194,11 +207,13 @@ export default class TwyrMenuComponent extends Component {
 	@action
 	close() {
 		this._didAnimateScale = false;
+		return true;
 	}
 
 	@action
 	open() {
 		this._didAnimateScale = true;
+		return true;
 	}
 	// #endregion
 }

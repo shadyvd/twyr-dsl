@@ -67,9 +67,6 @@ export default class TwyrMenuContentComponent extends Component {
 		this._element = element;
 
 		await nextTick();
-		if(this.isDestroying || this.isDestroyed)
-			return;
-
 		this._isActive = true;
 	}
 
@@ -146,7 +143,7 @@ export default class TwyrMenuContentComponent extends Component {
 	}
 
 	get destinationElement() {
-		return document.getElementById(this.args.destination);
+		return document.getElementById(this.args.destinationId);
 	}
 	// #endregion
 

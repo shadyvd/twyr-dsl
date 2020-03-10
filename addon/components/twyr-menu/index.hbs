@@ -1,14 +1,19 @@
-<BasicDropdown
-	@triggerComponent={{this.subComponents.trigger}}
-	@contentComponent={{this.subComponents.content}}
-	@calculatePosition={{this._calculatePosition}}
+<TwyrBasicDropdown
+	@contentComponent={{this.subComponents.ContentComponent}}
+	@triggerComponent={{this.subComponents.TriggerComponent}}
+
+	@calculatePosition={{this.calculatePosition}}
+
 	@onClose={{this.close}}
 	@onOpen={{this.open}}
+
 	...attributes
-	as |BD|
+
+	as |BasicDropdown|
 >
 	{{yield (hash
-		Trigger=BD.Trigger
-		Content=BD.Content
+		Trigger=BasicDropdown.Trigger
+		Content=BasicDropdown.Content
 	)}}
-</BasicDropdown>
+	<span class="d-none" {{did-insert (fn this.didInsert BasicDropdown)}}></span>
+</TwyrBasicDropdown>
