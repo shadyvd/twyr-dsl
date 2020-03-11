@@ -4,6 +4,10 @@
 @import 'components/twyr-tabs';
 
 // Overrides so we can use twyr-power-select & twyr-select
+md-select {
+	margin: 0px;
+}
+
 md-select.twyr-power-select-trigger {
 	border: 0px;
 	border-radius: 0px;

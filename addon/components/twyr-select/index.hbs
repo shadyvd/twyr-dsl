@@ -20,7 +20,7 @@
 		@calculateDropdownPosition={{this.calculatePosition}}
 
 		@ebdTriggerComponent={{component this.subComponents.ebdTriggerComponent label=@label selected=@selected required=@required}}
-		@ebdContentComponent={{component this.subComponents.ebdContentComponent searchEnabled=@searchEnabled}}
+		@ebdContentComponent={{component this.subComponents.ebdContentComponent powerSelect=this._TwyrSelect searchEnabled=@searchEnabled}}
 
 		@triggerClass="{{if this.isInvalid "ng-invalid"}}{{if this.isTouched " ng-dirty"}}"
 		@triggerComponent={{this.subComponents.epsTriggerComponent}}
@@ -36,8 +36,20 @@
 		@onFocus={{this.onFocus}}
 		@onOpen={{this.onOpen}}
 
-		as |TwyrSelect|
+		as |Option PowerSelect|
 	>
-		{{yield TwyrSelect}}
+		{{#with
+			(hash
+				id=PowerSelect.id
+
+				Controls=PowerSelect.Controls
+				Options=PowerSelect.Options
+				Status=(assign PowerSelect.Status this._selectStatus merge=true)
+			)
+			as |TwyrSelect|
+		}}
+			{{yield Option TwyrSelect}}
+			<span class="d-none" {{did-insert (fn this.didInsertPowerSelect TwyrSelect)}} />
+		{{/with}}
 	</TwyrPowerSelect>
 </md-input-container>

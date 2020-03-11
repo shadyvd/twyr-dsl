@@ -6,6 +6,7 @@ import { action } from '@ember/object';
 export default class TwyrSelectOptionsComponent extends PowerSelectOptions {
 	// #region Private Attributes
 	debug = debugLogger('twyr-select-options');
+	_element = null;
 	// #endregion
 
 	// #region Constructor
@@ -19,9 +20,9 @@ export default class TwyrSelectOptionsComponent extends PowerSelectOptions {
 	@action
 	didInsert(element) {
 		this.debug(`didInsert`);
+		this._element = element;
 
-		const superInsert = super.actions.didInsert.bind(this);
-		superInsert(element);
+		super._attachHandlers();
 	}
 	// #endregion
 

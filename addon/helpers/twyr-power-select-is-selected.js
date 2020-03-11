@@ -2,7 +2,7 @@ import { helper } from '@ember/component/helper';
 import { isArray as isEmberArray } from '@ember/array';
 import { isEqual } from '@ember/utils';
 
-export default helper(function twyrPowerSelectIsSelected(option, selectedOption) {
+export default helper(function twyrPowerSelectIsSelected([option, selectedOption]) {
 	if(selectedOption === undefined || selectedOption === null)
 		return false;
 

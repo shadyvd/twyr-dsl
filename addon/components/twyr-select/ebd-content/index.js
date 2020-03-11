@@ -159,16 +159,16 @@ export default class TwyrSelectEbdContentComponent extends Component {
 		this.debug(`handleKeyDown`);
 		switch (event.which) {
 			case this.constants.KEYCODE.ESCAPE:
-				this.dropdown.actions.close();
+				this.args.powerSelect.Controls.close();
 			break;
 
 			case this.constants.KEYCODE.LEFT_ARROW:
 			case this.constants.KEYCODE.UP_ARROW: {
 				event.preventDefault();
 
-				let newHighlighted = advanceSelectableOption(this.select.results, this.select.highlighted, -1);
-				this.select.actions.highlight(newHighlighted, event);
-				this.select.actions.scrollTo(newHighlighted);
+				let newHighlighted = advanceSelectableOption(this.args.powerSelect.Options.results, this.args.powerSelect.Options.highlightedOption, -1);
+				this.args.powerSelect.Controls.highlight(newHighlighted, event);
+				this.args.powerSelect.Controls.scrollTo(newHighlighted);
 
 				this._focusOption(event, -1);
 			}
@@ -178,9 +178,9 @@ export default class TwyrSelectEbdContentComponent extends Component {
 			case this.constants.KEYCODE.DOWN_ARROW: {
 				event.preventDefault();
 
-				let newHighlighted = advanceSelectableOption(this.select.results, this.select.highlighted, 1);
-				this.select.actions.highlight(newHighlighted, event);
-				this.select.actions.scrollTo(newHighlighted);
+				let newHighlighted = advanceSelectableOption(this.args.powerSelect.Options.results, this.args.powerSelect.Options.highlightedOption, 1);
+				this.args.powerSelect.Controls.highlight(newHighlighted, event);
+				this.args.powerSelect.Controls.scrollTo(newHighlighted);
 
 				this._focusOption(event, 1);
 			}
@@ -188,7 +188,7 @@ export default class TwyrSelectEbdContentComponent extends Component {
 
 			case this.constants.KEYCODE.ENTER:
 				event.preventDefault();
-				this.select.actions.choose(this.select.highlighted);
+				this.args.powerSelect.Controls.choose(this.args.powerSelect.Options.highlightedOption);
 			break;
 		}
 	}

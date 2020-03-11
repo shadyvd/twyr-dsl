@@ -32,6 +32,8 @@ export default class TwyrSelectComponent extends Component {
 	// #endregion
 
 	// #region Tracked Attributes
+	@tracked _TwyrSelect = null;
+
 	@tracked _selectStatus = {
 		'isFocused': false,
 		'isInvalid': false,
@@ -233,6 +235,12 @@ export default class TwyrSelectComponent extends Component {
 	// #endregion
 
 	// #region Actions
+	@action
+	didInsertPowerSelect(twyrSelect) {
+		this.debug(`didInsertPowerSelect`);
+		this._TwyrSelect = twyrSelect;
+	}
+
 	@action
 	onBlur() {
 		this.debug(`onBlur`);

@@ -83,6 +83,8 @@ export default class TwyrPowerSelectComponent extends Component {
 		this._selectControls.search = this._search.bind(this);
 		this._selectControls.select = this._select.bind(this);
 		this._selectControls.scrollTo = this._scrollTo.bind(this);
+
+		set(this._selectOptions, 'selected', (this.args.selected || ''));
 	}
 	// #endregion
 
@@ -490,7 +492,7 @@ export default class TwyrPowerSelectComponent extends Component {
 		const contentElement = document.querySelector(`[aria-controls="twyr-power-select-trigger-${this._PowerSelect.id}"`);
 		if(!contentElement) return;
 
-		const optionElement = contentElement.querySelectorAll(`[class="twyr-power-select-option"]`).item(index);
+		const optionElement = contentElement.querySelectorAll(`.twyr-power-select-option`).item(index);
 		if(!optionElement) return;
 
 		const optionTopScroll = optionElement.offsetTop - contentElement.offsetTop;
