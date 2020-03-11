@@ -1,0 +1,65 @@
+<TwyrPowerSelect
+	@allowClear={{@allowClear}}
+	@closeOnSelect={{@closeOnSelect}}
+	@defaultHighlighted={{@defaultHighlighted}}
+	@extra={{hash label=@label labelPath=@labelPath required=@required passThru=@passThru inputClass=@inputClass}}
+	@eventType={{@eventType}}
+	@matcher={{@matcher}}
+	@noMatchesMessage={{@noMatchesMessage}}
+	@options={{@options}}
+	@placeholder={{@placeholder}}
+	@selected={{@selected}}
+
+	@search={{@search}}
+	@searchEnabled={{@searchEnabled}}
+	@searchField={{@searchField}}
+	@searchPlaceholder={{@searchPlaceholder}}
+
+	@calculateDropdownPosition={{this.calculatePosition}}
+
+	@ebdTriggerComponent={{component this.subComponents.ebdTriggerComponent label=@label}}
+	@ebdContentComponent={{component this.subComponents.ebdContentComponent powerSelect=this._TwyrAutocomplete}}
+
+	@triggerClass={{@triggerClass}}
+	@triggerComponent={{component this.subComponents.epsTriggerComponent isTouched=this.isTouched hideAllMessages=@hideAllMessages validationErrorMessages=@validationErrorMessages errors=@errors}}
+
+	@contentClass={{@contentClass}}
+	@optionsComponent={{this.subComponents.optionsComponent}}
+
+	@noMatchesMessageComponent={{component this.subComponents.noMatchesMessageComponent onCreate=this.onNoMatchesComponentCreate}}
+
+	@onBlur={{this.onBlur}}
+	@onChange={{this.onChange}}
+	@onClose={{this.onClose}}
+	@onFocus={{this.onFocus}}
+	@onInput={{this.onInput}}
+	@onKeydown={{this.onKeydown}}
+	@onOpen={{this.onOpen}}
+
+	@scrollTo={{this.scrollTo}}
+
+	as |Option PowerSelect|
+>
+	{{#with
+		(hash
+			id=PowerSelect.id
+
+			Controls=PowerSelect.Controls
+			Options=PowerSelect.Options
+			Status=PowerSelect.Status
+		)
+		as |TwyrAutocomplete|
+	}}
+		{{#if (has-block)}}
+			{{yield Option TwyrAutocomplete}}
+		{{else}}
+			<PaperAutocomplete::Highlight
+				@label={{if @labelPath (get Option @labelPath) Option}}
+				@searchText={{TwyrAutocomplete.Options.searchText}}
+				@flags="i"
+			/>
+		{{/if}}
+
+		<span class="d-none" {{did-insert (fn this.didInsertPowerSelect TwyrAutocomplete)}} />
+	{{/with}}
+</TwyrPowerSelect>
