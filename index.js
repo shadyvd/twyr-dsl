@@ -273,19 +273,12 @@ module.exports = {
 		}
 
 		if(type === 'body-footer') {
-			let emberPowerSelect = this.addons.filter(function (addon) {
-				return addon.name === 'ember-power-select';
-			})[0];
-
-			let response = emberPowerSelect ? emberPowerSelect.contentFor(type, config) : null;
-			if(config.environment !== 'test' && !config._twyrDslContentForInvoked) {
+			if(config.environment !== 'test' && !config._twyrDslContentForInvoked)
 				config._twyrDslContentForInvoked = true;
 
-				response = `
-		${response || ''}
+				let response = `
 		<div id="twyr-wormhole"></div>
 				`;
-			}
 
 			return response;
 		}
