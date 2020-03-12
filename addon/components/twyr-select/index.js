@@ -223,7 +223,7 @@ export default class TwyrSelectComponent extends Component {
 			'yAlign': options.yAlign,
 
 			// Animate a scale out if we aren't just repositioning
-			'transform': !this.didAnimateScale ? `scale(${scaleX}, ${scaleY})` : undefined,
+			'transform': !this._didAnimateScale ? `scale(${scaleX}, ${scaleY})` : undefined,
 			'transform-origin': transformOrigin
 		};
 

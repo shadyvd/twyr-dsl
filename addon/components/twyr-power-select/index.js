@@ -219,7 +219,7 @@ export default class TwyrPowerSelectComponent extends Component {
 		let correctedTerm = undefined;
 		if(isPresent(this.args.onInput) && (typeof this.args.onInput === 'function')) {
 			this.debug(`handleInput::onInput`);
-			correctedTerm = this.args.onInput(event.target.value);
+			correctedTerm = this.args.onInput(event.target.value, event);
 		}
 
 		if(correctedTerm === false) {
