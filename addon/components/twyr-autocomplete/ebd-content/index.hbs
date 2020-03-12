@@ -1,0 +1,25 @@
+<TwyrBasicDropdown::Content @htmlTag="md-virtual-repeat-container"
+	class="md-virtual-repeat-container md-autocomplete-suggestions-container"
+
+	@destinationId={{@destinationId}}
+	@dropdownId={{@dropdownId}}
+	@dropdownControls={{@dropdownControls}}
+	@dropdownStatus={{@dropdownStatus}}
+
+	@preventScroll={{@preventScroll}}
+	@renderInPlace={{@renderInPlace}}
+	@rootEventType={{@rootEventType}}
+
+	@position={{@position}}
+	@otherStyles={{this._customStyles}}
+
+	@xAlign={{@xAlign}}
+	@yAlign={{@yAlign}}
+
+	@registerWithDropdown={{@registerWithDropdown}}
+	@shouldReposition={{this.shouldReposition}}
+
+	...attributes
+>
+	{{yield}}
+</TwyrBasicDropdown::Content>

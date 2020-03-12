@@ -1,0 +1,28 @@
+<VerticalCollection
+	@tagName="ul"
+	class="md-autocomplete-suggestions"
+	role="listbox"
+	aria-controls="twyr-power-select-trigger-{{@powerSelect.id}}"
+
+	@bufferSize={{3}}
+	@containerSelector=".md-autocomplete-suggestions-container"
+	@estimateHeight={{48}}
+	@items={{@options}}
+	@staticHeight={{true}}
+
+	{{did-insert this.didInsert}}
+	...attributes
+	as |Option index|
+>
+	<li
+		class="ember-power-select-option md-autocomplete-suggestion{{if (eq Option @powerSelect.Options.highlightedOption) " selected"}}"
+		role="option"
+		tabindex={{if Option.isDisabled "-1" "0"}}
+		aria-selected="{{twyr-power-select-is-selected Option @powerSelect.Options.selected}}"
+		aria-disabled={{if Option.isDisabled "true"}}
+		aria-current="{{eq Option @powerSelect.Options.highlightedOption}}"
+		data-option-index="{{@groupIndex}}{{index}}"
+	>
+		{{yield Option @powerSelect}}
+	</li>
+</VerticalCollection>

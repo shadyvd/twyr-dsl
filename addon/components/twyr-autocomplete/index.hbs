@@ -15,25 +15,23 @@
 	@searchField={{@searchField}}
 	@searchPlaceholder={{@searchPlaceholder}}
 
-	@calculateDropdownPosition={{this.calculatePosition}}
-
-	@ebdTriggerComponent={{component this.subComponents.ebdTriggerComponent label=@label}}
+	@ebdTriggerComponent={{component this.subComponents.ebdTriggerComponent label=@label powerSelect=this._TwyrAutocomplete}}
 	@ebdContentComponent={{component this.subComponents.ebdContentComponent powerSelect=this._TwyrAutocomplete}}
 
 	@triggerClass={{@triggerClass}}
-	@triggerComponent={{component this.subComponents.epsTriggerComponent isTouched=this.isTouched hideAllMessages=@hideAllMessages validationErrorMessages=@validationErrorMessages errors=@errors}}
+	@triggerComponent={{component this.subComponents.epsTriggerComponent errors=@errors hideAllMessages=@hideAllMessages isTouched=this.isTouched powerSelect=this._TwyrAutocomplete validationErrorMessages=@validationErrorMessages}}
 
 	@contentClass={{@contentClass}}
 	@optionsComponent={{this.subComponents.optionsComponent}}
 
-	@noMatchesMessageComponent={{component this.subComponents.noMatchesMessageComponent onCreate=this.onNoMatchesComponentCreate}}
+	@noMatchesMessageComponent={{component this.subComponents.noMatchesMessageComponent onCreate=this.onCreate}}
 
 	@onBlur={{this.onBlur}}
 	@onChange={{this.onChange}}
 	@onClose={{this.onClose}}
 	@onFocus={{this.onFocus}}
 	@onInput={{this.onInput}}
-	@onKeydown={{this.onKeydown}}
+	@onKeydown={{@onKeydown}}
 	@onOpen={{this.onOpen}}
 
 	@scrollTo={{this.scrollTo}}
@@ -53,7 +51,7 @@
 		{{#if (has-block)}}
 			{{yield Option TwyrAutocomplete}}
 		{{else}}
-			<PaperAutocomplete::Highlight
+			<TwyrAutocomplete::Highlight
 				@label={{if @labelPath (get Option @labelPath) Option}}
 				@searchText={{TwyrAutocomplete.Options.searchText}}
 				@flags="i"
