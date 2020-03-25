@@ -65,7 +65,7 @@
 		"polyfill-nodelist-foreach": "^1.0.1",
 		"propagating-hammerjs": "^1.4.7",
 		"vega": "^5.10.0",
-		"vega-embed": "^6.5.1",
+		"vega-embed": "^6.5.2",
 		"vega-lite": "^4.8.1"
 	},
 	"devDependencies": {
