@@ -1,0 +1,69 @@
+<md-autocomplete-wrap
+	class="{{unless @extra.label "md-whiteframe-z1"}}{{if @powerSelect.Status.isOpen " md-menu-showing"}}{{if this.showClearButton " md-show-clear-button"}} layout-row"
+	{{did-insert this.didInsert}}
+>
+	{{#if @extra.label}}
+		<PaperInput
+			class="twyr-paper-autocomplete-search-input flex {{@extra.inputClass}}"
+
+			@errors={{@errors}}
+			@label={{@extra.label}}
+			@hideAllMessages={{@hideAllMessages}}
+			@isTouched={{@isTouched}}
+			@passThru={{@extra.passThru}}
+			@required={{@extra.required}}
+			@value={{this.text}}
+
+
+			@onBlur={{@onBlur}}
+			@onChange={{this.handleInputChange}}
+			@onFocus={{@onFocus}}
+			@onKeyDown={{@onKeydown}}
+		/>
+	{{else}}
+		<input type="search"
+			class="twyr-paper-autocomplete-search-input flex {{@extra.inputClass}}"
+
+			accept={{@extra.passThru.accept}}
+
+			autocomplete={{or @extra.passThru.autocomplete "off"}}
+			autofocus={{@extra.passThru.autofocus}}
+			autosave={{@extra.passThru.autosave}}
+
+			form={{@extra.passThru.form}}
+			formaction={{@extra.passThru.formaction}}
+			formenctype={{@extra.passThru.formenctype}}
+			formmethod={{@extra.passThru.formmethod}}
+			formnovalidate={{@extra.passThru.formnovalidate}}
+			formtarget={{@extra.passThru.formtarget}}
+			inputmode={{@extra.passThru.inputmode}}
+
+			pattern={{@extra.passThru.pattern}}
+			placeholder={{@placeholder}}
+			readonly={{@extra.passThru.readonly}}
+			selectionDirection={{@extra.passThru.selectionDirection}}
+			spellcheck={{@extra.passThru.spellcheck}}
+			step={{@extra.passThru.step}}
+
+			value={{this.text}}
+
+			{{on "blur" @onBlur}}
+			{{on "focus" @onFocus}}
+			{{on "input" @onInput}}
+			{{on "keydown" @onKeydown}}
+		>
+	{{/if}}
+
+	{{#if (and @powerSelect.Status.isLoading @powerSelect.Status.isActive)}}
+		<PaperProgressLinear class={{if @extra.label "md-inline"}} />
+	{{/if}}
+
+	{{#if (and (or @powerSelect.Options.selected this.text) @allowClear (not @powerSelect.Status.isDisabled))}}
+		<TwyrResetButton
+			@onReset={{this.clear}}
+			@onTransitionOut={{this.resetButtonDestroyed}}
+		>
+			<PaperIcon @icon="close"/>
+		</TwyrResetButton>
+	{{/if}}
+</md-autocomplete-wrap>
