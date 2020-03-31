@@ -64,7 +64,7 @@
 		"matchmedia-polyfill": "^0.3.2",
 		"polyfill-nodelist-foreach": "^1.0.1",
 		"propagating-hammerjs": "^1.4.7",
-		"vega": "^5.10.0",
+		"vega": "^5.10.1",
 		"vega-embed": "^6.5.2",
 		"vega-lite": "^4.8.1"
 	},
@@ -78,7 +78,7 @@
 		"broccoli-asset-rev": "^3.0.0",
 		"broccoli-file-creator": "^2.1.1",
 		"broccoli-funnel": "2.0.2",
-		"broccoli-merge-trees": "^4.1.0",
+		"broccoli-merge-trees": "^4.2.0",
 		"els-addon-docs": "^1.0.2",
 		"ember-array-helper": "^5.1.0",
 		"ember-auto-import": "^1.5.3",
