@@ -80,6 +80,7 @@
 		"broccoli-funnel": "2.0.2",
 		"broccoli-merge-trees": "^4.2.0",
 		"els-addon-docs": "^1.0.2",
+		"ember-arg-types": "^0.2.0",
 		"ember-array-helper": "^5.1.0",
 		"ember-auto-import": "^1.5.3",
 		"ember-cli": "~3.17.0",
